@@ -42,17 +42,19 @@ class Land {
 }
 exports.Land = Land;
 class HumanWorker {
+    name;
     id;
     gender;
-    constructor(id, gender) {
+    constructor(name, id, gender) {
+        this.name = name;
         this.id = id;
         this.gender = gender;
     }
 }
 exports.HumanWorker = HumanWorker;
 class Farmer extends HumanWorker {
-    constructor(id, gender) {
-        super(id, gender);
+    constructor(name, id, gender) {
+        super(name, id, gender);
     }
 }
 exports.Farmer = Farmer;

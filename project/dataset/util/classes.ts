@@ -41,17 +41,19 @@ export class Land implements Interfaces.Land {
 }
 
 export class HumanWorker implements Interfaces.HumanWorker {
+  name: string
   id: number
   gender: Interfaces.Gender;
-  constructor(id: number, gender: Interfaces.Gender) {
+  constructor(name: string, id: number, gender: Interfaces.Gender) {
+    this.name = name
     this.id = id
     this.gender = gender
   }
 }
 
 export class Farmer extends HumanWorker implements Interfaces.Farmer {
-  constructor(id: number, gender: Interfaces.Gender) {
-    super(id, gender)
+  constructor(name: string, id: number, gender: Interfaces.Gender) {
+    super(name, id, gender)
   }
 }
 

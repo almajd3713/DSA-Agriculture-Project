@@ -50,10 +50,12 @@ const getProductSubset = () => {
 };
 const BASE_YEAR = 2000, CURRENT_YEAR = 2023;
 function workerGen() {
-    return new Classes.HumanWorker(RNG.rndNum(500000, 600000), RNG.rndNum(0, 1));
+    let { name, gender } = RNG.getName();
+    return new Classes.HumanWorker(name, RNG.rndNum(500000, 600000), gender);
 }
 function farmerGen() {
-    return new Classes.Farmer(RNG.rndNum(500000, 600000), RNG.rndNum(0, 1));
+    let { name, gender } = RNG.getName();
+    return new Classes.Farmer(name, RNG.rndNum(500000, 600000), gender);
 }
 function landDataGen() {
     let products = getProductSubset().map(prod => new Classes.Product(prod, RNG.rndNum(30, 200), RNG.rndNum(100, 5000)));

@@ -29,6 +29,7 @@ export interface Land {
 }
 
 export export interface HumanWorker {
+  name: string
   id: number,
   gender: Gender
 }
