@@ -5,9 +5,9 @@ This is a soon to be system for managing lands and stuff. This repo will contain
 
 TODO:
 
-- [ ] Script for generating data
+- [x] Script for generating data
 - [ ] Actual project
-  - [ ] JSON Reader/Writer
+  - [x] JSON Reader/Writer
   - [ ] Data Structures
   - [ ] Functions
   - [ ] Terminal Prompter

@@ -1,5 +1,20 @@
 {
   "files.exclude": {
     "**/**.js": false
+  },
+  "files.associations": {
+    "*.jldr": "json",
+    "array": "cpp",
+    "format": "cpp",
+    "istream": "cpp",
+    "memory": "cpp",
+    "tuple": "cpp",
+    "type_traits": "cpp",
+    "utility": "cpp",
+    "xlocmes": "cpp",
+    "xlocmon": "cpp",
+    "xlocnum": "cpp",
+    "xloctime": "cpp",
+    "xutility": "cpp"
   }
 }
