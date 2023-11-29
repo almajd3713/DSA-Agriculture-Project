@@ -2,8 +2,7 @@
 import * as Classes from "./util/classes"
 import * as RNG from "./util/rng"
 import * as Types from "./util/types"
-import fs from "fs"
-import {inspect} from "util"
+import { writeFileSync } from "fs"
 /**
  * Running the compiled generator.js file will generate a new set of data for the APMS to use.
  * You can modify the results later from the generated file or by the APMS terminal.
@@ -70,11 +69,11 @@ function wilayaGen(name: string): Types.Wilaya {
 }
 
 function jsonGen() {
-  let tissemsilt = wilayaGen(RNG.WILAYAS[0])
-  return tissemsilt
+  return Object.keys(RNG.countryTemplate).map(wil => wilayaGen(wil));
 }
 
 
 console.log("Generating and writing started")
-fs.writeFileSync("data.json", JSON.stringify(jsonGen()))
+let database = jsonGen()
+writeFileSync("data.json", JSON.stringify(database))
 console.log("Done!")

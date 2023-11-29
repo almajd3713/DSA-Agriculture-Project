@@ -34,19 +34,27 @@ class DBMS {
     void read() {
       if(!fileExists()) throw fileDoesNotExistException();
       fileReader.open(filePath);
-      fileWriter.open(filePath, ios::app);
-      if(!fileReader.is_open() || !fileWriter.is_open()) {
+      if(!(fileReader.is_open())) {
         throw fileCouldNotBeOpenedException();
       }
       fileData = json::parse(fileReader);
+      fileReader.close();
     }
     void write() {
-      cout << fileData.dump();
+      fileWriter.open(filePath);
+      if(!fileWriter.is_open())
+        throw fileCouldNotBeOpenedException();
+      fileWriter << fileData.dump();
+      fileWriter.close();
     }
-
-    json operator[](const string& accessor) {
+    
+    json& operator[](const string& accessor) {
       if(!fileExists()) throw fileDoesNotExistException();
       return fileData[accessor];
+    }
+    json& operator[](int accessor) {
+      if(!fileExists()) throw fileDoesNotExistException();
+      return fileData.at(accessor);
     }
 
     // DEBUG
@@ -62,6 +70,10 @@ class DBMS {
     }
 
     void erase(const string& item) {
+      if(!fileExists()) throw fileDoesNotExistException();
+      fileData.erase(item);
+    }
+    void erase(const int& item) {
       if(!fileExists()) throw fileDoesNotExistException();
       fileData.erase(item);
     }

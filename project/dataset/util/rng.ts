@@ -12,7 +12,7 @@ interface countryTemplateInterface {
   }
 }
 
-const countryTemplate: countryTemplateInterface = {
+export const countryTemplate: countryTemplateInterface = {
   tissemsilt: {
     khemisti: ["badr", "el_darb"],
     aion: ["baraka", "centre"]

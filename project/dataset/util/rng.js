@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getName = exports.getArea = exports.getCity = exports.getWilaya = exports.WILAYAS = exports.rndFromArr = exports.rndNum = void 0;
+exports.getName = exports.getArea = exports.getCity = exports.getWilaya = exports.WILAYAS = exports.countryTemplate = exports.rndFromArr = exports.rndNum = void 0;
 const rndNum = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
 exports.rndNum = rndNum;
 const rndFromArr = (arr) => {
     return arr[Math.floor(Math.random() * arr.length)];
 };
 exports.rndFromArr = rndFromArr;
-const countryTemplate = {
+exports.countryTemplate = {
     tissemsilt: {
         khemisti: ["badr", "el_darb"],
         aion: ["baraka", "centre"]
@@ -17,7 +17,7 @@ const countryTemplate = {
         blad: ["shara", "lanex"]
     }
 };
-exports.WILAYAS = Object.keys(countryTemplate);
+exports.WILAYAS = Object.keys(exports.countryTemplate);
 const RNGSTR = "123456789";
 const idGen = () => {
     let str = "";
@@ -26,7 +26,7 @@ const idGen = () => {
     return str;
 };
 const getWilaya = (name) => {
-    return countryTemplate[name];
+    return exports.countryTemplate[name];
 };
 exports.getWilaya = getWilaya;
 const getCity = (wil) => {

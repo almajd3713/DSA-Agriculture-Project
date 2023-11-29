@@ -22,13 +22,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const Classes = __importStar(require("./util/classes"));
 const RNG = __importStar(require("./util/rng"));
-const fs_1 = __importDefault(require("fs"));
+const fs_1 = require("fs");
 /**
  * Running the compiled generator.js file will generate a new set of data for the APMS to use.
  * You can modify the results later from the generated file or by the APMS terminal.
@@ -90,9 +87,9 @@ function wilayaGen(name) {
     return wilaya;
 }
 function jsonGen() {
-    let tissemsilt = wilayaGen(RNG.WILAYAS[0]);
-    return tissemsilt;
+    return Object.keys(RNG.countryTemplate).map(wil => wilayaGen(wil));
 }
 console.log("Generating and writing started");
-fs_1.default.writeFileSync("data.json", JSON.stringify(jsonGen()));
+let database = jsonGen();
+(0, fs_1.writeFileSync)("data.json", JSON.stringify(database));
 console.log("Done!");
