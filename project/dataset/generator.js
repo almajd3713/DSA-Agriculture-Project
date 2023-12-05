@@ -22,8 +22,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const Classes = __importStar(require("./util/classes"));
+const countryTemplate_1 = __importDefault(require("./util/countryTemplate"));
 const RNG = __importStar(require("./util/rng"));
 const fs_1 = require("fs");
 /**
@@ -45,32 +49,38 @@ const getProductSubset = () => {
     }
     return shuffled.slice(min);
 };
-const BASE_YEAR = 2000, CURRENT_YEAR = 2023;
+const args = process.argv.slice(2);
+const BASE_YEAR = Number(args[0]), CURRENT_YEAR = Number(args[1]);
 function workerGen() {
     let { name, gender } = RNG.getName();
-    return new Classes.HumanWorker(name, RNG.rndNum(500000, 600000), gender);
+    return new Classes.HumanWorker(name, RNG.rndNum(500000, 600000), RNG.rndNum(0, 1), gender);
 }
 function farmerGen() {
     let { name, gender } = RNG.getName();
-    return new Classes.Farmer(name, RNG.rndNum(500000, 600000), gender);
+    return new Classes.Farmer(name, RNG.rndNum(500000, 600000), RNG.rndNum(0, 1), gender);
 }
 function landDataGen() {
-    let products = getProductSubset().map(prod => new Classes.Product(prod, RNG.rndNum(30, 200), RNG.rndNum(100, 5000)));
+    let products = getProductSubset().map(prod => new Classes.Product(prod, RNG.rndNum(30, 200), RNG.rndNum(100, 5000), RNG.rndNum(0, 1)));
     let land = new Classes.LandData(products, RNG.rndNum(0, 2), RNG.rndNum(0, 10000), RNG.rndNum(0, 10000));
     return land;
 }
 function monthlyRepGen(month) {
     return new Classes.MonthlyReport(month + 1, landDataGen());
 }
-function yearlyRepGen(year) {
-    let months = new Array(12).fill(1).map((_, i) => monthlyRepGen(i));
-    return new Classes.AnnualReport(year, months);
+function yearlyRepGen(year, startingMonth = 0) {
+    let workers = new Array(RNG.rndNum(0, 20)).fill(1).map(_ => workerGen());
+    let months = new Array(12 - startingMonth).fill(1).map((_, i) => monthlyRepGen(i + startingMonth));
+    return new Classes.AnnualReport(year, months, workers);
 }
 function landGen() {
-    let workers = new Array(RNG.rndNum(0, 20)).fill(1).map(_ => workerGen());
     let landFormYear = RNG.rndNum(BASE_YEAR, CURRENT_YEAR);
-    let rep = new Array(CURRENT_YEAR - landFormYear + 1).fill(1).map((_, i) => yearlyRepGen(landFormYear + i));
-    return new Classes.Land(RNG.rndNum(200000, 300000), farmerGen(), workers, rep);
+    let rep = new Array(CURRENT_YEAR - landFormYear + 1).fill(1).map((_, i) => {
+        if (i)
+            return yearlyRepGen(landFormYear + i, 0);
+        else
+            return yearlyRepGen(landFormYear + i, RNG.rndNum(1, 12));
+    });
+    return new Classes.Land(RNG.rndNum(200000, 300000), farmerGen(), rep);
 }
 function areaGen(area) {
     let lands = new Array(3).fill(1).map(_ => landGen());
@@ -86,10 +96,10 @@ function wilayaGen(name) {
     let wilaya = new Classes.Wilaya(name, cities);
     return wilaya;
 }
-function jsonGen() {
-    return Object.keys(RNG.countryTemplate).map(wil => wilayaGen(wil));
+function jsonGen(count) {
+    return RNG.shuffle(Object.keys(countryTemplate_1.default)).slice(0, count).map(wil => wilayaGen(wil));
 }
 console.log("Generating and writing started");
-let database = jsonGen();
+let database = jsonGen(58);
 (0, fs_1.writeFileSync)("data.json", JSON.stringify(database));
 console.log("Done!");

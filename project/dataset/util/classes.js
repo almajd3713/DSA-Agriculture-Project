@@ -31,12 +31,10 @@ exports.Area = Area;
 class Land {
     id;
     farmer;
-    workers;
     report;
-    constructor(id, farmer, workers, report) {
+    constructor(id, farmer, report) {
         this.id = id;
         this.farmer = farmer;
-        this.workers = workers;
         this.report = report;
     }
 }
@@ -44,26 +42,30 @@ exports.Land = Land;
 class HumanWorker {
     name;
     id;
+    age;
     gender;
-    constructor(name, id, gender) {
+    constructor(name, id, age, gender) {
         this.name = name;
         this.id = id;
         this.gender = gender;
+        this.age = age;
     }
 }
 exports.HumanWorker = HumanWorker;
 class Farmer extends HumanWorker {
-    constructor(name, id, gender) {
-        super(name, id, gender);
+    constructor(name, id, age, gender) {
+        super(name, id, age, gender);
     }
 }
 exports.Farmer = Farmer;
 class AnnualReport {
     year;
     months;
-    constructor(year, months) {
+    workers;
+    constructor(year, months, workers) {
         this.year = year;
         this.months = months;
+        this.workers = workers;
     }
 }
 exports.AnnualReport = AnnualReport;
@@ -93,10 +95,12 @@ class Product {
     name;
     basePrice;
     production;
-    constructor(name, basePrice, production) {
+    pesticideSeverity;
+    constructor(name, basePrice, production, pestSeverity) {
         this.name = name;
         this.basePrice = basePrice;
         this.production = production;
+        this.pesticideSeverity = pestSeverity;
     }
 }
 exports.Product = Product;

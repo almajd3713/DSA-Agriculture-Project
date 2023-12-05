@@ -30,12 +30,10 @@ export class Area implements Interfaces.Area {
 export class Land implements Interfaces.Land {
   id: number;
   farmer: Farmer;
-  workers: HumanWorker[];
   report: Interfaces.AnnualReport[];
-  constructor(id: number, farmer: Farmer, workers: HumanWorker[], report: AnnualReport[]) {
+  constructor(id: number, farmer: Farmer, report: AnnualReport[]) {
     this.id = id;
     this.farmer = farmer
-    this.workers = workers
     this.report = report;
   }
 }
@@ -43,26 +41,30 @@ export class Land implements Interfaces.Land {
 export class HumanWorker implements Interfaces.HumanWorker {
   name: string
   id: number
+  age: number
   gender: Interfaces.Gender;
-  constructor(name: string, id: number, gender: Interfaces.Gender) {
+  constructor(name: string, id: number, age: number, gender: Interfaces.Gender) {
     this.name = name
     this.id = id
     this.gender = gender
+    this.age = age
   }
 }
 
 export class Farmer extends HumanWorker implements Interfaces.Farmer {
-  constructor(name: string, id: number, gender: Interfaces.Gender) {
-    super(name, id, gender)
+  constructor(name: string, id: number, age: number, gender: Interfaces.Gender) {
+    super(name, id, age, gender)
   }
 }
 
 export class AnnualReport implements Interfaces.AnnualReport {
-  year: number;
-  months: MonthlyReport[];
-  constructor(year: number, months: MonthlyReport[]) {
+  year: number
+  months: MonthlyReport[]
+  workers: HumanWorker[]
+  constructor(year: number, months: MonthlyReport[], workers: HumanWorker[]) {
     this.year = year
     this.months = months
+    this.workers = workers
   }
 }
 
@@ -91,11 +93,13 @@ export class LandData implements Interfaces.LandData {
 export class Product implements Interfaces.Product {
   name: string  
   basePrice: number
-  production: number;
-  constructor(name: string, basePrice: number, production: number) {
+  production: number
+  pesticideSeverity: Interfaces.PestSeverity;
+  constructor(name: string, basePrice: number, production: number, pestSeverity: Interfaces.PestSeverity) {
     this.name = name
     this.basePrice = basePrice
     this.production = production
+    this.pesticideSeverity = pestSeverity
   }
 }
 

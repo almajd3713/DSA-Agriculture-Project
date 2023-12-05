@@ -22,15 +22,15 @@ export interface Area {
 export interface Land {
   id: number
   farmer: Farmer
-  workers: HumanWorker[]
   report: AnnualReport[]
   
 
 }
 
 export export interface HumanWorker {
+  id: number
   name: string
-  id: number,
+  age: number
   gender: Gender
 }
 
@@ -38,6 +38,7 @@ export interface Farmer extends HumanWorker { }
 
 export interface AnnualReport {
   year: number
+  workers: HumanWorker[]
   months: MonthlyReport[]
 }
 export interface MonthlyReport {
@@ -45,7 +46,6 @@ export interface MonthlyReport {
   data: LandData
 }
 export interface LandData {
-  pesticideSeverity: PestSeverity
   products: Product[]
   waterConsumption: number
   electricityConsumption: number
@@ -55,6 +55,7 @@ export interface Product {
   name: string
   basePrice: number
   production: number
+  pesticideSeverity: PestSeverity
 }
 
 export interface SalesReport {

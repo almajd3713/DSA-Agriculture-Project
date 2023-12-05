@@ -1,23 +1,25 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getName = exports.getArea = exports.getCity = exports.getWilaya = exports.WILAYAS = exports.countryTemplate = exports.rndFromArr = exports.rndNum = void 0;
+exports.getName = exports.getArea = exports.getCity = exports.getWilaya = exports.WILAYAS = exports.shuffle = exports.rndFromArr = exports.rndNum = void 0;
+const countryTemplate_1 = __importDefault(require("./countryTemplate"));
 const rndNum = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
 exports.rndNum = rndNum;
 const rndFromArr = (arr) => {
     return arr[Math.floor(Math.random() * arr.length)];
 };
 exports.rndFromArr = rndFromArr;
-exports.countryTemplate = {
-    tissemsilt: {
-        khemisti: ["badr", "el_darb"],
-        aion: ["baraka", "centre"]
-    },
-    chlef: {
-        chlef: ["shetia", "salam"],
-        blad: ["shara", "lanex"]
+const shuffle = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
+    return array;
 };
-exports.WILAYAS = Object.keys(exports.countryTemplate);
+exports.shuffle = shuffle;
+exports.WILAYAS = Object.keys(countryTemplate_1.default);
 const RNGSTR = "123456789";
 const idGen = () => {
     let str = "";
@@ -26,7 +28,7 @@ const idGen = () => {
     return str;
 };
 const getWilaya = (name) => {
-    return exports.countryTemplate[name];
+    return countryTemplate_1.default[name];
 };
 exports.getWilaya = getWilaya;
 const getCity = (wil) => {

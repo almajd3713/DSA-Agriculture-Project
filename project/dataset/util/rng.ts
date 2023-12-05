@@ -1,27 +1,19 @@
 
 import type * as Types from "./types"
+import countryTemplate from "./countryTemplate"
 
 export const rndNum = (min: number, max: number) => min + Math.floor(Math.random() * (max - min + 1))
 export const rndFromArr = <T>(arr: T[]) => {
   return arr[Math.floor(Math.random() * arr.length)]
 }
-
-interface countryTemplateInterface {
-  [wilaya: string]: {
-    [city: string] : string[]
+export const shuffle = <T>(array: T[]) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
-}
+  return array;
+};
 
-export const countryTemplate: countryTemplateInterface = {
-  tissemsilt: {
-    khemisti: ["badr", "el_darb"],
-    aion: ["baraka", "centre"]
-  }, 
-  chlef: {
-    chlef: ["shetia", "salam"],
-    blad: ["shara", "lanex"]
-  }
-}
 export const WILAYAS = Object.keys(countryTemplate)
 const RNGSTR = "123456789"
 const idGen = () => {

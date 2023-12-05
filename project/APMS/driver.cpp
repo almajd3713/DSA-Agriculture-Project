@@ -1,25 +1,24 @@
 
-#include "classes/DBMS.hpp"
+#include "misc/DBMS.hpp"
 using namespace std;
 
 
 int main() {
   // Accessing the DBMS System, using the given database file
-  DBMS data("data.json");
+  DBMS data("./data.json");
   // Read the file and store its data in the DBMS database
   data.read();
+  cout << "AYE" << endl;
   // Cout the second city in the first wilaya, with intendation of two spaces per layer
-  cout << setw(2) << data[0]["cities"][1] << endl;
 
   // Modifying the name of the second wilaya
-  data[1]["name"] = "HabibiLand";
-  cout << data[1]["name"];
+  // for(auto& [key, val] : data.getFileData()[0].items()) {
+  //   cout << key << endl;
+  // }
 
   // erasing the second wilaya
-  data.erase(0);
 
   // saving the changes into the data file
-  data.write();
   
   return 0;
 }
