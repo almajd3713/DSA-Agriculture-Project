@@ -78,7 +78,7 @@ function jsonGen(count: number) {
 }
 
 
-console.log("Generating and writing started")
+console.log("Generating and writing started UwU")
 let database = jsonGen(WIL_COUNT)
 writeFileSync("data.json", JSON.stringify(database))
 console.log("Done!")
