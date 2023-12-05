@@ -50,7 +50,7 @@ const getProductSubset = () => {
     return shuffled.slice(min);
 };
 const args = process.argv.slice(2);
-const BASE_YEAR = Number(args[0]), CURRENT_YEAR = Number(args[1]);
+const BASE_YEAR = Number(args[0]), CURRENT_YEAR = Number(args[1]), WIL_COUNT = Number([args[3]]);
 function workerGen() {
     let { name, gender } = RNG.getName();
     return new Classes.HumanWorker(name, RNG.rndNum(500000, 600000), RNG.rndNum(0, 1), gender);
@@ -100,6 +100,6 @@ function jsonGen(count) {
     return RNG.shuffle(Object.keys(countryTemplate_1.default)).slice(0, count).map(wil => wilayaGen(wil));
 }
 console.log("Generating and writing started");
-let database = jsonGen(58);
+let database = jsonGen(WIL_COUNT);
 (0, fs_1.writeFileSync)("data.json", JSON.stringify(database));
 console.log("Done!");

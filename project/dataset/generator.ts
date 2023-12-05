@@ -25,7 +25,7 @@ const getProductSubset = () => {
   return shuffled.slice(min);
 }
 const args = process.argv.slice(2)
-const BASE_YEAR = Number(args[0]), CURRENT_YEAR = Number(args[1])
+const BASE_YEAR = Number(args[0]), CURRENT_YEAR = Number(args[1]), WIL_COUNT = Number([args[3]])
 
 function workerGen(): Types.HumanWorker {
   let {name, gender} = RNG.getName()
@@ -79,6 +79,6 @@ function jsonGen(count: number) {
 
 
 console.log("Generating and writing started")
-let database = jsonGen(58)
+let database = jsonGen(WIL_COUNT)
 writeFileSync("data.json", JSON.stringify(database))
 console.log("Done!")
