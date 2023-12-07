@@ -6,21 +6,28 @@ class Area {
 
 public:
     Area();
-    Area(const std::string& , const std::vector<Land>&);
-
-    // Copy constructor
-    Area(const Area& rhs)
+    Area(const std::string& , const int& ,const std::vector<Land>&);
+    ~Area();
     //setters and  getters
-    std::string getName()const;
-    std::vector<Land> getLands()const;
-    void setName(const std::string&);
+    std::string getAreaName()const;
+    std::vector<Land> getLands() const;
+    int getAreaID()const;
+    void setAreaID(const int&);
+    void setAreaName(const std::string&);
     void setLands(const std::vector<Land>&);
+
+    //add or remove a land to/from the Area
     void addLand(const Land&);
     void removeLand(const Land&);
     void removeLand(const std::string&);
 
+    //overloading < operator
+    bool operator<(const Area&)const; 
+
+
     private:
     std::string name;
+    int ID;
     std::vector<Land> lands;
 
 };

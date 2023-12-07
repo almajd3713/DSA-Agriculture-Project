@@ -6,20 +6,21 @@
 
 using namespace std;   
 
-template<typename Area>
 class City {
 
 public:
     City();
     //parameterized constructor
-    City(const std::string&, const std::vector<Area>&);
+    City(const std::string&,const int&, const std::vector<Area>&);
     ~City();
-    City(const City& rhs);  //copy constructor
     //getter and setter
-    string getName();
-    Area getArea(int index);
-    void setName(string name);
-    void setArea(vector<Area> areas);
+
+    string getName()const;
+    int getCityID()const;
+    std::vector<Area> getArea()const;
+    void setName(const string &name);
+    void setArea(const vector<Area>& areas);
+    void setCityID(const int& );
 
     //add area to the city
     void addArea(const Area&);
@@ -27,10 +28,13 @@ public:
     void removeArea(const Area&);
     void removeArea(const string&);
 
+    //overloading < operator
+    bool operator<(const City&)const; 
 
 
 private:
-    std::string name;
+    string name;
+    int ID;
     std::vector<Area> areas; 
 };
 
