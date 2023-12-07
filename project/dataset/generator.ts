@@ -25,7 +25,7 @@ const getProductSubset = () => {
   return shuffled.slice(min);
 }
 const args = process.argv.slice(2)
-const BASE_YEAR = Number(args[0]), CURRENT_YEAR = Number(args[1]), WIL_COUNT = Number([args[3]])
+const BASE_YEAR = Number(args[0]), CURRENT_YEAR = Number(args[1]), WIL_COUNT = Number([args[2]])
 
 function workerGen(): Types.HumanWorker {
   let {name, gender} = RNG.getName()
@@ -74,11 +74,15 @@ function wilayaGen(name: string): Types.Wilaya {
 }
 
 function jsonGen(count: number) {
-  return RNG.shuffle(Object.keys(countryTemplate)).slice(0, count).map(wil => wilayaGen(wil));
+  console.log(count)
+  return RNG.shuffle(Object.keys(countryTemplate)).slice(0, count).map(wil => {
+    return wilayaGen(wil)
+  });
 }
 
 
 console.log("Generating and writing started UwU")
 let database = jsonGen(WIL_COUNT)
+// console.log(database)
 writeFileSync("data.json", JSON.stringify(database))
 console.log("Done!")
