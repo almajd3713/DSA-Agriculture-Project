@@ -1,7 +1,8 @@
 #ifndef AVL_TREE_H
 #define AVL_TREE_H
 
-#include "dsexceptions.hpp"
+#include "exceptions.hpp"
+#include "BinarySearchTree.hpp"
 #include <algorithm>
 #include <iostream> 
 using namespace std;
@@ -23,17 +24,12 @@ using namespace std;
 // Throws UnderflowException as warranted
 
 template <typename Comparable>
-class AvlTree
-{
+class AvlTree {
   public:
-    AvlTree( );
-    
-    
-    AvlTree( const AvlTree & );
-    
-    AvlTree( AvlTree && );
-    
-    ~AvlTree( );
+    AvlTree();
+    AvlTree(const AvlTree&);
+    AvlTree(AvlTree &&);
+    ~AvlTree();
 
     /**
      * Deep copy.

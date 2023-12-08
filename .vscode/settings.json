@@ -18,6 +18,7 @@
     "xutility": "cpp",
     "xmemory": "cpp",
     "vector": "cpp",
-    "algorithm": "cpp"
+    "algorithm": "cpp",
+    "iostream": "cpp"
   }
 }
