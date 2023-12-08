@@ -9,35 +9,33 @@
 using namespace std;
 using std::vector;
 class Wilaya {
+    string name;
+    int id;
+    vector<City> cities; // array of cities
 
- public:
+public:
     Wilaya();
     //parameterized constructor
-    Wilaya(const std::string&,const int&, const std::vector<City>&);
+    Wilaya(int, const string&, const vector<City>&);
+    Wilaya(const Wilaya&);
+    Wilaya(Wilaya&&);
     ~Wilaya();
     //getter and setter
-    int getWilayaID()const;
+    int getWilayaId()const;
+    void setId(const int&);
     string getName()const;
-    vector<City> getCity()const;
     void setName(const string&);
+    vector<City> getCity()const;
     void setCity(const vector<City>&);
-    void setWilayaID(const int&);
 
     //add city to the wilaya
     void addCity(const City&);
     //remove city from the wilaya
     void removeCity(const City&);
     void removeCity(const string&);
-    
+
     //overloading < operator
     bool operator<(const Wilaya&)const;
-    
-
-
-    private:
-    string name;
-    int ID;
-    vector<City> Cities; // array of cities
 };
 
 #endif

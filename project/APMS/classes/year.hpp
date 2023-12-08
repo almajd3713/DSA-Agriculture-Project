@@ -8,14 +8,20 @@ class AnnualReport {
   MonthlyReport* months;
 
   public:
-    AnnualReport(int y, MonthlyReport m[12])
-      : year{y}, months{m} {}
+    AnnualReport();
+    AnnualReport(int, MonthlyReport*);
+    AnnualReport(const AnnualReport&);
+    AnnualReport(AnnualReport&&);
+    ~AnnualReport();
 
     int getYear() const;
     void setYear(int);
     MonthlyReport* getMonthlyReport() const;
     void setMonthlyReport(MonthlyReport*);
     
+    void addMonth(const MonthlyReport&);
+    void removeMonth(const MonthlyReport&);
+    void removeMonth(int);
 };
 
 

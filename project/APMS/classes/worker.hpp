@@ -1,10 +1,8 @@
-
 #ifndef WORKERDSA
 #define WORKERDSA
 #include <string>
 #include "enums.hpp"
 using namespace std;
-
 
 
 class Worker {
@@ -15,9 +13,12 @@ class Worker {
     Gender gender;
 
   public:
-    Worker(int i, int a, string n, Gender g)
-      : id{i}, age{a}, name{n}, gender{g} {};
-  
+    Worker();
+    Worker(int i, int a, const string&, const Gender&);
+    Worker(const Worker&);
+    Worker(Worker&&);
+    ~Worker();
+
     int getId() const;
     void setId(int);
     string getName() const;
@@ -28,12 +29,12 @@ class Worker {
 
 class Farmer : public Worker {
   public:
-    Farmer(int i, int a, string n, Gender g): Worker(i, a, n, g) {}
+    Farmer();
+    Farmer(int, int, string, Gender);
+    Farmer(const Farmer&);
+    Farmer(Farmer&&);
+    ~Farmer();
 };
-
-
-
-
 
 
 #endif

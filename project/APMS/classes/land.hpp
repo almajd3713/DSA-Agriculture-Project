@@ -8,18 +8,23 @@
 
 class Land {
   int id;
-  AnnualReport* report;
+  AnnualReport** report;
 
   public:
-    Land(int i, AnnualReport r[12])
-      : id{i}, report{r} {};
+    Land();
+    Land(int, AnnualReport**);
+    Land(const Land&);
+    Land(Land&&);
+    ~Land();
 
     int getId() const;
     void setId(int);
-    AnnualReport* getReport() const;
-    void setReport(AnnualReport*);
-    
-  
+    AnnualReport** getReport() const;
+    void setReport(AnnualReport**);
+
+    void addYear(const AnnualReport&);
+    void removeYear(const AnnualReport&);
+    void removeYear(int);
 };
 
 

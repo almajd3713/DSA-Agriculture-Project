@@ -8,13 +8,16 @@ using namespace std;
 
 class LandData {
   int waterConsumption;
-  int eletricityConsumption;
+  int electricityConsumption;
   unordered_map<string, Product> products;
 
   public:
-    LandData(int wc, int ec, const unordered_map<string, Product>& initProducts = {})
-    : waterConsumption{wc}, eletricityConsumption{ec}, products{initProducts} {}
-
+    LandData();
+    LandData(int, int, const unordered_map<string, Product>&);
+    LandData(const LandData&);
+    LandData(LandData&&);
+    ~LandData();
+    
     int getWaterConsumption() const;
     void setWaterConsumption(int);
     int getElectricityConsumption() const;
@@ -22,7 +25,15 @@ class LandData {
     unordered_map<string, Product> getProducts() const;
     void setProducts(unordered_map<string, Product>);
     
-    
+    void addProduct(const string&, double, double, PesticideSeverity);
+    void addProduct(const Product&);
+
+    LandData& operator=(const LandData& rhs) {
+      electricityConsumption = rhs.electricityConsumption;
+      waterConsumption = rhs.waterConsumption;
+      products = rhs.products;
+      return *this;
+    }
 
 };
 

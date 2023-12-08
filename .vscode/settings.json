@@ -15,6 +15,9 @@
     "xlocmon": "cpp",
     "xlocnum": "cpp",
     "xloctime": "cpp",
-    "xutility": "cpp"
+    "xutility": "cpp",
+    "xmemory": "cpp",
+    "vector": "cpp",
+    "algorithm": "cpp"
   }
 }

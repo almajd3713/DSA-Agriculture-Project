@@ -1,28 +1,49 @@
 #include "Wilaya.hpp"
 #include <algorithm>
-#include <iostream>
-#include <string>
-#include <vector>
 #include "City.hpp"
 
 using namespace std;
 
 
+// Wilaya::Wilaya() {
+//     name = "";
+//     id = 0;
+//     cities = vector<City>();
+// }
+
+// Wilaya::Wilaya(const std::string& name, const int& id, const std::vector<City>& cities) : name(name), id(id), cities(cities) {}
+
+// Wilaya::Wilaya(const Wilaya& rhs)
+// : name{rhs.name}, id{rhs.id}, cities{rhs.cities} {}
+
+// Wilaya::Wilaya(Wilaya&& rhs)
+// : name{move(rhs.name)}, id{rhs.id}, cities{move(rhs.cities)} {}
+
+// Wilaya::~Wilaya() 
+// {
+//     cities.clear();
+// }
 Wilaya::Wilaya() {
-    name = "";
-    ID = 0;
-    Cities = vector<City>();
+  id = 0;
+  name = "";
+  cities = vector<City>();
 }
 
-Wilaya::Wilaya(const std::string& name, const int& id, const std::vector<City>& cities) : name(name), ID(id), Cities(cities) {}
+Wilaya::Wilaya(int id, const string& name, const vector<City>& cities)
+  : id{id}, name{name}, cities{cities} {}
 
-Wilaya::~Wilaya() 
-{
-    Cities.clear();
+Wilaya::Wilaya(const Wilaya& rhs)
+  : id{rhs.id}, name{rhs.name}, cities{rhs.cities} {}
+
+Wilaya::Wilaya(Wilaya&& rhs)
+  : id{move(rhs.id)}, name{move(rhs.name)}, cities{move(rhs.cities)} {}
+
+Wilaya::~Wilaya() {
+    cities.clear();
 }
 
-int Wilaya::getWilayaID() const {
-    return ID;
+int Wilaya::getWilayaId() const {
+    return id;
 }
 
 std::string Wilaya::getName() const {
@@ -30,7 +51,7 @@ std::string Wilaya::getName() const {
 }
 
 std::vector<City> Wilaya::getCity() const {
-    return Cities;
+    return cities;
 }
 
 void Wilaya::setName(const std::string& name) {
@@ -38,27 +59,27 @@ void Wilaya::setName(const std::string& name) {
 }
 
 void Wilaya::setCity(const std::vector<City>& cities) {
-    this->Cities = cities;
+    this->cities = cities;
 }
 
-void Wilaya::setWilayaID(const int& id) {
-    this->ID = id;
+void Wilaya::setId(const int& id) {
+    this->id = id;
 }
 
 void Wilaya::addCity(const City& city) {
-    Cities.push_back(city);
+    cities.push_back(city);
 }
 
 void Wilaya::removeCity(const City& city) {
-    Cities.erase(std::remove(Cities.begin(), Cities.end(), city), Cities.end());
+    cities.erase(remove(cities.begin(), cities.end(), city), cities.end());
 }
 
-void Wilaya::removeCity(const std::string& cityName) {
-    Cities.erase(std::remove_if(Cities.begin(), Cities.end(), [&cityName](const City& city) {
+void Wilaya::removeCity(const string& cityName) {
+    cities.erase(remove_if(cities.begin(), cities.end(), [&cityName](const City& city) {
         return city.getName() == cityName;
-    }), Cities.end());
+    }), cities.end());
 }
 
 bool Wilaya::operator<(const Wilaya& rhs) const {
-    return ID < rhs.ID;
+    return id < rhs.id;
 }

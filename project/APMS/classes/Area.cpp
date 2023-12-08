@@ -1,23 +1,27 @@
-#include<iostream>
-#include<string>
 #include<algorithm>
-#include<vector>
-#include"land.hpp"
 #include "Area.hpp"
+using std::move;
 
 Area::Area() {
     name = "";
-    ID = 0;
+    id = 0;
     lands = std::vector<Land>();
 }
-Area::~Area()
-{
+Area::~Area() {
      lands.clear();    
 }
 
-Area::Area(const std::string& name, const int& id, const std::vector<Land>& lands) : name(name), ID(id), lands(lands) {}
+Area::Area(const std::string& name, const int& id, const std::vector<Land>& lands) : name{name}, id{id}, lands{lands} {}
 
-std::string Area::getAreaName() const {
+Area::Area(const Area& rhs)
+    : name{rhs.name}, id{rhs.id}, lands{rhs.lands} {}
+
+Area::Area(Area&& rhs)
+    : name{move(rhs.name)}, id{rhs.id}, lands{move(rhs.lands)} {}
+
+
+
+string Area::getName() const {
     return name;
 }
 
@@ -25,15 +29,15 @@ std::vector<Land> Area::getLands() const {
     return lands;
 }
 
-int Area::getAreaID() const {
-    return ID;
+int Area::getId() const {
+    return id;
 }
 
-void Area::setAreaID(const int& id) {
-    this->ID = id;
+void Area::setId(const int& id) {
+    this->id = id;
 }
 
-void Area::setAreaName(const std::string& name) {
+void Area::setName(const string& name) {
     this->name = name;
 }
 
@@ -49,12 +53,12 @@ void Area::removeLand(const Land& land) {
     lands.erase(std::remove(lands.begin(), lands.end(), land), lands.end());
 }
 
-void Area::removeLand(const std::string& landName) {
-    lands.erase(std::remove_if(lands.begin(), lands.end(), [&landName](const Land& land) {
-        return land.getName() == landName;
+void Area::removeLand(/*const std::string& landName*/ const int& landId) {
+    lands.erase(std::remove_if(lands.begin(), lands.end(), [&landId](const Land& land) {
+        return land.getId() == landId;
     }), lands.end());
 }
 
 bool Area::operator<(const Area& rhs) const {
-    return ID < rhs.ID;
+    return id < rhs.id;
 }

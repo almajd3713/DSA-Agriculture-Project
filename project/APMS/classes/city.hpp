@@ -7,20 +7,25 @@
 using namespace std;   
 
 class City {
+    string name;
+    int id;
+    std::vector<Area> areas;
 
 public:
     City();
     //parameterized constructor
-    City(const std::string&,const int&, const std::vector<Area>&);
+    City(const string&, const int&, const vector<Area>&);
+    City(const City&);
+    City(City&&);
     ~City();
     //getter and setter
 
     string getName()const;
-    int getCityID()const;
+    int getCityId()const;
     std::vector<Area> getArea()const;
     void setName(const string &name);
     void setArea(const vector<Area>& areas);
-    void setCityID(const int& );
+    void setCityId(const int& );
 
     //add area to the city
     void addArea(const Area&);
@@ -30,11 +35,5 @@ public:
 
     //overloading < operator
     bool operator<(const City&)const; 
-
-
-private:
-    string name;
-    int ID;
-    std::vector<Area> areas; 
 };
 

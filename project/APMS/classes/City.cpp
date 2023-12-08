@@ -1,20 +1,16 @@
-#include<iostream>
-#include<string>
-#include<vector>
 #include<algorithm>
-#include"Area.hpp"
 #include "City.hpp"
 using namespace std;
 
 
 City::City() {
     name = "";
-    ID = 0;
+    id = 0;
     areas = std::vector<Area>();
 
 }
 
-City::City(const std::string& name, const int& id, const std::vector<Area>& areas) : name(name), ID(id), areas(areas) {}
+City::City(const std::string& name, const int& id, const std::vector<Area>& areas) : name(name), id(id), areas(areas) {}
 
 City::~City() {
     areas.clear();
@@ -24,8 +20,8 @@ std::string City::getName() const {
     return name;
 }
 
-int City::getCityID() const {
-    return ID;
+int City::getCityId() const {
+    return id;
 }
 
 std::vector<Area> City::getArea() const {
@@ -40,8 +36,8 @@ void City::setArea(const std::vector<Area> &areas) {
     this->areas = areas;
 }
 
-void City::setCityID(const int &id) {
-    this->ID = id;
+void City::setCityId(const int &id) {
+    this->id = id;
 }
 
 void City::addArea(const Area& area) {
@@ -49,15 +45,15 @@ void City::addArea(const Area& area) {
 }
 
 void City::removeArea(const Area& area) {
-    areas.erase(std::remove(areas.begin(), areas.end(), area), areas.end());
+    areas.erase(remove(areas.begin(), areas.end(), area), areas.end());
 }
 
 void City::removeArea(const std::string& areaName) {
-    areas.erase(std::remove_if(areas.begin(), areas.end(), [&areaName](const Area& area) {
-        return area.getAreaName() == areaName;
+    areas.erase(remove_if(areas.begin(), areas.end(), [&areaName](const Area& area) {
+        return area.getName() == areaName;
     }), areas.end());
 }
 
 bool City::operator<(const City& rhs) const {
-    return ID < rhs.ID;
+    return id < rhs.id;
 }

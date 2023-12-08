@@ -3,31 +3,34 @@
 #include <vector>
 #include "Land.hpp"
 class Area {
+    string name;
+    int id;
+    vector<Land> lands;
 
 public:
     Area();
-    Area(const std::string& , const int& ,const std::vector<Land>&);
+    Area(const string& , const int& ,const vector<Land>&);
+    Area(const Area&);
+    Area(Area&&);
     ~Area();
     //setters and  getters
-    std::string getAreaName()const;
+    std::string getName()const;
     std::vector<Land> getLands() const;
-    int getAreaID()const;
-    void setAreaID(const int&);
-    void setAreaName(const std::string&);
+    int getId()const;
+    void setId(const int&);
+    void setName(const std::string&);
     void setLands(const std::vector<Land>&);
 
     //add or remove a land to/from the Area
     void addLand(const Land&);
     void removeLand(const Land&);
-    void removeLand(const std::string&);
+    void removeLand(const int&);
 
     //overloading < operator
     bool operator<(const Area&)const; 
 
 
     private:
-    std::string name;
-    int ID;
-    std::vector<Land> lands;
+
 
 };
