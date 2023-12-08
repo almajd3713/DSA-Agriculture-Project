@@ -1,6 +1,5 @@
-#include "Wilaya.hpp"
+#include "wilaya.hpp"
 #include <algorithm>
-#include "City.hpp"
 
 using namespace std;
 
@@ -39,6 +38,7 @@ Wilaya::Wilaya(Wilaya&& rhs)
   : id{move(rhs.id)}, name{move(rhs.name)}, cities{move(rhs.cities)} {}
 
 Wilaya::~Wilaya() {
+    cout << "deopcvfk" << endl;
     cities.clear();
 }
 
@@ -74,12 +74,16 @@ void Wilaya::removeCity(const City& city) {
     cities.erase(remove(cities.begin(), cities.end(), city), cities.end());
 }
 
-void Wilaya::removeCity(const string& cityName) {
-    cities.erase(remove_if(cities.begin(), cities.end(), [&cityName](const City& city) {
-        return city.getName() == cityName;
-    }), cities.end());
-}
+// void Wilaya::removeCity(const string& cityName) {
+//     cities.erase(remove_if(cities.begin(), cities.end(), [&cityName](const City& city) {
+//         return city.getName() == cityName;
+//     }), cities.end());
+// }
 
 bool Wilaya::operator<(const Wilaya& rhs) const {
     return id < rhs.id;
+}
+
+bool Wilaya::operator==(const Wilaya& rhs) {
+  return id == rhs.id;
 }

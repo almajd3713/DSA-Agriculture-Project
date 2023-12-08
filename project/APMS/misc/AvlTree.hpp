@@ -2,7 +2,6 @@
 #define AVL_TREE_H
 
 #include "exceptions.hpp"
-#include "BinarySearchTree.hpp"
 #include <algorithm>
 #include <iostream> 
 using namespace std;

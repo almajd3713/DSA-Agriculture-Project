@@ -1,7 +1,8 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Land.hpp"
+#include "land.hpp"
 class Area {
     string name;
     int id;
@@ -14,8 +15,8 @@ public:
     Area(Area&&);
     ~Area();
     //setters and  getters
-    std::string getName()const;
-    std::vector<Land> getLands() const;
+    string getName() const;
+    vector<Land> getLands() const;
     int getId()const;
     void setId(const int&);
     void setName(const std::string&);
@@ -24,10 +25,12 @@ public:
     //add or remove a land to/from the Area
     void addLand(const Land&);
     void removeLand(const Land&);
-    void removeLand(const int&);
+    // void removeLand(const int&);
 
     //overloading < operator
-    bool operator<(const Area&)const; 
+    bool operator<(const Area&) const; 
+    bool operator==(const Area&);
+    Area& operator=(const Area&);
 
 
     private:

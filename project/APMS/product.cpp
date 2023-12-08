@@ -1,6 +1,22 @@
 
 #include "product.hpp"
 
+Product::Product() {
+  name = "";
+  basePrice = 0;
+  production = 0;
+  pestSeverity = PesticideSeverity::light;
+}
+
+Product::Product(string n, double bp, double pr, PesticideSeverity ps)
+: name{n}, basePrice{bp}, production{pr}, pestSeverity{ps} {};
+
+Product::Product(const Product& rhs)
+: name{rhs.name}, basePrice{rhs.basePrice}, production{rhs.production}, pestSeverity{rhs.pestSeverity} {}
+
+Product::Product(Product&& rhs)
+: name{move(rhs.name)}, basePrice{rhs.basePrice}, production{rhs.production}, pestSeverity{move(rhs.pestSeverity)} {}
+
 string Product::getName() const {
   return name;
 }
@@ -43,4 +59,12 @@ double Product::getRatio(const double& wConsumption) const {
 
 double Product::getPenalty() const {
   return getPureSales() * (pestSeverity / 10);
+}
+
+Product& Product::operator=(const Product& rhs) {
+  name = rhs.name;
+  basePrice = rhs.basePrice;
+  production = rhs.production;
+  pestSeverity = rhs.pestSeverity;
+  return *this;
 }

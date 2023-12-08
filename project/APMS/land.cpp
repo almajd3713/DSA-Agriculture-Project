@@ -1,4 +1,3 @@
-
 #include "land.hpp"
 
 Land::Land() {
@@ -35,4 +34,18 @@ void Land::setReport(AnnualReport** new_report) {
 
 void Land::addYear(const AnnualReport& rep) {
   delete[] report;
+}
+
+bool Land::operator<(const Land &rhs) {
+  return id < rhs.id;
+}
+
+bool Land::operator==(const Land& rhs) {
+  return id == rhs.id;
+}
+
+Land& Land::operator=(const Land& rhs) {
+  id = rhs.id;
+  report = rhs.report;
+  return *this;
 }

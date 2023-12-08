@@ -1,15 +1,12 @@
 #pragma once
-
 #ifndef APMSDSA
 #define APMSDSA
 #include <vector>
 #include <type_traits>
 #include "misc/AvlTree.hpp"
+#include "misc/BinarySearchTree.h"
 #include "misc/DBMS.hpp"
-#include "classes/wilaya.hpp"
-
-
-
+#include "wilaya.hpp"
 
 // template<>
 // class APMS<int> {
@@ -44,14 +41,23 @@
 
 class APMS {
   DBMS rawFile;
-  AvlTree<Wilaya> wilayas;
-  AvlTree<City> cities;
-  AvlTree<Area> areas;
-  AvlTree<Land> lands;
+  BSTree<Wilaya> wilayas;
+  // BSTree<City> cities;
+  // BSTree<Area> areas;
+  // BSTree<Land> lands;
 
 public:
-  APMS() : rawFile{DBMS("")}, wilayas{AvlTree<Wilaya>()}, cities{AvlTree<City>()}, areas{AvlTree<Area>()}, lands{AvlTree<Land>()} {}
-  APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{AvlTree<Wilaya>()}, cities{AvlTree<City>()}, areas{AvlTree<Area>()}, lands{AvlTree<Land>()} {}
+  // APMS() : rawFile{DBMS("")}, wilayas{BSTree<Wilaya>()}, cities{BSTree<City>()}, areas{BSTree<Area>()}, lands{BSTree<Land>()} {}
+  APMS() {
+    wilayas = BSTree<Wilaya>();
+    // cities = BSTree<City>();
+    // areas = BSTree<Area>();
+    // lands = BSTree<Land>();
+  }
+  BSTree<Wilaya> getWilayas() const {
+    return wilayas;
+  }
+  // APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya>()}, cities{BSTree<City>()}, areas{BSTree<Area>()}, lands{BSTree<Land>()} {}
 };
 
 

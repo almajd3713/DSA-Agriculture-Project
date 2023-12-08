@@ -1,13 +1,8 @@
+#pragma once
 #ifndef WILAYADSA
 #define WILAYADSA
-#include <iostream>
-#include <string>
-#include "City.hpp"
-#include <vector>
-#include <algorithm>
+#include "city.hpp"
 
-using namespace std;
-using std::vector;
 class Wilaya {
     string name;
     int id;
@@ -32,10 +27,14 @@ public:
     void addCity(const City&);
     //remove city from the wilaya
     void removeCity(const City&);
-    void removeCity(const string&);
+    // void removeCity(const string&);
 
     //overloading < operator
-    bool operator<(const Wilaya&)const;
+    bool operator<(const Wilaya&) const;
+    bool operator==(const Wilaya&);
 };
+
+
+
 
 #endif

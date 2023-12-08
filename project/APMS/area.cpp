@@ -1,5 +1,5 @@
 #include<algorithm>
-#include "Area.hpp"
+#include "area.hpp"
 using std::move;
 
 Area::Area() {
@@ -53,12 +53,23 @@ void Area::removeLand(const Land& land) {
     lands.erase(std::remove(lands.begin(), lands.end(), land), lands.end());
 }
 
-void Area::removeLand(/*const std::string& landName*/ const int& landId) {
-    lands.erase(std::remove_if(lands.begin(), lands.end(), [&landId](const Land& land) {
-        return land.getId() == landId;
-    }), lands.end());
-}
+// void Area::removeLand(/*const std::string& landName*/ const int& landId) {
+//     lands.erase(std::remove_if(lands.begin(), lands.end(), [&landId](const Land& land) {
+//         return land.getId() == landId;
+//     }), lands.end());
+// }
 
 bool Area::operator<(const Area& rhs) const {
     return id < rhs.id;
+}
+
+Area& Area::operator=(const Area& rhs) {
+    name = rhs.name;
+    id = rhs.id;
+    lands = rhs.lands;
+    return *this;
+}
+
+bool Area::operator==(const Area& rhs) {
+    return id == rhs.id;
 }

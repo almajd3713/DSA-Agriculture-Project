@@ -1,5 +1,5 @@
 #include<algorithm>
-#include "City.hpp"
+#include "city.hpp"
 using namespace std;
 
 
@@ -11,6 +11,12 @@ City::City() {
 }
 
 City::City(const std::string& name, const int& id, const std::vector<Area>& areas) : name(name), id(id), areas(areas) {}
+
+City::City(const City& rhs)
+: name{rhs.name}, id{rhs.id}, areas{rhs.areas} {}
+
+City::City(City&& rhs)
+: name{move(rhs.name)}, id{rhs.id}, areas{move(rhs.areas)} {}
 
 City::~City() {
     areas.clear();
@@ -48,12 +54,23 @@ void City::removeArea(const Area& area) {
     areas.erase(remove(areas.begin(), areas.end(), area), areas.end());
 }
 
-void City::removeArea(const std::string& areaName) {
-    areas.erase(remove_if(areas.begin(), areas.end(), [&areaName](const Area& area) {
-        return area.getName() == areaName;
-    }), areas.end());
-}
+// void City::removeArea(const std::string& areaName) {
+//     areas.erase(remove_if(areas.begin(), areas.end(), [&areaName](const Area& area) {
+//         return area.getName() == areaName;
+//     }), areas.end());
+// }
 
 bool City::operator<(const City& rhs) const {
     return id < rhs.id;
+}
+
+City& City::operator=(const City& rhs) {
+    id = rhs.id;
+    name = rhs.name;
+    areas = rhs.areas;
+    return *this;
+}
+
+bool City::operator==(const City& rhs) {
+    return id == rhs.id;
 }

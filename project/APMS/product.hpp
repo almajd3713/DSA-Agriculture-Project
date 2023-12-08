@@ -13,8 +13,10 @@ class Product {
   PesticideSeverity pestSeverity;
 
   public:
-  Product(string n, double bp, double pr, PesticideSeverity ps)
-    : name{n}, basePrice{bp}, production{pr}, pestSeverity{ps} {}
+  Product();
+  Product(string n, double bp, double pr, PesticideSeverity ps);
+  Product(const Product&);
+  Product(Product&&);
 
   double getPureSales() const;
   double getPenalty() const;
@@ -29,6 +31,8 @@ class Product {
   void setProduction(double);
   PesticideSeverity getPestSeverity() const;
   void setPestSeverity(PesticideSeverity);
+
+  Product& operator=(const Product&);
   
 };
 

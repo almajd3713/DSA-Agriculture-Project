@@ -1,4 +1,4 @@
-
+#pragma once
 #ifndef LANDDSA
 #define LANDDSA
 #include "worker.hpp"
@@ -25,6 +25,10 @@ class Land {
     void addYear(const AnnualReport&);
     void removeYear(const AnnualReport&);
     void removeYear(int);
+
+    bool operator<(const Land&);
+    bool operator==(const Land&);
+    Land& operator=(const Land&);
 };
 
 

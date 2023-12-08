@@ -1,17 +1,12 @@
-
-#include <iostream>
-#include <vector> 
-#include <string> 
-#include "Area.hpp" 
-
-using namespace std;   
+#pragma once
+#include "area.hpp" 
 
 class City {
     string name;
     int id;
     std::vector<Area> areas;
 
-public:
+public: 
     City();
     //parameterized constructor
     City(const string&, const int&, const vector<Area>&);
@@ -31,9 +26,11 @@ public:
     void addArea(const Area&);
     //remove area from the city
     void removeArea(const Area&);
-    void removeArea(const string&);
+    // void removeArea(const string&);
 
     //overloading < operator
-    bool operator<(const City&)const; 
+    bool operator<(const City&) const;
+    City &operator=(const City&);
+    bool operator==(const City&);
 };
 
