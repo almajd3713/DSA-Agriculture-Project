@@ -6,7 +6,7 @@
 #include "misc/AvlTree.hpp"
 #include "misc/BinarySearchTree.h"
 #include "misc/DBMS.hpp"
-#include "wilaya.hpp"
+#include "classes/wilaya.hpp"
 
 // template<>
 // class APMS<int> {
