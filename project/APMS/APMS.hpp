@@ -57,7 +57,7 @@ public:
   BSTree<Wilaya> getWilayas() const {
     return wilayas;
   }
-  // APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya>()}, cities{BSTree<City>()}, areas{BSTree<Area>()}, lands{BSTree<Land>()} {}
+   APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya>()}, cities{BSTree<City>()}, areas{BSTree<Area>()}, lands{BSTree<Land>()} {}
 };
 
 
