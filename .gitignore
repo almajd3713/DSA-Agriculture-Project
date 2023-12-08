@@ -1,6 +1,9 @@
 node_modules
-
 .vscode/*
 *.code-workspace
 *.exe
 directives/*
+=======
+project/APMS/classes/old
+data.json
+driver.exe
