@@ -12,18 +12,22 @@ export class Wilaya implements Interfaces.Wilaya {
 }
 
 export class City implements Interfaces.City {
+  id: number
   name: string
   areas: Area[];
-  constructor(name: string, areas: Area[]) {
+  constructor(id: number, name: string, areas: Area[]) {
+    this.id = id
     this.areas = areas
     this.name = name
   }
 }
 
 export class Area implements Interfaces.Area {
+  id: number
   name: string
   lands: Land[];
-  constructor(name: string, lands: Land[]) {
+  constructor(id: number, name: string, lands: Land[]) {
+    this.id = id
     this.lands = lands
     this.name = name
   }

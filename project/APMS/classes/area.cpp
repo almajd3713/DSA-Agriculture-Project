@@ -5,13 +5,13 @@ using std::move;
 Area::Area() {
     name = "";
     id = 0;
-    lands = std::vector<Land>();
+    lands = std::vector<Land*>();
 }
 Area::~Area() {
      lands.clear();    
 }
 
-Area::Area(const std::string& name, const int& id, const std::vector<Land>& lands) : name{name}, id{id}, lands{lands} {}
+Area::Area(const std::string& name, const int& id, const std::vector<Land*>& lands) : name{name}, id{id}, lands{lands} {}
 
 Area::Area(const Area& rhs)
     : name{rhs.name}, id{rhs.id}, lands{rhs.lands} {}
@@ -25,7 +25,7 @@ string Area::getName() const {
     return name;
 }
 
-std::vector<Land> Area::getLands() const {
+std::vector<Land*> Area::getLands() const {
     return lands;
 }
 
@@ -41,15 +41,15 @@ void Area::setName(const string& name) {
     this->name = name;
 }
 
-void Area::setLands(const std::vector<Land>& lands) {
+void Area::setLands(const std::vector<Land*>& lands) {
     this->lands = lands;
 }
 
-void Area::addLand(const Land& land) {
+void Area::addLand(Land* land) {
     lands.push_back(land);
 }
 
-void Area::removeLand(const Land& land) {
+void Area::removeLand(Land* land) {
     lands.erase(std::remove(lands.begin(), lands.end(), land), lands.end());
 }
 

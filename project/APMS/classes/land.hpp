@@ -8,23 +8,33 @@
 
 class Land {
   int id;
-  AnnualReport** report;
+  vector<AnnualReport*> report;
+  Farmer farmer;
+  vector<Worker*> workers;
 
   public:
     Land();
-    Land(int, AnnualReport**);
+    Land(int, vector<AnnualReport*>, const Farmer&, const vector<Worker*>&);
     Land(const Land&);
     Land(Land&&);
     ~Land();
 
     int getId() const;
     void setId(int);
-    AnnualReport** getReport() const;
-    void setReport(AnnualReport**);
-
-    void addYear(const AnnualReport&);
-    void removeYear(const AnnualReport&);
+    vector<AnnualReport*> getReport() const;
+    void setReport(vector<AnnualReport*>);
+    Farmer getFarmer() const;
+    void setFarmer(const Farmer&);
+    vector<Worker*> getWorkers() const;
+    void setWorkers(const vector<Worker*>&);
+    
+    void addYear(AnnualReport*);
+    void removeYear(AnnualReport*);
     void removeYear(int);
+    void addWorker(Worker*);
+    void removeWorker(Worker*);
+    void removeWorker(string);
+    void removeWorker(int);
 
     bool operator<(const Land&);
     bool operator==(const Land&);

@@ -3,10 +3,10 @@
 
 AnnualReport::AnnualReport() {
   year = 0;
-  months = nullptr;
+  months = vector<MonthlyReport*>();
 }
 
-AnnualReport::AnnualReport(int year, MonthlyReport* months)
+AnnualReport::AnnualReport(int year, vector<MonthlyReport*> months)
 : year{year}, months{months} {}
 
 AnnualReport::AnnualReport(const AnnualReport& rhs)
@@ -16,7 +16,7 @@ AnnualReport::AnnualReport(AnnualReport&& rhs)
 : year{rhs.year}, months{move(rhs.months)} {}
 
 AnnualReport::~AnnualReport() {
-  delete months;
+  months.clear();
 }
 
 int AnnualReport::getYear() const {
@@ -25,10 +25,19 @@ int AnnualReport::getYear() const {
 void AnnualReport::setYear(int new_year) {
   year = new_year;
 }
-MonthlyReport* AnnualReport::getMonthlyReport() const {
+vector<MonthlyReport*> AnnualReport::getMonthlyReport() const {
   return months;
 }
-void AnnualReport::setMonthlyReport(MonthlyReport* new_months) {
+void AnnualReport::setMonthlyReport(vector<MonthlyReport*> new_months) {
   months = new_months;
 }
 
+void AnnualReport::addMonth(MonthlyReport* rhs) {
+  months.push_back(rhs);
+};
+// void AnnualReport::removeMonth(MonthlyReport* rhs) {
+//   months.erase(remove(months.begin(), months.end(), rhs));
+// };
+// void AnnualReport::removeMonth(int) {
+  
+// };

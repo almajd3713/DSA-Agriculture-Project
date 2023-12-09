@@ -21,11 +21,13 @@ class DBMS {
   bool isModified;
 
   bool fileExists() {
+    // cout <<  << endl;
     return filesystem::exists(filePath);
   }
 
   public:
-    DBMS(string fpath = "") : filePath{fpath}, isModified{false} {}
+    DBMS(): filePath{"data.json"}, isModified{false} {}
+    DBMS(string fpath) : filePath{fpath}, isModified{false} {}
     DBMS(const DBMS& f) : filePath{f.filePath}, fileData{f.fileData}, isModified{false} {}
     DBMS(DBMS&& f) : filePath{move(f.filePath)}, fileReader{move(f.fileReader)}, fileWriter{move(f.fileWriter)}, fileData{move(f.fileData)}, isModified{f.isModified} {}
 
@@ -85,6 +87,8 @@ class DBMS {
       fileData.erase(item);
     }
 
+    DBMS& operator=(const DBMS&);
+
 };
 
 string DBMS::debug::type(const json& obj)  {
@@ -98,6 +102,13 @@ string DBMS::debug::type(const json& obj)  {
     obj.is_null() ? "Null" :
     "Couldn't identify the type";
 }
+
+DBMS& DBMS::operator=(const DBMS& rhs) {
+  fileData = rhs.fileData;
+  filePath = rhs.fileData;
+  isModified = rhs.isModified;
+  return *this;
+} 
 
 
 ostream& operator<<(ostream& os, const DBMS& dbms) {

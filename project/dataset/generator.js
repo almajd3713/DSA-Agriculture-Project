@@ -84,11 +84,11 @@ function landGen() {
 }
 function areaGen(area) {
     let lands = new Array(3).fill(1).map(_ => landGen());
-    return new Classes.Area(area, lands);
+    return new Classes.Area(RNG.rndNum(3000000, 4000000), area, lands);
 }
 function cityGen(city) {
     let areas = city[1].map(area => areaGen(area));
-    return new Classes.City(city[0], areas);
+    return new Classes.City(RNG.rndNum(2000000, 3000000), city[0], areas);
 }
 function wilayaGen(name) {
     let wil = RNG.getWilaya(name);

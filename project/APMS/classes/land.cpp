@@ -2,20 +2,20 @@
 
 Land::Land() {
   id = 0;
-  report = new AnnualReport*[12];
+  report = vector<AnnualReport*>();
 }
 
-Land::Land(int id, AnnualReport** report)
-: id{id}, report{report} {}
+Land::Land(int id, vector<AnnualReport*> report, const Farmer& farmer, const vector<Worker*>& workers)
+: id{id}, report{report}, farmer{farmer}, workers{workers} {}
 
 Land::Land(const Land& rhs)
-: id{rhs.id}, report{rhs.report} {}
+: id{rhs.id}, report{rhs.report}, farmer{rhs.farmer}, workers{rhs.workers} {}
 
 Land::Land(Land&& rhs)
-: id{rhs.id}, report{move(rhs.report)} {}
+: id{rhs.id}, report{move(rhs.report)}, farmer{move(rhs.farmer)}, workers{move(rhs.workers)} {}
 
 Land::~Land() {
-  delete report;
+  report.clear();
 }
 
 int Land::getId() const {
@@ -25,15 +25,41 @@ void Land::setId(int new_id) {
   id = new_id;
 }
 
-AnnualReport** Land::getReport() const {
+vector<AnnualReport*> Land::getReport() const {
   return report;
 }
-void Land::setReport(AnnualReport** new_report) {
+void Land::setReport(vector<AnnualReport*> new_report) {
   report = new_report;
 }
 
-void Land::addYear(const AnnualReport& rep) {
-  delete[] report;
+Farmer Land::getFarmer() const {
+  return farmer;
+}
+void Land::setFarmer(const Farmer& new_farmer) {
+  farmer = new_farmer;
+}
+
+vector<Worker*> Land::getWorkers() const {
+  return workers;
+}
+void Land::setWorkers(const vector<Worker*>& new_workers) {
+  workers = new_workers;
+}
+
+void Land::addWorker(Worker* wkr) {
+  workers.push_back(wkr);
+}
+
+//TODO This stuff aaaaahhhhhhhhhh
+void Land::removeWorker(Worker* wkr) {
+
+}
+
+
+
+void Land::addYear(AnnualReport* rep) {
+  report.push_back(rep);
+  //TODO: Check if arr.length > 12
 }
 
 bool Land::operator<(const Land &rhs) {

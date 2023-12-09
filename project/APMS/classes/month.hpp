@@ -18,7 +18,6 @@ class MonthlyReport {
     LandData getLandData() const;
     void setLandData(const LandData&);
     
-    
 };
 
 

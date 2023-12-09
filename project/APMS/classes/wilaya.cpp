@@ -25,10 +25,10 @@ using namespace std;
 Wilaya::Wilaya() {
   id = 0;
   name = "";
-  cities = vector<City>();
+  cities = vector<City*>();
 }
 
-Wilaya::Wilaya(int id, const string& name, const vector<City>& cities)
+Wilaya::Wilaya(int id, const string& name, const vector<City*>& cities)
   : id{id}, name{name}, cities{cities} {}
 
 Wilaya::Wilaya(const Wilaya& rhs)
@@ -50,7 +50,7 @@ std::string Wilaya::getName() const {
     return name;
 }
 
-std::vector<City> Wilaya::getCity() const {
+std::vector<City*> Wilaya::getCity() const {
     return cities;
 }
 
@@ -58,7 +58,7 @@ void Wilaya::setName(const std::string& name) {
     this->name = name;
 }
 
-void Wilaya::setCity(const std::vector<City>& cities) {
+void Wilaya::setCity(const std::vector<City*>& cities) {
     this->cities = cities;
 }
 
@@ -66,11 +66,11 @@ void Wilaya::setId(const int& id) {
     this->id = id;
 }
 
-void Wilaya::addCity(const City& city) {
+void Wilaya::addCity(City* city) {
     cities.push_back(city);
 }
 
-void Wilaya::removeCity(const City& city) {
+void Wilaya::removeCity(City* city) {
     cities.erase(remove(cities.begin(), cities.end(), city), cities.end());
 }
 

@@ -41,23 +41,65 @@
 
 class APMS {
   DBMS rawFile;
-  BSTree<Wilaya> wilayas;
-  BSTree<City> cities;
-  BSTree<Area> areas;
-  BSTree<Land> lands;
+  BSTree<Wilaya*> wilayas;
+  BSTree<City*> cities;
+  BSTree<Area*> areas;
+  BSTree<Land*> lands;
+
+  // vector<City>& addCities(auto cities) {
+
+  // }
+
 
 public:
-  // APMS() : rawFile{DBMS("")}, wilayas{BSTree<Wilaya>()}, cities{BSTree<City>()}, areas{BSTree<Area>()}, lands{BSTree<Land>()} {}
-  APMS() {
-    wilayas = BSTree<Wilaya>();
-    cities = BSTree<City>();
-    areas = BSTree<Area>();
-    lands = BSTree<Land>();
+  APMS(): wilayas{BSTree<Wilaya*>()}, cities{BSTree<City*>()}, areas{BSTree<Area*>()}, lands{BSTree<Land*>()}, rawFile{DBMS()} {}
+  APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya*>()}, cities{BSTree<City*>()}, areas{BSTree<Area*>()}, lands{BSTree<Land*>()} {}
+  
+  void load() {
+    rawFile.read();
+    for(auto wil = rawFile.getFileData().begin(); wil != rawFile.getFileData().end(); wil++) {
+      Wilaya* wilaya = new Wilaya();
+      wilayas.insert(wilaya);
+      wilaya->setName((*wil)["name"]);
+      wilaya->setId((*wil)["id"]);
+      for(auto city = (*wil)["cities"].begin(); city != (*wil)["cities"].end(); city++) {
+        City* cit = new City();
+        cities.insert(cit);
+        wilaya->addCity(cit);
+        cit->setName((*city)["name"]);
+        cit->setCityId((*city)["id"]);
+        for (auto area = (*city)["areas"].begin(); area != (*city)["areas"].end(); area++) {
+          Area* ar = new Area();
+          areas.insert(ar);
+          cit->addArea(ar);
+          ar->setId((*area)["id"]);
+          ar->setName((*area)["name"]);
+          for(auto land = (*area)["lands"].begin(); land != (*area)["lands"].end(); land++) {
+            Land* lnd = new Land();
+            ar->addLand(lnd);
+            lands.insert(lnd);
+            lnd->setId((*land)["id"]);
+            
+            for(auto year = (*land)["report"].begin(); year != (*land)["report"].end(); year++) {
+              AnnualReport* report = new AnnualReport();
+              lnd->addYear(report);
+              report->setYear((*year)["year"]);
+              for(int month = 0; month < 12; month++) {
+                MonthlyReport* mo = new MonthlyReport();
+                report->addMonth(mo);
+                mo->setMonth(month + 1);    
+              }
+            }
+          }
+        }
+      }
+    }
   }
-  BSTree<Wilaya> getWilayas() const {
-    return wilayas;
-  }
-  APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya>()}, cities{BSTree<City>()}, areas{BSTree<Area>()}, lands{BSTree<Land>()} {}
+
+
+  // BSTree<Wilaya> getWilayas() const {
+  //   return wilayas;
+  // }
 };
 
 

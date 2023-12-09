@@ -38,8 +38,32 @@ void Worker::setGender(Gender new_gender) {
   gender = new_gender;
 }
 
+Worker& Worker::operator=(const Worker& rhs) {
+  id = rhs.id;
+  name = rhs.name;
+  age = rhs.age;
+  gender = rhs.gender;
+  return *this;
+}
+
+bool Worker::operator==(const Worker& rhs) {
+  return id == rhs.id;
+}
+
 Farmer::Farmer() : Worker() {};
 Farmer::Farmer(int id, int age, string name, Gender gender): Worker(id, age, name, gender) {};
 Farmer::Farmer(const Farmer& rhs): Worker(rhs) {};
 Farmer::Farmer(Farmer&& rhs): Worker(rhs) {};
 Farmer::~Farmer() {}
+
+Farmer& Farmer::operator=(const Farmer& rhs) {
+  id = rhs.id;
+  name = rhs.name;
+  age = rhs.age;
+  gender = rhs.gender;
+  return *this;
+}
+
+bool Farmer::operator==(const Farmer& rhs) {
+  return id == rhs.id;
+}

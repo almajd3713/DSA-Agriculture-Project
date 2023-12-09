@@ -10,7 +10,7 @@ let countryTemplateNoId = {
         "El_marsa": ["Ras El Hadid", "Mers El Hadjadj"]
     },
     "Laghouat": {
-        "Aïn Madhi": ["Tadjmout", "Tadjrouna"],
+        "Ain Madhi": ["Tadjmout", "Tadjrouna"],
         "Aflou": ["Sidi Bouzid", "Sebgag"]
     },
     "Oum El Bouaghi": {
@@ -35,7 +35,7 @@ let countryTemplateNoId = {
     },
     "Blida": {
         "Boufarik": ["Sidi Moussa", "El Affroun"],
-        "Oued_El_Alleug": ["Bir Mourad Raïs", "Birkhadem"]
+        "Oued_El_Alleug": ["Bir Mourad Rais", "Birkhadem"]
     },
     "Bouira": {
         "Lakhdaria": ["Ammal", "Bir Ghbalou"],
@@ -66,7 +66,7 @@ let countryTemplateNoId = {
         "Bir Mourad Rais": ["Birkhadem", "R’raoua"]
     },
     "Djelfa": {
-        "Aïn El Ibil": ["Admit", "Mouadjebara"],
+        "Ain El Ibil": ["Admit", "Mouadjebara"],
         "Messad": ["Deldoud", "Selmana"]
     },
     "Djilel": {
@@ -94,7 +94,7 @@ let countryTemplateNoId = {
         "Berrahal": ["Oued El Aneb", "Treat"]
     },
     Guelma: {
-        "Aïn Makhlouf": ["Ain Larbi", "Tamlouka"],
+        "Ain Makhlouf": ["Ain Larbi", "Tamlouka"],
         "Houari Boumédienne": ["Ras El Agba", "Medjez Amar"]
     },
     "Constantine": {
@@ -175,17 +175,17 @@ let countryTemplateNoId = {
     },
     "Ain defla": {
         "Boumedfaa": ["Hoceinia", " ben allal "],
-        " Hemmam righa ": ["Ain benian ", "Ain terki "]
+        "Hemmam righa ": ["Ain benian ", "Ain terki "]
     },
     "El Naâma": {
         "Mechria ": ["Ain ben Khelil", " El biod"],
         " Moghrar": ["Djeniene Bourezg", "Kasdir"]
     },
-    "Aïn Témouchent": {
+    "Ain Témouchent": {
         "El Amria": ["Bou Zedjar", "El Messaid"],
         "El Malah": ["Ouled Kihal", "Terga", "Chaabat El Ham"]
     },
-    Ghardaïa: {
+    Ghardaia: {
         Bounoura: ["Bounoura", "El Atteuf"],
         "El Ménia": ["El Ménia", "Hassi Gara"]
     },
@@ -206,7 +206,7 @@ let countryTemplateNoId = {
     },
     "Béni Abbès": {
         Kerzaz: ["Timoudi", "Beni Ikhlef"],
-        "El Ouata": ["Aguedal", "El Beïda"]
+        "El Ouata": ["Aguedal", "El Beida"]
     },
     "Ain Salah": {
         "Ain Salah": ["El Barka", "Hinoune", "Sahla Tahtania"],
@@ -218,7 +218,7 @@ let countryTemplateNoId = {
     },
     Touggourt: {
         Mégarine: ["Mégarine", "Sidi Slimane"],
-        Taïbet: ["Benaceur", "M'Naguer"],
+        Taibet: ["Benaceur", "M'Naguer"],
         Touggourt: ["Nezla", "Tebesbest", "Zaouia El Abidia"]
     },
     Djanet: {

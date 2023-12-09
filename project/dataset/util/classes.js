@@ -13,18 +13,22 @@ class Wilaya {
 }
 exports.Wilaya = Wilaya;
 class City {
+    id;
     name;
     areas;
-    constructor(name, areas) {
+    constructor(id, name, areas) {
+        this.id = id;
         this.areas = areas;
         this.name = name;
     }
 }
 exports.City = City;
 class Area {
+    id;
     name;
     lands;
-    constructor(name, lands) {
+    constructor(id, name, lands) {
+        this.id = id;
         this.lands = lands;
         this.name = name;
     }

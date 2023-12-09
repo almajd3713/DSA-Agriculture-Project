@@ -6,12 +6,12 @@
 class Wilaya {
 	string name;
 	int id;
-	vector<City> cities; // array of cities
+	vector<City*> cities; // array of cities
 
 public:
 	Wilaya();
 	//parameterized constructor
-	Wilaya(int, const string&, const vector<City>&);
+	Wilaya(int, const string&, const vector<City*>&);
 	Wilaya(const Wilaya&);
 	Wilaya(Wilaya&&);
 	~Wilaya();
@@ -20,13 +20,13 @@ public:
 	void setId(const int&);
 	string getName()const;
 	void setName(const string&);
-	vector<City> getCity()const;
-	void setCity(const vector<City>&);
+	vector<City*> getCity()const;
+	void setCity(const vector<City*>&);
 
 	//add city to the wilaya
-	void addCity(const City&);
+	void addCity(City*);
 	//remove city from the wilaya
-	void removeCity(const City&);
+	void removeCity(City*);
 	// void removeCity(const string&);
 
 	//overloading < operator

@@ -13,10 +13,12 @@ export interface Wilaya {
 
 }
 export interface City {
+  id: number
   name: string
   areas: Area[]
 }
 export interface Area {
+  id: number
   name: string
   lands: Land[]
 }

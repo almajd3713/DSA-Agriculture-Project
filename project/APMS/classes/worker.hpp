@@ -25,6 +25,9 @@ class Worker {
     void setName(string);
     Gender getGender() const;
     void setGender(Gender);
+
+    Worker& operator=(const Worker&);
+    bool operator==(const Worker&);
 };
 
 class Farmer : public Worker {
@@ -34,6 +37,9 @@ class Farmer : public Worker {
     Farmer(const Farmer&);
     Farmer(Farmer&&);
     ~Farmer();
+
+    Farmer& operator=(const Farmer&);
+    bool operator==(const Farmer&);
 };
 
 

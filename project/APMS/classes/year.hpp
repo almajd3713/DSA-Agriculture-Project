@@ -5,23 +5,24 @@
 
 class AnnualReport {
   int year;
-  MonthlyReport* months;
+  vector<MonthlyReport*> months;
 
   public:
     AnnualReport();
-    AnnualReport(int, MonthlyReport*);
+    AnnualReport(int, vector<MonthlyReport*>);
     AnnualReport(const AnnualReport&);
     AnnualReport(AnnualReport&&);
     ~AnnualReport();
 
     int getYear() const;
     void setYear(int);
-    MonthlyReport* getMonthlyReport() const;
-    void setMonthlyReport(MonthlyReport*);
+    vector<MonthlyReport*> getMonthlyReport() const;
+    void setMonthlyReport(vector<MonthlyReport*>);
     
-    void addMonth(const MonthlyReport&);
-    void removeMonth(const MonthlyReport&);
-    void removeMonth(int);
+    void addMonth(MonthlyReport*);
+    // Why would you remove a month? Lord knows
+    // void removeMonth(MonthlyReport*);
+    // void removeMonth(int);
 };
 
 

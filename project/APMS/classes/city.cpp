@@ -6,11 +6,11 @@ using namespace std;
 City::City() {
     name = "";
     id = 0;
-    areas = std::vector<Area>();
+    areas = std::vector<Area*>();
 
 }
 
-City::City(const std::string& name, const int& id, const std::vector<Area>& areas) : name(name), id(id), areas(areas) {}
+City::City(const std::string& name, const int& id, const std::vector<Area*>& areas) : name(name), id(id), areas(areas) {}
 
 City::City(const City& rhs)
 : name{rhs.name}, id{rhs.id}, areas{rhs.areas} {}
@@ -30,7 +30,7 @@ int City::getCityId() const {
     return id;
 }
 
-std::vector<Area> City::getArea() const {
+std::vector<Area*> City::getArea() const {
     return areas;
 }
 
@@ -38,7 +38,7 @@ void City::setName(const std::string &name) {
     this->name = name;
 }
 
-void City::setArea(const std::vector<Area> &areas) {
+void City::setArea(const std::vector<Area*> &areas) {
     this->areas = areas;
 }
 
@@ -46,11 +46,11 @@ void City::setCityId(const int &id) {
     this->id = id;
 }
 
-void City::addArea(const Area& area) {
+void City::addArea(Area* area) {
     areas.push_back(area);
 }
 
-void City::removeArea(const Area& area) {
+void City::removeArea(Area* area) {
     areas.erase(remove(areas.begin(), areas.end(), area), areas.end());
 }
 
