@@ -20,13 +20,12 @@ const shuffle = (array) => {
 };
 exports.shuffle = shuffle;
 exports.WILAYAS = Object.keys(countryTemplate_1.default);
-const RNGSTR = "123456789";
-const idGen = () => {
-    let str = "";
-    for (let i = 0; i < 16; i++)
-        str = `${str}${(0, exports.rndFromArr)(RNGSTR.split(''))}`;
-    return str;
-};
+// const RNGSTR = "123456789"
+// const idGen = () => {
+//   let str = ""
+//   for(let i = 0; i < 16; i++) str = `${str}${rndFromArr<string>(RNGSTR.split(''))}`
+//   return str
+// }
 const getWilaya = (name) => {
     return countryTemplate_1.default[name];
 };

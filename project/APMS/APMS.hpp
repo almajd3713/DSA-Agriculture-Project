@@ -42,22 +42,22 @@
 class APMS {
   DBMS rawFile;
   BSTree<Wilaya> wilayas;
-  // BSTree<City> cities;
-  // BSTree<Area> areas;
-  // BSTree<Land> lands;
+  BSTree<City> cities;
+  BSTree<Area> areas;
+  BSTree<Land> lands;
 
 public:
   // APMS() : rawFile{DBMS("")}, wilayas{BSTree<Wilaya>()}, cities{BSTree<City>()}, areas{BSTree<Area>()}, lands{BSTree<Land>()} {}
   APMS() {
     wilayas = BSTree<Wilaya>();
-    // cities = BSTree<City>();
-    // areas = BSTree<Area>();
-    // lands = BSTree<Land>();
+    cities = BSTree<City>();
+    areas = BSTree<Area>();
+    lands = BSTree<Land>();
   }
   BSTree<Wilaya> getWilayas() const {
     return wilayas;
   }
-  // APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya>()}, cities{BSTree<City>()}, areas{BSTree<Area>()}, lands{BSTree<Land>()} {}
+  APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya>()}, cities{BSTree<City>()}, areas{BSTree<Area>()}, lands{BSTree<Land>()} {}
 };
 
 

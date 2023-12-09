@@ -8,6 +8,7 @@ export interface datasetStructure {
 
 export interface Wilaya {
   name: string
+  id: number
   cities: City[]
 
 }

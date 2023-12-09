@@ -91,9 +91,10 @@ function cityGen(city) {
     return new Classes.City(city[0], areas);
 }
 function wilayaGen(name) {
-    let wilCities = RNG.getWilaya(name);
-    let cities = Object.entries(wilCities).map(entry => cityGen(entry));
-    let wilaya = new Classes.Wilaya(name, cities);
+    let wil = RNG.getWilaya(name);
+    let id = wil.id;
+    let cities = Object.entries(wil.cities).map(entry => cityGen(entry));
+    let wilaya = new Classes.Wilaya(name, id, cities);
     return wilaya;
 }
 function jsonGen(count) {

@@ -2,10 +2,12 @@ import type * as Interfaces from "./types"
 
 export class Wilaya implements Interfaces.Wilaya {
   name: string
+  id: number
   cities: City[];
-  constructor(name: string, cities: City[]) {
+  constructor(name: string, id: number, cities: City[]) {
     this.cities = cities
     this.name = name
+    this.id = id
   }
 }
 

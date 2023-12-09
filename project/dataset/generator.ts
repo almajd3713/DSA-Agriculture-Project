@@ -4,6 +4,7 @@ import countryTemplate from "./util/countryTemplate"
 import * as RNG from "./util/rng"
 import * as Types from "./util/types"
 import { writeFileSync } from "fs"
+
 /**
  * Running the compiled generator.js file will generate a new set of data for the APMS to use.
  * You can modify the results later from the generated file or by the APMS terminal.
@@ -66,10 +67,11 @@ function cityGen(city: [string, string[]]): Types.City {
   return new Classes.City(city[0], areas)
 }
 function wilayaGen(name: string): Types.Wilaya {
-  let wilCities = RNG.getWilaya(name)
-  let cities = Object.entries(wilCities).map(entry => cityGen(entry))
+  let wil = RNG.getWilaya(name)
+  let id = wil.id
+  let cities = Object.entries(wil.cities).map(entry => cityGen(entry))
 
-  let wilaya = new Classes.Wilaya(name, cities)
+  let wilaya = new Classes.Wilaya(name, id, cities)
   return wilaya
 }
 

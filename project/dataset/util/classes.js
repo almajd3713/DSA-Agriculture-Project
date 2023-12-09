@@ -3,10 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SalesReport = exports.Product = exports.LandData = exports.MonthlyReport = exports.AnnualReport = exports.Farmer = exports.HumanWorker = exports.Land = exports.Area = exports.City = exports.Wilaya = void 0;
 class Wilaya {
     name;
+    id;
     cities;
-    constructor(name, cities) {
+    constructor(name, id, cities) {
         this.cities = cities;
         this.name = name;
+        this.id = id;
     }
 }
 exports.Wilaya = Wilaya;

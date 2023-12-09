@@ -14,13 +14,14 @@ export const shuffle = <T>(array: T[]) => {
   return array;
 };
 
+
 export const WILAYAS = Object.keys(countryTemplate)
-const RNGSTR = "123456789"
-const idGen = () => {
-  let str = ""
-  for(let i = 0; i < 16; i++) str = `${str}${rndFromArr<string>(RNGSTR.split(''))}`
-  return str
-}
+// const RNGSTR = "123456789"
+// const idGen = () => {
+//   let str = ""
+//   for(let i = 0; i < 16; i++) str = `${str}${rndFromArr<string>(RNGSTR.split(''))}`
+//   return str
+// }
 export const getWilaya = (name: string) => {
   return countryTemplate[name]
 }
