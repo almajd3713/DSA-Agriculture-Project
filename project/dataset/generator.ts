@@ -30,11 +30,11 @@ const BASE_YEAR = Number(args[0]), CURRENT_YEAR = Number(args[1]), WIL_COUNT = N
 
 function workerGen(): Types.HumanWorker {
   let {name, gender} = RNG.getName()
-  return new Classes.HumanWorker(name, RNG.rndNum(500000, 600000), RNG.rndNum(0, 1),  gender)
+  return new Classes.HumanWorker(name, RNG.rndNum(500000, 600000), RNG.rndNum(18, 40),  gender)
 }
 function farmerGen(): Types.Farmer {
   let { name, gender } = RNG.getName()
-  return new Classes.Farmer(name, RNG.rndNum(500000, 600000), RNG.rndNum(0, 1), gender)
+  return new Classes.Farmer(name, RNG.rndNum(500000, 600000), RNG.rndNum(18, 65), gender)
 }
 
 function landDataGen(): Types.LandData {

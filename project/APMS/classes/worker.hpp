@@ -1,3 +1,4 @@
+#pragma once
 #ifndef WORKERDSA
 #define WORKERDSA
 #include <string>
@@ -14,13 +15,15 @@ class Worker {
 
   public:
     Worker();
-    Worker(int i, int a, const string&, const Gender&);
+    Worker(int, int, const string&, const Gender&);
     Worker(const Worker&);
     Worker(Worker&&);
     ~Worker();
 
     int getId() const;
     void setId(int);
+    int getAge() const;
+    void setAge(int);
     string getName() const;
     void setName(string);
     Gender getGender() const;
@@ -31,12 +34,15 @@ class Worker {
 };
 
 class Farmer : public Worker {
+  
   public:
     Farmer();
     Farmer(int, int, string, Gender);
     Farmer(const Farmer&);
     Farmer(Farmer&&);
     ~Farmer();
+
+    
 
     Farmer& operator=(const Farmer&);
     bool operator==(const Farmer&);

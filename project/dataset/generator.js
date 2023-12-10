@@ -53,11 +53,11 @@ const args = process.argv.slice(2);
 const BASE_YEAR = Number(args[0]), CURRENT_YEAR = Number(args[1]), WIL_COUNT = Number([args[2]]);
 function workerGen() {
     let { name, gender } = RNG.getName();
-    return new Classes.HumanWorker(name, RNG.rndNum(500000, 600000), RNG.rndNum(0, 1), gender);
+    return new Classes.HumanWorker(name, RNG.rndNum(500000, 600000), RNG.rndNum(18, 40), gender);
 }
 function farmerGen() {
     let { name, gender } = RNG.getName();
-    return new Classes.Farmer(name, RNG.rndNum(500000, 600000), RNG.rndNum(0, 1), gender);
+    return new Classes.Farmer(name, RNG.rndNum(500000, 600000), RNG.rndNum(18, 65), gender);
 }
 function landDataGen() {
     let products = getProductSubset().map(prod => new Classes.Product(prod, RNG.rndNum(30, 200), RNG.rndNum(100, 5000), RNG.rndNum(0, 1)));

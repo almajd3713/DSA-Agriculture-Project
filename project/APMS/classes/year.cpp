@@ -32,6 +32,21 @@ void AnnualReport::setMonthlyReport(vector<MonthlyReport*> new_months) {
   months = new_months;
 }
 
+vector<Worker*> AnnualReport::getWorkers() const {
+  return workers;
+}
+void AnnualReport::setWorkers(const vector<Worker*>& new_workers) {
+  workers = new_workers;
+}
+
+void AnnualReport::addWorker(Worker* wkr) {
+  workers.push_back(wkr);
+}
+void AnnualReport::removeWorker(Worker* wkr) {
+  
+}
+
+
 void AnnualReport::addMonth(MonthlyReport* rhs) {
   months.push_back(rhs);
 };

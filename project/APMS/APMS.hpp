@@ -45,6 +45,7 @@ class APMS {
   BSTree<City*> cities;
   BSTree<Area*> areas;
   BSTree<Land*> lands;
+  BSTree<Farmer*> farmers;
 
   // vector<City>& addCities(auto cities) {
 
@@ -52,8 +53,8 @@ class APMS {
 
 
 public:
-  APMS(): wilayas{BSTree<Wilaya*>()}, cities{BSTree<City*>()}, areas{BSTree<Area*>()}, lands{BSTree<Land*>()}, rawFile{DBMS()} {}
-  APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya*>()}, cities{BSTree<City*>()}, areas{BSTree<Area*>()}, lands{BSTree<Land*>()} {}
+  APMS(): wilayas{BSTree<Wilaya*>()}, cities{BSTree<City*>()}, areas{BSTree<Area*>()}, lands{BSTree<Land*>()}, rawFile{DBMS()}, farmers{BSTree<Farmer*>()} {}
+  APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya*>()}, cities{BSTree<City*>()}, areas{BSTree<Area*>()}, lands{BSTree<Land*>()}, farmers{BSTree<Farmer*>()} {}
   
   void load() {
     rawFile.read();
@@ -79,15 +80,56 @@ public:
             ar->addLand(lnd);
             lands.insert(lnd);
             lnd->setId((*land)["id"]);
-            
+            Farmer *frmr = new Farmer(
+                (*land)["farmer"]["id"],
+                (*land)["farmer"]["age"],
+                (*land)["farmer"]["name"],
+                (*land)["farmer"]["gender"]
+            );
+            lnd->setFarmer(frmr);
+
             for(auto year = (*land)["report"].begin(); year != (*land)["report"].end(); year++) {
               AnnualReport* report = new AnnualReport();
               lnd->addYear(report);
               report->setYear((*year)["year"]);
-              for(int month = 0; month < 12; month++) {
+              // Farmer* frmr = new Farmer(
+                // (*year)["farmer"]["id"],
+                // (*year)["farmer"]["age"],
+                // (*year)["farmer"]["name"],
+                // (*year)["farmer"]["gender"]
+              // );
+              // frmr->setId((*year)["farmer"]["id"]);
+              // frmr->setAge((*year)["farmer"]["age"]);
+              // frmr->setName((*year)["farmer"]["name"]);
+              // lnd->setFarmer(frmr);
+              for(auto worker = (*year)["workers"].begin(); worker != (*year)["workers"].end(); worker++) {
+                Worker* wkr = new Worker(
+                  (*worker)["id"],
+                  (*worker)["age"],
+                  (*worker)["name"],
+                  (*worker)["gender"]
+                );
+                report->addWorker(wkr);
+              }
+              for(auto month = (*year)["months"].begin(); month != (*year)["months"].end(); month++) {
                 MonthlyReport* mo = new MonthlyReport();
                 report->addMonth(mo);
-                mo->setMonth(month + 1);    
+                mo->setMonth((*month)["month"]);
+                auto landData = (*month)["data"];
+                LandData* lndData = new LandData();
+                mo->setLandData(lndData);
+                unordered_map<string, Product> prod;
+                for(auto product = landData["products"].begin(); product != landData["products"].end(); product++) {
+                  prod[(string)(*product)["name"]] = Product(
+                    (string)(*product)["name"],
+                    (double)(*product)["basePrice"],
+                    (double)(*product)["production"],
+                    (PesticideSeverity)(*product)["pesticideSeverity"]
+                  );
+                }
+                lndData->setProducts(prod);
+                lndData->setWaterConsumption(landData["waterConsumption"]);
+                lndData->setElectricityConsumption(landData["electricityConsumption"]);
               }
             }
           }

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ENUMSDSA
 #define ENUMSDSA
 

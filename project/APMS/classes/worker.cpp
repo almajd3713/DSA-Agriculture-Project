@@ -24,6 +24,14 @@ void Worker::setId(int new_id) {
   id = new_id;
 }
 
+int Worker::getAge() const {
+  return age;
+}
+void Worker::setAge(int new_age) {
+  age = new_age;
+}
+
+
 string Worker::getName() const {
   return name;
 }

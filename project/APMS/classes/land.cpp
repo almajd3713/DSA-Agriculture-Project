@@ -5,14 +5,14 @@ Land::Land() {
   report = vector<AnnualReport*>();
 }
 
-Land::Land(int id, vector<AnnualReport*> report, const Farmer& farmer, const vector<Worker*>& workers)
-: id{id}, report{report}, farmer{farmer}, workers{workers} {}
+Land::Land(int id, vector<AnnualReport*> report, Farmer* farmer)
+: id{id}, report{report}, farmer{farmer} {}
 
 Land::Land(const Land& rhs)
-: id{rhs.id}, report{rhs.report}, farmer{rhs.farmer}, workers{rhs.workers} {}
+: id{rhs.id}, report{rhs.report}, farmer{rhs.farmer} {}
 
 Land::Land(Land&& rhs)
-: id{rhs.id}, report{move(rhs.report)}, farmer{move(rhs.farmer)}, workers{move(rhs.workers)} {}
+: id{rhs.id}, report{move(rhs.report)}, farmer{move(rhs.farmer)} {}
 
 Land::~Land() {
   report.clear();
@@ -32,28 +32,28 @@ void Land::setReport(vector<AnnualReport*> new_report) {
   report = new_report;
 }
 
-Farmer Land::getFarmer() const {
+Farmer* Land::getFarmer() const {
   return farmer;
 }
-void Land::setFarmer(const Farmer& new_farmer) {
+void Land::setFarmer(Farmer* new_farmer) {
   farmer = new_farmer;
 }
 
-vector<Worker*> Land::getWorkers() const {
-  return workers;
-}
-void Land::setWorkers(const vector<Worker*>& new_workers) {
-  workers = new_workers;
-}
+// vector<Worker*> Land::getWorkers() const {
+//   return workers;
+// }
+// void Land::setWorkers(const vector<Worker*>& new_workers) {
+//   workers = new_workers;
+// }
 
-void Land::addWorker(Worker* wkr) {
-  workers.push_back(wkr);
-}
+// void Land::addWorker(Worker* wkr) {
+//   workers.push_back(wkr);
+// }
 
-//TODO This stuff aaaaahhhhhhhhhh
-void Land::removeWorker(Worker* wkr) {
+// //TODO This stuff aaaaahhhhhhhhhh
+// void Land::removeWorker(Worker* wkr) {
 
-}
+// }
 
 
 

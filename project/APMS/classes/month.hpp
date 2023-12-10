@@ -4,19 +4,19 @@
 
 class MonthlyReport {
   int month;
-  LandData data;
+  LandData* data;
 
   public:
     MonthlyReport();
-    MonthlyReport(int, const LandData&);
+    MonthlyReport(int, LandData*);
     MonthlyReport(const MonthlyReport&);
     MonthlyReport(MonthlyReport&&);
     ~MonthlyReport();
 
     int getMonth() const;
     void setMonth(int);
-    LandData getLandData() const;
-    void setLandData(const LandData&);
+    LandData* getLandData() const;
+    void setLandData(LandData*);
     
 };
 

@@ -9,12 +9,11 @@
 class Land {
   int id;
   vector<AnnualReport*> report;
-  Farmer farmer;
-  vector<Worker*> workers;
+  Farmer* farmer;
 
   public:
     Land();
-    Land(int, vector<AnnualReport*>, const Farmer&, const vector<Worker*>&);
+    Land(int, vector<AnnualReport*>, Farmer*);
     Land(const Land&);
     Land(Land&&);
     ~Land();
@@ -23,16 +22,14 @@ class Land {
     void setId(int);
     vector<AnnualReport*> getReport() const;
     void setReport(vector<AnnualReport*>);
-    Farmer getFarmer() const;
-    void setFarmer(const Farmer&);
+    Farmer* getFarmer() const;
+    void setFarmer(Farmer*);
     vector<Worker*> getWorkers() const;
     void setWorkers(const vector<Worker*>&);
     
     void addYear(AnnualReport*);
     void removeYear(AnnualReport*);
     void removeYear(int);
-    void addWorker(Worker*);
-    void removeWorker(Worker*);
     void removeWorker(string);
     void removeWorker(int);
 
