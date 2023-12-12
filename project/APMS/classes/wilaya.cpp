@@ -81,7 +81,7 @@ void Wilaya::removeCity(City* city) {
 // }
 
 bool Wilaya::operator<(const Wilaya& rhs) const {
-    return id < rhs.id;
+  return id < rhs.id;
 }
 
 bool Wilaya::operator==(const Wilaya& rhs) {

@@ -58,6 +58,9 @@ Worker& Worker::operator=(const Worker& rhs) {
 bool Worker::operator==(const Worker& rhs) {
   return id == rhs.id;
 }
+bool Worker::operator<(const Worker& rhs) {
+  return id < rhs.id;
+}
 
 Farmer::Farmer() : Worker() {};
 Farmer::Farmer(int id, int age, string name, Gender gender): Worker(id, age, name, gender) {};
@@ -95,4 +98,7 @@ ostream& operator<<(ostream & out,const Farmer&rhs)
   out<<"gender: " << rhs.getGender() << endl;
   return out;
 
+}
+bool Farmer::operator<(const Farmer& rhs) {
+  return id < rhs.id;
 }

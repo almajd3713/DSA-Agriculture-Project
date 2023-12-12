@@ -60,9 +60,9 @@ public:
     rawFile.read();
     for(auto wil = rawFile.getFileData().begin(); wil != rawFile.getFileData().end(); wil++) {
       Wilaya* wilaya = new Wilaya();
-      wilayas.insert(wilaya);
       wilaya->setName((*wil)["name"]);
       wilaya->setId((*wil)["id"]);
+      wilayas.insert(wilaya);
       for(auto city = (*wil)["cities"].begin(); city != (*wil)["cities"].end(); city++) {
         City* cit = new City();
         cities.insert(cit);
@@ -71,14 +71,13 @@ public:
         cit->setCityId((*city)["id"]);
         for (auto area = (*city)["areas"].begin(); area != (*city)["areas"].end(); area++) {
           Area* ar = new Area();
-          areas.insert(ar);
           cit->addArea(ar);
           ar->setId((*area)["id"]);
           ar->setName((*area)["name"]);
+          areas.insert(ar);
           for(auto land = (*area)["lands"].begin(); land != (*area)["lands"].end(); land++) {
             Land* lnd = new Land();
             ar->addLand(lnd);
-            lands.insert(lnd);
             lnd->setId((*land)["id"]);
             Farmer *frmr = new Farmer(
                 (*land)["farmer"]["id"],
@@ -87,6 +86,8 @@ public:
                 (*land)["farmer"]["gender"]
             );
             lnd->setFarmer(frmr);
+            farmers.insert(frmr);
+            lands.insert(lnd);
 
             for(auto year = (*land)["report"].begin(); year != (*land)["report"].end(); year++) {
               AnnualReport* report = new AnnualReport();
@@ -116,11 +117,11 @@ public:
                 report->addMonth(mo);
                 mo->setMonth((*month)["month"]);
                 auto landData = (*month)["data"];
-                LandData* lndData = new LandData();
+                Production* lndData = new Production();
                 mo->setLandData(lndData);
-                unordered_map<string, Product> prod;
+                unordered_map<string, ProductCategory> prod;
                 for(auto product = landData["products"].begin(); product != landData["products"].end(); product++) {
-                  prod[(string)(*product)["name"]] = Product(
+                  prod[(string)(*product)["name"]] = ProductCategory(
                     (string)(*product)["name"],
                     (double)(*product)["basePrice"],
                     (double)(*product)["production"],

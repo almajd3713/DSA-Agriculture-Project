@@ -2,6 +2,7 @@
 #define BINARY_SEARCH_TREE_H
 
 #include "exceptions.hpp"
+#include <iostream>
 #include <algorithm>
 using namespace std;       
 
@@ -206,12 +207,28 @@ class BSTree
 
         if( t == nullptr )
             t = new BinaryNode{ x, nullptr, nullptr };
-        else if( x < t->element )
-            insert( x, t->left );
-        else if( t->element < x )
-            insert( x, t->right );
-        else
-            ;  // Duplicate; do nothing
+        else if(is_pointer<Comparable>::value) {
+            if (*x < *(t->element))
+            {
+                insert(x, t->left);
+            }
+            else if (*(t->element) < *x)
+            {
+                insert(x, t->right);
+            }
+            else;
+        } else {
+            if (x < t->element)
+            {
+                insert(x, t->left);
+            }
+            else if (t->element < x)
+            {
+                insert(x, t->right);
+            }
+            else; // Duplicate; do nothing
+        }
+
     }
     
     /**

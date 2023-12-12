@@ -7,19 +7,17 @@
 
 using namespace std;
 
-class category {
-friend ostream& operator<<(ostream&, const category&);
-
+class ProductCategory {
   string name;
   double basePrice;
   double production;
   PesticideSeverity pestSeverity;
 
   public:
-  category();
-  category(string n, double bp, double pr, PesticideSeverity ps);
-  category(const category&);
-  category(category&&);
+  ProductCategory();
+  ProductCategory(string n, double bp, double pr, PesticideSeverity ps);
+  ProductCategory(const ProductCategory&);
+  ProductCategory(ProductCategory&&);
 
   double getGrossSales() const;
   double getPenalty() const;
@@ -35,7 +33,7 @@ friend ostream& operator<<(ostream&, const category&);
   PesticideSeverity getPestSeverity() const;
   void setPestSeverity(PesticideSeverity);
 
-  category& operator=(const category&);
+  ProductCategory& operator=(const ProductCategory&);
   
 };
 

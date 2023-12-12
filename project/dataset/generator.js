@@ -61,7 +61,7 @@ function farmerGen() {
 }
 function landDataGen() {
     let products = getProductSubset().map(prod => new Classes.Product(prod, RNG.rndNum(30, 200), RNG.rndNum(100, 5000), RNG.rndNum(0, 1)));
-    let land = new Classes.LandData(products, RNG.rndNum(0, 2), RNG.rndNum(0, 10000), RNG.rndNum(0, 10000));
+    let land = new Classes.LandData(products, RNG.rndNum(0, 10000), RNG.rndNum(0, 10000));
     return land;
 }
 function monthlyRepGen(month) {

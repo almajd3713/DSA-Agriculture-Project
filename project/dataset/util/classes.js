@@ -86,12 +86,10 @@ class MonthlyReport {
 exports.MonthlyReport = MonthlyReport;
 class LandData {
     products;
-    pesticideSeverity;
     waterConsumption;
     electricityConsumption;
-    constructor(products = [], pestSev = 0, waterCon, electCon) {
+    constructor(products = [], waterCon, electCon) {
         this.products = products;
-        this.pesticideSeverity = pestSev;
         this.waterConsumption = waterCon;
         this.electricityConsumption = electCon;
     }
