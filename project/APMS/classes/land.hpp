@@ -10,7 +10,7 @@ class Land {
 friend ostream& operator<<(ostream&, const Land&);
 
   int id;
-  vector<AnnualReport*> reports;
+  vector<AnnualReport*> reports;// hash table to access directly to the year
   Farmer* farmer;
 
   public:
@@ -31,6 +31,7 @@ friend ostream& operator<<(ostream&, const Land&);
     void setWorkers(const vector<Worker*>&);
     //
     void printAnualReport(int year);
+    void printMonthlyReport(int year, int month);
     void addYear(AnnualReport*);
     void removeYear(AnnualReport*);
     void removeYear(int);

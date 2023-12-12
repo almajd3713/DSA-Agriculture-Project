@@ -1,41 +1,49 @@
 #include "land.hpp"
 
-Land::Land() {
+Land::Land()
+{
   id = 0;
-  reports = vector<AnnualReport*>();
+  reports = vector<AnnualReport *>();
 }
 
-Land::Land(int id, vector<AnnualReport*> reports, Farmer* farmer)
-: id{id}, reports{reports}, farmer{farmer} {}
+Land::Land(int id, vector<AnnualReport *> reports, Farmer *farmer)
+    : id{id}, reports{reports}, farmer{farmer} {}
 
-Land::Land(const Land& rhs)
-: id{rhs.id}, reports{rhs.reports}, farmer{rhs.farmer} {}
+Land::Land(const Land &rhs)
+    : id{rhs.id}, reports{rhs.reports}, farmer{rhs.farmer} {}
 
-Land::Land(Land&& rhs)
-: id{rhs.id}, reports{move(rhs.reports)}, farmer{move(rhs.farmer)} {}
+Land::Land(Land &&rhs)
+    : id{rhs.id}, reports{move(rhs.reports)}, farmer{move(rhs.farmer)} {}
 
-Land::~Land() {
+Land::~Land()
+{
   reports.clear();
 }
 
-int Land::getId() const {
+int Land::getId() const
+{
   return id;
 }
-void Land::setId(int new_id) {
+void Land::setId(int new_id)
+{
   id = new_id;
 }
 
-vector<AnnualReport*> Land::getReports() const {
+vector<AnnualReport *> Land::getReports() const
+{
   return reports;
 }
-void Land::setReport(vector<AnnualReport*> new_report) {
+void Land::setReport(vector<AnnualReport *> new_report)
+{
   reports = new_report;
 }
 
-Farmer* Land::getFarmer() const {
+Farmer *Land::getFarmer() const
+{
   return farmer;
 }
-void Land::setFarmer(Farmer* new_farmer) {
+void Land::setFarmer(Farmer *new_farmer)
+{
   farmer = new_farmer;
 }
 
@@ -55,43 +63,70 @@ void Land::setFarmer(Farmer* new_farmer) {
 
 // }
 
-
-
-void Land::addYear(AnnualReport* rep) {
+void Land::addYear(AnnualReport *rep)
+{
   reports.push_back(rep);
-  //TODO: Check if arr.length > 12
+  // TODO: Check if arr.length > 12
 }
 
-bool Land::operator<(const Land &rhs) {
+bool Land::operator<(const Land &rhs)
+{
   return id < rhs.id;
 }
 
-bool Land::operator==(const Land& rhs) {
+bool Land::operator==(const Land &rhs)
+{
   return id == rhs.id;
 }
 
-Land& Land::operator=(const Land& rhs) {
+Land &Land::operator=(const Land &rhs)
+{
   id = rhs.id;
   reports = rhs.reports;
   return *this;
 }
-
-ostream& operator<<(ostream& os, const Land& land) {
+// to be used in case we want to retrieve the report of a all years
+ostream &operator<<(ostream &os, const Land &land)
+{
   os << "Land ID: " << land.id << endl;
   os << "Farmer: " << land.farmer->getName() << endl;
   os << "Annual Reports: " << endl;
-  for (auto year : land.reports) {
+  for (auto year : land.reports)
+  {
     os << *year << endl;
   }
   return os;
 }
+// must be implimented with hash table
+void Land::printAnualReport(int year)
+{
+  cout << "Land ID: " << id << endl;
+  cout << *farmer << endl;
+  for (auto report : reports)
+  {
+    if (report->getYear() == year)
+    {
 
-void Land::printAnualReport(int year) {
-    cout << "Land ID: " << id << endl;
-  for (auto report : reports) {
-    if (report->getYear() == year) {
-      
       cout << *report << endl;
+    }
+  }
+}
+// modified later using hash table
+void Land::printMonthlyReport(int year, int m)
+{
+  cout << "Land ID: " << id << endl;
+  cout << *farmer << endl;
+  for (auto report : reports)
+  {
+    if (report->getYear() == year)
+    {
+      for (auto month : report->getMonthlyReport())
+      {
+        if (month->getMonth() == m)
+        {
+          cout << *month << endl;
+        }
+      }
     }
   }
 }

@@ -45,16 +45,16 @@ void ProductCategory::setPestSeverity(PesticideSeverity new_pestSeverity) {
   pestSeverity = new_pestSeverity;
 }
 
-double ProductCategory::getSales() const {
-  return getPureSales() - getPenalty();
+double ProductCategory::getPureSales() const {
+  return getGrossSales() - getPenalty();
 }
 
-double ProductCategory::getPureSales() const {
+double ProductCategory::getGrossSales() const {
   return production * basePrice;
 }
 
 double ProductCategory::getRatio(const double& wConsumption) const {
-  return getSales() / wConsumption;
+  return getPureSales() / wConsumption;
 }
 
 double ProductCategory::getPenalty() const {
@@ -67,4 +67,16 @@ ProductCategory& ProductCategory::operator=(const ProductCategory& rhs) {
   production = rhs.production;
   pestSeverity = rhs.pestSeverity;
   return *this;
+}
+
+ostream& operator<<(ostream& out, const ProductCategory& rhs) {
+  out << "Name: " << rhs.name << endl;
+  out << "Base Price: " << rhs.basePrice << endl;
+  out << "Production: " << rhs.production << endl;
+  out  <<"gross sales: " << rhs.getGrossSales() << endl;
+    out << "Pesticide Severity: " << rhs.pestSeverity << endl;
+  out << "Penalty: " << rhs.getPenalty() << endl;
+  out << "Pure Sales: " << rhs.getPureSales() << endl;
+
+  return out;
 }

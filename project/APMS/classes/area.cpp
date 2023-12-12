@@ -80,9 +80,6 @@ void Area::Print_Area_By_Year(int year)
     for(auto land : lands)
     {
         cout<<*land->getFarmer()<<endl;
-        
-      
-
-
-    }
+        land->printAnualReport(year);
+     }
 }

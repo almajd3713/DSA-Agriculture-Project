@@ -9,9 +9,10 @@
 using namespace std;
 
 class Production {
+friend ostream& operator<<(ostream&, const Production&);//left for redwan to do it (unordered_map issues :( 
   int waterConsumption;
   int electricityConsumption;
-  vector<ProductCategory*> categories;
+  unordered_map<string, ProductCategory> categories;
 
   public:
     Production();
@@ -24,8 +25,8 @@ class Production {
     void setWaterConsumption(int);
     int getElectricityConsumption() const;
     void setElectricityConsumption(int);
-    unordered_map<string, ProductCategory> getProducts() const;
-    void setProducts(unordered_map<string, ProductCategory>);
+    unordered_map<string, ProductCategory> getcategories() const;
+    void setcategories(unordered_map<string, ProductCategory>);
     
     void addProduct(const string&, double, double, PesticideSeverity);
     void addProduct(const ProductCategory&);

@@ -128,7 +128,7 @@ public:
                     (PesticideSeverity)(*product)["pesticideSeverity"]
                   );
                 }
-                lndData->setProducts(prod);
+                lndData->setcategories(prod);
                 lndData->setWaterConsumption(landData["waterConsumption"]);
                 lndData->setElectricityConsumption(landData["electricityConsumption"]);
               }
@@ -141,20 +141,8 @@ public:
 
   void printLandWorkersByYear(int id, int year) {
     // Accessing the lands using the areas name using getById
-    Area* area = *areas.getById(id);
-    for(auto land = area->getLands().begin(); land != area->getLands().end(); land++) {
-      for(auto report = (*land)->getReport().begin(); report != (*land)->getReport().end(); report++) {
-        if((*report)->getYear() == year) {
-          cout << "Land ID: " << (*land)->getId() << endl;
-          cout << "Land Farmer: " << (*land)->getFarmer()->getName() << endl;
-          cout << "Land Workers: " << endl;
-          for(auto worker = (*report)->getWorkers().begin(); worker != (*report)->getWorkers().end(); worker++) {
-            cout << (*worker)->getName() << endl;
-          }
-        }
-      }
-    }
-  }
+    Land* l = *lands.getById(id);
+    l->printAnualReport(year);
 
 
 

@@ -4,20 +4,20 @@
 Production::Production() {
   waterConsumption = 0;
   electricityConsumption = 0;
-  products = unordered_map<string, ProductCategory>();
+  categories = unordered_map<string, ProductCategory>();
 }
 
-Production::Production(int wc, int ec, const unordered_map<string, ProductCategory>&initProducts)
-: waterConsumption{wc}, electricityConsumption{ec}, products{initProducts} {}
+Production::Production(int wc, int ec, const unordered_map<string, ProductCategory>&initcategories)
+: waterConsumption{wc}, electricityConsumption{ec}, categories{initcategories} {}
 
 Production::Production(const Production& rhs)
-: waterConsumption{rhs.waterConsumption}, electricityConsumption{rhs.electricityConsumption}, products{rhs.products} {}
+: waterConsumption{rhs.waterConsumption}, electricityConsumption{rhs.electricityConsumption}, categories{rhs.categories} {}
 
 Production::Production(Production&& rhs)
-: waterConsumption{rhs.waterConsumption}, electricityConsumption{rhs.electricityConsumption}, products{move(rhs.products)} {}
+: waterConsumption{rhs.waterConsumption}, electricityConsumption{rhs.electricityConsumption}, categories{move(rhs.categories)} {}
 
 Production::~Production() {
-  products.clear();
+  categories.clear();
 }
 
 int Production::getWaterConsumption() const {
@@ -34,17 +34,17 @@ void Production::setElectricityConsumption(int new_electricityConsumption) {
   electricityConsumption = new_electricityConsumption;
 }
 
-unordered_map<string, ProductCategory> Production::getProducts() const {
-  return products;
+unordered_map<string, ProductCategory> Production::getcategories() const {
+  return categories;
 }
-void Production::setProducts(unordered_map<string, ProductCategory> new_products) {
-  products = new_products;
+void Production::setcategories(unordered_map<string, ProductCategory> new_categories) {
+  categories = new_categories;
 }
 
 void Production::addProduct(const ProductCategory& ProductCategory) {
-  products[ProductCategory.getName()] = ProductCategory;
+  categories[ProductCategory.getName()] = ProductCategory;
 }
 
 void Production::addProduct(const string& name, double bp, double pr, PesticideSeverity ps) {
-  products[name] = ProductCategory(name, bp, pr, ps);
+  categories[name] = ProductCategory(name, bp, pr, ps);
 }
