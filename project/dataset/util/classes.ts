@@ -84,12 +84,10 @@ export class MonthlyReport implements Interfaces.MonthlyReport {
 }
 export class LandData implements Interfaces.LandData {
   products: Interfaces.Product[];
-  pesticideSeverity: Interfaces.PestSeverity;
   waterConsumption: number;
   electricityConsumption: number;
-  constructor(products: Product[] = [], pestSev = 0, waterCon: number, electCon: number) {
+  constructor(products: Product[] = [], waterCon: number, electCon: number) {
     this.products = products
-    this.pesticideSeverity = pestSev 
     this.waterConsumption = waterCon
     this.electricityConsumption = electCon
   }
