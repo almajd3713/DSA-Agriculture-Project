@@ -3,6 +3,7 @@
 #define PRODUCTDSA
 #include <string>
 #include "enums.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -18,9 +19,9 @@ class ProductCategory {
   ProductCategory(const ProductCategory&);
   ProductCategory(ProductCategory&&);
 
-  double getPureSales() const;
+  double getGrossSales() const;
   double getPenalty() const;
-  double getSales() const;
+  double getPureSales() const;
   double getRatio(const double&) const;
 
   string getName() const;

@@ -33,3 +33,10 @@ Production* MonthlyReport::getLandData() const {
 void MonthlyReport::setLandData(Production* new_data) {
   data = new_data;
 }
+
+ostream& operator<<(ostream& os, const MonthlyReport& report) {
+  os << "Month: " << report.month << endl;
+  os << "Land Data: " << endl;
+  os << *(report.data) << endl;
+  return os;
+}

@@ -3,10 +3,12 @@
 #define WORKERDSA
 #include <string>
 #include "enums.hpp"
+#include <iostream>
 using namespace std;
 
 
 class Worker {
+  friend ostream& operator<<(ostream& out, const Worker&);
   protected:
     int id;
     int age;
@@ -35,7 +37,8 @@ class Worker {
 };
 
 class Farmer : public Worker {
-  
+  friend ostream& operator<<(ostream&, const Farmer&);
+
   public:
     Farmer();
     Farmer(int, int, string, Gender);

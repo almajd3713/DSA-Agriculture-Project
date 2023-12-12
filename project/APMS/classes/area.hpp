@@ -31,9 +31,11 @@ public:
     bool operator<(const Area&) const; 
     bool operator==(const Area&);
     Area& operator=(const Area&);
+    //print  the data  of area by year 
+    void Print_Area_By_Year(int year);
 
 
-    private:
+
 
 
 };

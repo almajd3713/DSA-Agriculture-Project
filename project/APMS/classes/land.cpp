@@ -2,20 +2,20 @@
 
 Land::Land() {
   id = 0;
-  report = vector<AnnualReport*>();
+  reports = vector<AnnualReport*>();
 }
 
-Land::Land(int id, vector<AnnualReport*> report, Farmer* farmer)
-: id{id}, report{report}, farmer{farmer} {}
+Land::Land(int id, vector<AnnualReport*> reports, Farmer* farmer)
+: id{id}, reports{reports}, farmer{farmer} {}
 
 Land::Land(const Land& rhs)
-: id{rhs.id}, report{rhs.report}, farmer{rhs.farmer} {}
+: id{rhs.id}, reports{rhs.reports}, farmer{rhs.farmer} {}
 
 Land::Land(Land&& rhs)
-: id{rhs.id}, report{move(rhs.report)}, farmer{move(rhs.farmer)} {}
+: id{rhs.id}, reports{move(rhs.reports)}, farmer{move(rhs.farmer)} {}
 
 Land::~Land() {
-  report.clear();
+  reports.clear();
 }
 
 int Land::getId() const {
@@ -25,11 +25,11 @@ void Land::setId(int new_id) {
   id = new_id;
 }
 
-vector<AnnualReport*> Land::getReport() const {
-  return report;
+vector<AnnualReport*> Land::getReports() const {
+  return reports;
 }
 void Land::setReport(vector<AnnualReport*> new_report) {
-  report = new_report;
+  reports = new_report;
 }
 
 Farmer* Land::getFarmer() const {
@@ -58,7 +58,7 @@ void Land::setFarmer(Farmer* new_farmer) {
 
 
 void Land::addYear(AnnualReport* rep) {
-  report.push_back(rep);
+  reports.push_back(rep);
   //TODO: Check if arr.length > 12
 }
 
@@ -72,6 +72,26 @@ bool Land::operator==(const Land& rhs) {
 
 Land& Land::operator=(const Land& rhs) {
   id = rhs.id;
-  report = rhs.report;
+  reports = rhs.reports;
   return *this;
+}
+
+ostream& operator<<(ostream& os, const Land& land) {
+  os << "Land ID: " << land.id << endl;
+  os << "Farmer: " << land.farmer->getName() << endl;
+  os << "Annual Reports: " << endl;
+  for (auto year : land.reports) {
+    os << *year << endl;
+  }
+  return os;
+}
+
+void Land::printAnualReport(int year) {
+    cout << "Land ID: " << id << endl;
+  for (auto report : reports) {
+    if (report->getYear() == year) {
+      
+      cout << *report << endl;
+    }
+  }
 }

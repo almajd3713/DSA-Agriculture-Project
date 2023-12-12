@@ -73,3 +73,16 @@ Area& Area::operator=(const Area& rhs) {
 bool Area::operator==(const Area& rhs) {
     return id == rhs.id;
 }
+//print function
+void Area::Print_Area_By_Year(int year)
+{
+    cout<< "Year :"<<year<<endl;
+    for(auto land : lands)
+    {
+        cout<<*land->getFarmer()<<endl;
+        
+      
+
+
+    }
+}

@@ -1,6 +1,5 @@
 #include "year.hpp"
-
-
+#include <iostream>
 AnnualReport::AnnualReport() {
   year = 0;
   months = vector<MonthlyReport*>();
@@ -56,3 +55,17 @@ void AnnualReport::addMonth(MonthlyReport* rhs) {
 // void AnnualReport::removeMonth(int) {
   
 // };
+ostream& operator<<(ostream& os, const AnnualReport& report) {
+  os << "Year: " << report.year << endl;
+  os << "Monthly Reports: " << endl;
+  for (auto month : report.months) {
+    os << *month << endl;
+  }
+  os << "Workers: " << endl;
+  int number = 0;
+  for (auto worker : report.workers) {
+    os << "Worker " << number << ": " << endl;
+    os << *worker << endl;
+  }
+  return os;
+}

@@ -11,7 +11,7 @@ using namespace std;
 class Production {
   int waterConsumption;
   int electricityConsumption;
-  unordered_map<string, ProductCategory> products;
+  vector<ProductCategory*> categories;
 
   public:
     Production();
@@ -33,7 +33,7 @@ class Production {
     Production& operator=(const Production& rhs) {
       electricityConsumption = rhs.electricityConsumption;
       waterConsumption = rhs.waterConsumption;
-      products = rhs.products;
+      categories = rhs.categories;
       return *this;
     }
 

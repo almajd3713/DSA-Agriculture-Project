@@ -155,6 +155,11 @@ class BSTree
     {
         remove( x, root );
     }
+  
+    ///function to return object by id
+    Comparable* getById(const int& id) {
+        return getById(id, root);
+    }
 
 
   private:
@@ -175,7 +180,21 @@ class BSTree
     };
 
     BinaryNode *root;
-
+    //internal function to return object by id
+    Comparable* getById(const int id, BinaryNode* t) {
+    if(t == nullptr) {
+        return nullptr;
+    }
+    else if((t->element)->getId() == id) {
+        return &(t->element);
+    }
+    else if((t->element)->getId() > id) {
+        return getById(id, t->left);
+    }
+    else {
+        return getById(id, t->right);
+    }
+}
 
     /**
      * Internal method to insert into a subtree.
@@ -185,6 +204,7 @@ class BSTree
      */
     void insert( const Comparable & x, BinaryNode * & t )
     {
+
         if( t == nullptr )
             t = new BinaryNode{ x, nullptr, nullptr };
         else if(is_pointer<Comparable>::value) {
