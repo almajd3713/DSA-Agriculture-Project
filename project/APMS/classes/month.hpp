@@ -1,22 +1,22 @@
 #ifndef MONTHDSA
 #define MONTHDSA
-#include "land_data.hpp"
+#include "production.hpp"
 
 class MonthlyReport {
   int month;
-  LandData* data;
+  Production* data;
 
   public:
     MonthlyReport();
-    MonthlyReport(int, LandData*);
+    MonthlyReport(int, Production*);
     MonthlyReport(const MonthlyReport&);
     MonthlyReport(MonthlyReport&&);
     ~MonthlyReport();
 
     int getMonth() const;
     void setMonth(int);
-    LandData* getLandData() const;
-    void setLandData(LandData*);
+    Production* getLandData() const;
+    void setLandData(Production*);
     
 };
 

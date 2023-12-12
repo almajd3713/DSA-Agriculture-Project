@@ -7,7 +7,7 @@ MonthlyReport::MonthlyReport() {
   data = nullptr;
 }
 
-MonthlyReport::MonthlyReport(int month, LandData* data)
+MonthlyReport::MonthlyReport(int month, Production* data)
   : month{month}, data{data} {}
 
 MonthlyReport::MonthlyReport(const MonthlyReport& rhs)
@@ -27,9 +27,9 @@ void MonthlyReport::setMonth(int new_month) {
   month = new_month;
 }
 
-LandData* MonthlyReport::getLandData() const {
+Production* MonthlyReport::getLandData() const {
   return data;
 }
-void MonthlyReport::setLandData(LandData* new_data) {
+void MonthlyReport::setLandData(Production* new_data) {
   data = new_data;
 }

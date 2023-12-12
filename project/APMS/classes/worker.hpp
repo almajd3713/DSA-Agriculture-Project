@@ -31,6 +31,7 @@ class Worker {
 
     Worker& operator=(const Worker&);
     bool operator==(const Worker&);
+    bool operator<(const Worker&);
 };
 
 class Farmer : public Worker {
@@ -46,6 +47,7 @@ class Farmer : public Worker {
 
     Farmer& operator=(const Farmer&);
     bool operator==(const Farmer&);
+    bool operator<(const Farmer&);
 };
 
 

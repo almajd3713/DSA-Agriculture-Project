@@ -6,17 +6,17 @@
 
 using namespace std;
 
-class Product {
+class ProductCategory {
   string name;
   double basePrice;
   double production;
   PesticideSeverity pestSeverity;
 
   public:
-  Product();
-  Product(string n, double bp, double pr, PesticideSeverity ps);
-  Product(const Product&);
-  Product(Product&&);
+  ProductCategory();
+  ProductCategory(string n, double bp, double pr, PesticideSeverity ps);
+  ProductCategory(const ProductCategory&);
+  ProductCategory(ProductCategory&&);
 
   double getPureSales() const;
   double getPenalty() const;
@@ -32,7 +32,7 @@ class Product {
   PesticideSeverity getPestSeverity() const;
   void setPestSeverity(PesticideSeverity);
 
-  Product& operator=(const Product&);
+  ProductCategory& operator=(const ProductCategory&);
   
 };
 
