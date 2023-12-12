@@ -5,6 +5,7 @@
 #include "worker.hpp"
 
 class AnnualReport {
+  friend ostream& operator<<(ostream&, const AnnualReport&);
   int year;
   vector<MonthlyReport*> months;
   vector<Worker*> workers;

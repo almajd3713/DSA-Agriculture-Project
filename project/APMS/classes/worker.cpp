@@ -1,5 +1,6 @@
 
 #include "worker.hpp"
+using namespace std;
 
 Worker::Worker()
   : id{0}, name{""}, age{0}, gender{Gender::male} {}
@@ -74,4 +75,24 @@ Farmer& Farmer::operator=(const Farmer& rhs) {
 
 bool Farmer::operator==(const Farmer& rhs) {
   return id == rhs.id;
+}
+
+ostream& operator<<(ostream& out, const Worker& rhs)
+{
+  
+  out << "name : " << rhs.getName() << endl;
+  out << "ID: " << rhs.getId()  << endl;
+  out<< "Age: " << rhs.getAge() << endl;
+  out<<"gender: " << rhs.getGender() << endl;
+  return out;
+}
+ostream& operator<<(ostream & out,const Farmer&rhs)
+{
+  out << "Farmer: " << endl;
+  out << "name : " << rhs.getName() << endl;
+  out << "ID: " << rhs.getId()  << endl;
+  out<< "Age: " << rhs.getAge() << endl;
+  out<<"gender: " << rhs.getGender() << endl;
+  return out;
+
 }

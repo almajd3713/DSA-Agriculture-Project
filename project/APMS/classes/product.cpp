@@ -1,70 +1,84 @@
 
 #include "product.hpp"
 
-Product::Product() {
+category::category() {
   name = "";
   basePrice = 0;
   production = 0;
   pestSeverity = PesticideSeverity::light;
 }
 
-Product::Product(string n, double bp, double pr, PesticideSeverity ps)
+category::category(string n, double bp, double pr, PesticideSeverity ps)
 : name{n}, basePrice{bp}, production{pr}, pestSeverity{ps} {};
 
-Product::Product(const Product& rhs)
+category::category(const category& rhs)
 : name{rhs.name}, basePrice{rhs.basePrice}, production{rhs.production}, pestSeverity{rhs.pestSeverity} {}
 
-Product::Product(Product&& rhs)
+category::category(category&& rhs)
 : name{move(rhs.name)}, basePrice{rhs.basePrice}, production{rhs.production}, pestSeverity{move(rhs.pestSeverity)} {}
 
-string Product::getName() const {
+string category::getName() const {
   return name;
 }
-void Product::setName(string new_name) {
+void category::setName(string new_name) {
   name = new_name;
 }
 
-double Product::getProduction() const {
+double category::getProduction() const {
   return production;
 }
-void Product::setProduction(double new_production) {
+void category::setProduction(double new_production) {
   production = new_production;
 }
 
-double Product::getBasePrice() const {
+double category::getBasePrice() const {
   return basePrice;
 }
-void Product::setBasePrice(double new_basePrice) {
+void category::setBasePrice(double new_basePrice) {
   basePrice = new_basePrice;
 }
 
-PesticideSeverity Product::getPestSeverity() const {
+PesticideSeverity category::getPestSeverity() const {
   return pestSeverity;
 }
-void Product::setPestSeverity(PesticideSeverity new_pestSeverity) {
+void category::setPestSeverity(PesticideSeverity new_pestSeverity) {
   pestSeverity = new_pestSeverity;
 }
 
-double Product::getSales() const {
-  return getPureSales() - getPenalty();
+double category::getPureSales() const {
+  return getGrossSales() - getPenalty();
 }
 
-double Product::getPureSales() const {
+double category::getGrossSales() const {
   return production * basePrice;
 }
 
-double Product::getRatio(const double& wConsumption) const {
-  return getSales() / wConsumption;
+double category::getRatio(const double& wConsumption) const {
+  return getPureSales() / wConsumption;
 }
 
-double Product::getPenalty() const {
-  return getPureSales() * (pestSeverity / 10);
+double category::getPenalty() const {
+  return getGrossSales() * ( (10* pestSeverity) / 100);
 }
 
-Product& Product::operator=(const Product& rhs) {
+category& category::operator=(const category& rhs) {
   name = rhs.name;
   basePrice = rhs.basePrice;
   production = rhs.production;
   pestSeverity = rhs.pestSeverity;
   return *this;
+}
+
+ostream& operator<<(ostream& out, const category& rhs) {
+  out << "Name: " << rhs.name << endl;
+  out << "Production: " << rhs.production << endl;
+  out << "Base Price: " << rhs.basePrice << endl;
+  out << "gross sales" << rhs.getGrossSales() << endl;
+
+  out << "Pesticide Severity: " << rhs.pestSeverity << endl;
+  out<< "Penalty: " << rhs.getPenalty() << endl;
+
+  out << " Pure Sales(after penalty) : " << rhs.getPureSales() << endl;
+
+  return out;
 }

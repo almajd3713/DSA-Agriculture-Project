@@ -9,13 +9,14 @@
 using namespace std;
 
 class LandData {
+  friend ostream& operator<<(ostream&, const LandData&);
   int waterConsumption;
   int electricityConsumption;
-  unordered_map<string, Product> products;
+  vector<category*> categories;
 
   public:
     LandData();
-    LandData(int, int, const unordered_map<string, Product>&);
+    LandData(int, int, const vector<category*>&);
     LandData(const LandData&);
     LandData(LandData&&);
     ~LandData();
@@ -24,16 +25,16 @@ class LandData {
     void setWaterConsumption(int);
     int getElectricityConsumption() const;
     void setElectricityConsumption(int);
-    unordered_map<string, Product> getProducts() const;
-    void setProducts(unordered_map<string, Product>);
+    vector<category*> getcategories() const;
+    void setcategories(vector<category*>);
     
-    void addProduct(const string&, double, double, PesticideSeverity);
-    void addProduct(const Product&);
+    void addcategory(const string&, double, double, PesticideSeverity);
+    void addcategory(const category&);
 
     LandData& operator=(const LandData& rhs) {
       electricityConsumption = rhs.electricityConsumption;
       waterConsumption = rhs.waterConsumption;
-      products = rhs.products;
+      categories= rhs.categories;
       return *this;
     }
 

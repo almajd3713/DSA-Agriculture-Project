@@ -3,6 +3,7 @@
 #include "land_data.hpp"
 
 class MonthlyReport {
+  friend ostream& operator<<(ostream&, const MonthlyReport&);
   int month;
   LandData* data;
 

@@ -184,10 +184,10 @@ class BSTree
     if(t == nullptr) {
         return nullptr;
     }
-    else if(t->element.getId() == id) {
+    else if((t->element)->getId() == id) {
         return &(t->element);
     }
-    else if(t->element.getId() > id) {
+    else if((t->element)->getId() > id) {
         return getById(id, t->left);
     }
     else {
@@ -203,6 +203,7 @@ class BSTree
      */
     void insert( const Comparable & x, BinaryNode * & t )
     {
+
         if( t == nullptr )
             t = new BinaryNode{ x, nullptr, nullptr };
         else if( x < t->element )

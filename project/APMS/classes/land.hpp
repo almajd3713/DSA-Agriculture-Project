@@ -7,8 +7,10 @@
 
 
 class Land {
+friend ostream& operator<<(ostream&, const Land&);
+
   int id;
-  vector<AnnualReport*> report;
+  vector<AnnualReport*> reports;
   Farmer* farmer;
 
   public:
@@ -20,13 +22,15 @@ class Land {
 
     int getId() const;
     void setId(int);
-    vector<AnnualReport*> getReport() const;
+    vector<AnnualReport*> getReports() const;
     void setReport(vector<AnnualReport*>);
     Farmer* getFarmer() const;
     void setFarmer(Farmer*);
+    //wtf is this
     vector<Worker*> getWorkers() const;
     void setWorkers(const vector<Worker*>&);
-    
+    //
+    void printAnualReport(int year);
     void addYear(AnnualReport*);
     void removeYear(AnnualReport*);
     void removeYear(int);

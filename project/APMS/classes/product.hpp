@@ -3,24 +3,27 @@
 #define PRODUCTDSA
 #include <string>
 #include "enums.hpp"
+#include <iostream>
 
 using namespace std;
 
-class Product {
+class category {
+friend ostream& operator<<(ostream&, const category&);
+
   string name;
   double basePrice;
   double production;
   PesticideSeverity pestSeverity;
 
   public:
-  Product();
-  Product(string n, double bp, double pr, PesticideSeverity ps);
-  Product(const Product&);
-  Product(Product&&);
+  category();
+  category(string n, double bp, double pr, PesticideSeverity ps);
+  category(const category&);
+  category(category&&);
 
-  double getPureSales() const;
+  double getGrossSales() const;
   double getPenalty() const;
-  double getSales() const;
+  double getPureSales() const;
   double getRatio(const double&) const;
 
   string getName() const;
@@ -32,7 +35,7 @@ class Product {
   PesticideSeverity getPestSeverity() const;
   void setPestSeverity(PesticideSeverity);
 
-  Product& operator=(const Product&);
+  category& operator=(const category&);
   
 };
 

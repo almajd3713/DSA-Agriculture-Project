@@ -4,20 +4,20 @@
 LandData::LandData() {
   waterConsumption = 0;
   electricityConsumption = 0;
-  products = unordered_map<string, Product>();
+  categories = vector<category*>();
 }
 
-LandData::LandData(int wc, int ec, const unordered_map<string, Product>&initProducts)
-: waterConsumption{wc}, electricityConsumption{ec}, products{initProducts} {}
+LandData::LandData(int wc, int ec, const vector<category*>&initcategory)
+: waterConsumption{wc}, electricityConsumption{ec}, categories{initcategory} {}
 
 LandData::LandData(const LandData& rhs)
-: waterConsumption{rhs.waterConsumption}, electricityConsumption{rhs.electricityConsumption}, products{rhs.products} {}
+: waterConsumption{rhs.waterConsumption}, electricityConsumption{rhs.electricityConsumption}, categories{rhs.categories} {}
 
 LandData::LandData(LandData&& rhs)
-: waterConsumption{rhs.waterConsumption}, electricityConsumption{rhs.electricityConsumption}, products{move(rhs.products)} {}
+: waterConsumption{rhs.waterConsumption}, electricityConsumption{rhs.electricityConsumption}, categories{move(rhs.categories)} {}
 
 LandData::~LandData() {
-  products.clear();
+  categories.clear();
 }
 
 int LandData::getWaterConsumption() const {
@@ -34,17 +34,18 @@ void LandData::setElectricityConsumption(int new_electricityConsumption) {
   electricityConsumption = new_electricityConsumption;
 }
 
-unordered_map<string, Product> LandData::getProducts() const {
-  return products;
+vector<category*> LandData::getcategories() const {
+  return categories;
 }
-void LandData::setProducts(unordered_map<string, Product> new_products) {
-  products = new_products;
+void LandData::setcategories(vector<category*> new_category) {
+  categories = new_category;
 }
-
-void LandData::addProduct(const Product& product) {
-  products[product.getName()] = product;
-}
-
-void LandData::addProduct(const string& name, double bp, double pr, PesticideSeverity ps) {
-  products[name] = Product(name, bp, pr, ps);
+ostream& operator<<(ostream& os, const LandData& land) {
+  os << "Water Consumption: " << land.waterConsumption << endl;
+  os << "Electricity Consumption: " << land.electricityConsumption << endl;
+  os << "Categories: " << endl;
+  for (auto category : land.categories) {
+    os << *category << endl;
+  }
+  return os;
 }
