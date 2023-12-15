@@ -26,6 +26,8 @@ class Production {
     void setElectricityConsumption(int);
     unordered_map<string, ProductCategory*> getCategories() const;
     void setCategories(unordered_map<string, ProductCategory*>);
+
+    ProductCategory* getCategory(string cat);
     
     void addProduct(const string&, double, double, PesticideSeverity);
     void addProduct(ProductCategory*);

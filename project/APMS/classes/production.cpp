@@ -64,3 +64,8 @@ ostream &operator<<(ostream& os, const Production& data) {
   }
   return os;
 };
+
+ProductCategory* Production::getCategory(string cat) {
+  if(categories.find(cat) != categories.end()) return categories[cat];
+  else return nullptr;
+}

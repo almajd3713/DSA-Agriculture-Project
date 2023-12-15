@@ -27,10 +27,10 @@ void MonthlyReport::setMonth(int new_month) {
   month = new_month;
 }
 
-Production* MonthlyReport::getLandData() const {
+Production* MonthlyReport::getProduction() const {
   return data;
 }
-void MonthlyReport::setLandData(Production* new_data) {
+void MonthlyReport::setProduction(Production* new_data) {
   data = new_data;
 }
 

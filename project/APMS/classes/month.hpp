@@ -16,8 +16,8 @@ class MonthlyReport {
 
     int getMonth() const;
     void setMonth(int);
-    Production* getLandData() const;
-    void setLandData(Production*);
+    Production* getProduction() const;
+    void setProduction(Production*);
     
 };
 

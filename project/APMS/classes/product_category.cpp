@@ -58,7 +58,7 @@ double ProductCategory::getRatio(const double& wConsumption) const {
 }
 
 double ProductCategory::getPenalty() const {
-  return getPureSales() * (pestSeverity / 10);
+  return getGrossSales() * (pestSeverity / 10);
 }
 
 ProductCategory& ProductCategory::operator=(const ProductCategory& rhs) {

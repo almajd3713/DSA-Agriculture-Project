@@ -48,6 +48,7 @@ class APMS {
   BSTree<Area*> areas;
   BSTree<Land*> lands;
   BSTree<Farmer*> farmers;
+  vector<string> categories;
 
   // vector<City>& addCities(auto cities) {
 
@@ -55,8 +56,8 @@ class APMS {
 
 
 public:
-  APMS(): wilayas{BSTree<Wilaya*>()}, cities{BSTree<City*>()}, areas{BSTree<Area*>()}, lands{BSTree<Land*>()}, rawFile{DBMS()}, farmers{BSTree<Farmer*>()} {}
-  APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya*>()}, cities{BSTree<City*>()}, areas{BSTree<Area*>()}, lands{BSTree<Land*>()}, farmers{BSTree<Farmer*>()} {}
+  APMS(): wilayas{BSTree<Wilaya*>()}, cities{BSTree<City*>()}, areas{BSTree<Area*>()}, lands{BSTree<Land*>()}, rawFile{DBMS()}, farmers{BSTree<Farmer*>()}, categories{vector<string>()} {}
+  APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya*>()}, cities{BSTree<City*>()}, areas{BSTree<Area*>()}, lands{BSTree<Land*>()}, farmers{BSTree<Farmer*>()}, categories{vector<string>()} {}
   
   void load() {
     rawFile.read();
@@ -111,7 +112,7 @@ public:
                 mo->setMonth((*month)["month"]);
                 auto landData = (*month)["data"];
                 Production* lndData = new Production();
-                mo->setLandData(lndData);
+                mo->setProduction(lndData);
                 unordered_map<string, ProductCategory*> prod;
                 for(auto product = landData["products"].begin(); product != landData["products"].end(); product++) {
                   prod[(string)(*product)["name"]] = new ProductCategory(
@@ -180,19 +181,43 @@ public:
     }
   }
 
+  void addCategory(string cat) {
+    categories.push_back(cat);
+  }
 
-  void test() {
-    wilayas.iterate([](Wilaya* idk) -> bool {
-      
+
+  void getWinner(int year, int month, string category) {
+    // check if cateogries exists to begin with
+    if(find(categories.begin(), categories.end(), category) == categories.end()) return;
+
+    Land* winner = nullptr;
+    double ratio = 0;
+    cout << "start winners loop..." << endl;
+    lands.iterate([year, month, category, &winner, &ratio](Land* land) -> bool {
+      AnnualReport* y = land->getAnnualReport(year);
+      if(y) {
+        MonthlyReport* m = y->getMonthlyReport(month);
+        if(m) {
+          Production* prod = m->getProduction();
+          ProductCategory* cat = prod->getCategory(category);
+          if(cat) {
+            // cout << land->getFarmer()->getName() << ": " << cat->getRatio(prod->getWaterConsumption()) << endl;
+            if(
+              !winner || (
+                ratio < cat->getRatio(prod->getWaterConsumption())
+              )) {
+              winner = land;
+              ratio = cat->getRatio(prod->getWaterConsumption());
+              cout << "found someone with higher ratio! " << ratio << endl; 
+            }
+          }
+        }
+      }
+      return true;
     });
+    cout << "Final Winner of the month is " << winner->getFarmer()->getName() << "!" << "They got a ratio of " << ratio << endl;
   }
 };
-
-
-void printWinners(int year, int month, BSTree<Land*> bst) {
-  
-}
-
 
 
 

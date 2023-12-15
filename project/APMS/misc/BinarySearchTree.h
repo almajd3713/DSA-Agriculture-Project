@@ -157,6 +157,10 @@ class BSTree
     {
         remove( x, root );
     }
+
+    Comparable getRoot() {
+        return root->element;
+    }
   
     ///function to return object by id
     Comparable* getById(const int& id) {

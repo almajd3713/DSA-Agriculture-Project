@@ -67,18 +67,26 @@ function landDataGen() {
 function monthlyRepGen(month) {
     return new Classes.MonthlyReport(month + 1, landDataGen());
 }
-function yearlyRepGen(year, startingMonth = 0) {
-    let workers = new Array(RNG.rndNum(0, 20)).fill(1).map(_ => workerGen());
+function yearlyRepGen(year, startingMonth, prevWorkers) {
+    let workers = (prevWorkers ? prevWorkers : new Array(RNG.rndNum(0, 20)).fill(1)).map((_, i) => {
+        if (prevWorkers) {
+            prevWorkers[i].age++;
+            return prevWorkers[i];
+        }
+        else
+            return workerGen();
+    });
     let months = new Array(12 - startingMonth).fill(1).map((_, i) => monthlyRepGen(i + startingMonth));
     return new Classes.AnnualReport(year, months, workers);
 }
 function landGen() {
     let landFormYear = RNG.rndNum(BASE_YEAR, CURRENT_YEAR);
-    let rep = new Array(CURRENT_YEAR - landFormYear + 1).fill(1).map((_, i) => {
+    let rep = new Array(CURRENT_YEAR - landFormYear + 1).fill(1);
+    rep.forEach((_, i, arr) => {
         if (i)
-            return yearlyRepGen(landFormYear + i, 0);
+            arr[i] = yearlyRepGen(landFormYear + i, 0, arr[i - 1].workers);
         else
-            return yearlyRepGen(landFormYear + i, RNG.rndNum(1, 12));
+            arr[i] = yearlyRepGen(landFormYear + i, RNG.rndNum(1, 11));
     });
     return new Classes.Land(RNG.rndNum(200000, 300000), farmerGen(), rep);
 }
