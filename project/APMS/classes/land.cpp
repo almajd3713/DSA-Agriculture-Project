@@ -87,11 +87,18 @@ ostream& operator<<(ostream& os, const Land& land) {
 }
 
 void Land::printAnualReport(int year) {
-    cout << "Land ID: " << id << endl;
+  cout << "Land ID: " << id << endl;
   for (auto report : reports) {
     if (report->getYear() == year) {
       
       cout << *report << endl;
     }
   }
+}
+
+AnnualReport* Land::getAnnualReport(int year) {
+  for(AnnualReport* y: reports) {
+    if(y->getYear() == year) return y;
+  }
+  return nullptr;
 }

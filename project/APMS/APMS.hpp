@@ -3,6 +3,8 @@
 #define APMSDSA
 #include <vector>
 #include <type_traits>
+#include <iomanip>
+#include <stdlib.h>
 #include "misc/AvlTree.hpp"
 #include "misc/BinarySearchTree.h"
 #include "misc/DBMS.hpp"
@@ -83,7 +85,8 @@ public:
                 (*land)["farmer"]["id"],
                 (*land)["farmer"]["age"],
                 (*land)["farmer"]["name"],
-                (*land)["farmer"]["gender"]
+                (*land)["farmer"]["gender"],
+                lnd
             );
             lnd->setFarmer(frmr);
             farmers.insert(frmr);
@@ -93,16 +96,6 @@ public:
               AnnualReport* report = new AnnualReport();
               lnd->addYear(report);
               report->setYear((*year)["year"]);
-              // Farmer* frmr = new Farmer(
-                // (*year)["farmer"]["id"],
-                // (*year)["farmer"]["age"],
-                // (*year)["farmer"]["name"],
-                // (*year)["farmer"]["gender"]
-              // );
-              // frmr->setId((*year)["farmer"]["id"]);
-              // frmr->setAge((*year)["farmer"]["age"]);
-              // frmr->setName((*year)["farmer"]["name"]);
-              // lnd->setFarmer(frmr);
               for(auto worker = (*year)["workers"].begin(); worker != (*year)["workers"].end(); worker++) {
                 Worker* wkr = new Worker(
                   (*worker)["id"],
@@ -119,16 +112,16 @@ public:
                 auto landData = (*month)["data"];
                 Production* lndData = new Production();
                 mo->setLandData(lndData);
-                unordered_map<string, ProductCategory> prod;
+                unordered_map<string, ProductCategory*> prod;
                 for(auto product = landData["products"].begin(); product != landData["products"].end(); product++) {
-                  prod[(string)(*product)["name"]] = ProductCategory(
+                  prod[(string)(*product)["name"]] = new ProductCategory(
                     (string)(*product)["name"],
                     (double)(*product)["basePrice"],
                     (double)(*product)["production"],
                     (PesticideSeverity)(*product)["pesticideSeverity"]
                   );
                 }
-                lndData->setProducts(prod);
+                lndData->setCategories(prod);
                 lndData->setWaterConsumption(landData["waterConsumption"]);
                 lndData->setElectricityConsumption(landData["electricityConsumption"]);
               }
@@ -143,7 +136,7 @@ public:
     // Accessing the lands using the areas name using getById
     Area* area = *areas.getById(id);
     for(auto land = area->getLands().begin(); land != area->getLands().end(); land++) {
-      for(auto report = (*land)->getReport().begin(); report != (*land)->getReport().end(); report++) {
+      for(auto report = (*land)->getReports().begin(); report != (*land)->getReports().end(); report++) {
         if((*report)->getYear() == year) {
           cout << "Land ID: " << (*land)->getId() << endl;
           cout << "Land Farmer: " << (*land)->getFarmer()->getName() << endl;
@@ -156,14 +149,49 @@ public:
     }
   }
 
+  
+
+  void start() {
+    int input;
+    int year, month;
+    while(true) {
+      switch (input)
+      {
+      case 3:
+        cout << "Enter Year and Month: ";
+        cin >> year >> month;
+
+        break;
+      
+      default:
+        system("cls");
+        cout << setfill('=') << setw(40) << "" << endl
+             << setfill(' ') << "** APMS System -- 1.3.77 -- All Rights Reserved" << endl
+             << setfill('=') << setw(40) << "" << endl
+             << setfill(' ') << "1: Print all lands" << endl
+              << setfill('=') << setw(40) << "" << endl;
+             while (std::cout << "Enter query: " && !(std::cin >> input)) {
+                std::cin.clear(); //clear bad input flag
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //discard input
+                std::cout << endl << "Invalid input; please re-enter.\n";
+            }
+            break;
+      }
+    }
+  }
 
 
-  // BSTree<Wilaya> getWilayas() const {
-  //   return wilayas;
-  // }
+  void test() {
+    wilayas.iterate([](Wilaya* idk) -> bool {
+      
+    });
+  }
 };
 
 
+void printWinners(int year, int month, BSTree<Land*> bst) {
+  
+}
 
 
 

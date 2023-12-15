@@ -11,11 +11,11 @@ using namespace std;
 class Production {
   int waterConsumption;
   int electricityConsumption;
-  vector<ProductCategory*> categories;
+  unordered_map<string, ProductCategory*> categories;
 
   public:
     Production();
-    Production(int, int, const unordered_map<string, ProductCategory>&);
+    Production(int, int, const unordered_map<string, ProductCategory*>&);
     Production(const Production&);
     Production(Production&&);
     ~Production();
@@ -24,11 +24,11 @@ class Production {
     void setWaterConsumption(int);
     int getElectricityConsumption() const;
     void setElectricityConsumption(int);
-    unordered_map<string, ProductCategory> getProducts() const;
-    void setProducts(unordered_map<string, ProductCategory>);
+    unordered_map<string, ProductCategory*> getCategories() const;
+    void setCategories(unordered_map<string, ProductCategory*>);
     
     void addProduct(const string&, double, double, PesticideSeverity);
-    void addProduct(const ProductCategory&);
+    void addProduct(ProductCategory*);
 
     Production& operator=(const Production& rhs) {
       electricityConsumption = rhs.electricityConsumption;
@@ -36,6 +36,9 @@ class Production {
       categories = rhs.categories;
       return *this;
     }
+
+    friend ostream& operator<<(ostream&, const Production&);
+
 
 };
 

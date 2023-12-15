@@ -45,16 +45,16 @@ void ProductCategory::setPestSeverity(PesticideSeverity new_pestSeverity) {
   pestSeverity = new_pestSeverity;
 }
 
-double ProductCategory::getSales() const {
-  return getPureSales() - getPenalty();
+double ProductCategory::getPureSales() const {
+  return getGrossSales() - getPenalty();
 }
 
-double ProductCategory::getPureSales() const {
+double ProductCategory::getGrossSales() const {
   return production * basePrice;
 }
 
 double ProductCategory::getRatio(const double& wConsumption) const {
-  return getSales() / wConsumption;
+  return getPureSales() / wConsumption;
 }
 
 double ProductCategory::getPenalty() const {

@@ -63,9 +63,9 @@ bool Worker::operator<(const Worker& rhs) {
 }
 
 Farmer::Farmer() : Worker() {};
-Farmer::Farmer(int id, int age, string name, Gender gender): Worker(id, age, name, gender) {};
-Farmer::Farmer(const Farmer& rhs): Worker(rhs) {};
-Farmer::Farmer(Farmer&& rhs): Worker(rhs) {};
+Farmer::Farmer(int id, int age, string name, Gender gender, Land* land): Worker(id, age, name, gender), land{land} {};
+Farmer::Farmer(const Farmer& rhs): Worker(rhs), land{land} {};
+Farmer::Farmer(Farmer&& rhs): Worker(rhs), land{move(land)} {};
 Farmer::~Farmer() {}
 
 Farmer& Farmer::operator=(const Farmer& rhs) {
@@ -101,4 +101,11 @@ ostream& operator<<(ostream & out,const Farmer&rhs)
 }
 bool Farmer::operator<(const Farmer& rhs) {
   return id < rhs.id;
+}
+
+Land* Farmer::getLand() const {
+  return land;
+}
+void Farmer::setLand(Land* new_land) {
+  land = new_land;
 }
