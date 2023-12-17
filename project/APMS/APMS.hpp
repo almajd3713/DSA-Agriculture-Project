@@ -165,18 +165,8 @@ public:
         break;
       
       default:
-        system("cls");
-        cout << setfill('=') << setw(40) << "" << endl
-             << setfill(' ') << "** APMS System -- 1.3.77 -- All Rights Reserved" << endl
-             << setfill('=') << setw(40) << "" << endl
-             << setfill(' ') << "1: Print all lands" << endl
-              << setfill('=') << setw(40) << "" << endl;
-             while (std::cout << "Enter query: " && !(std::cin >> input)) {
-                std::cin.clear(); //clear bad input flag
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //discard input
-                std::cout << endl << "Invalid input; please re-enter.\n";
-            }
-            break;
+        defaultPrompt(input);
+        break;
       }
     }
   }
@@ -208,7 +198,6 @@ public:
               )) {
               winner = land;
               ratio = cat->getRatio(prod->getWaterConsumption());
-              cout << "found someone with higher ratio! " << ratio << endl; 
             }
           }
         }
@@ -217,6 +206,24 @@ public:
     });
     cout << "Final Winner of the month is " << winner->getFarmer()->getName() << "!" << "They got a ratio of " << ratio << endl;
   }
+
+  private:
+    void defaultPrompt(int &input)
+    {
+      system("cls");
+      cout << setfill('=') << setw(40) << "" << endl
+           << setfill(' ') << "** APMS System -- 1.3.77 -- All Rights Reserved" << endl
+           << setfill('=') << setw(40) << "" << endl
+           << setfill(' ') << "1: Print all lands" << endl
+           << setfill('=') << setw(40) << "" << endl;
+      while (std::cout << "Enter query: " && !(std::cin >> input))
+      {
+        std::cin.clear();                                                   // clear bad input flag
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // discard input
+        std::cout << endl
+                  << "Invalid input; please re-enter.\n";
+      }
+    }
 };
 
 
