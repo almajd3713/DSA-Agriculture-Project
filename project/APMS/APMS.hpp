@@ -3,7 +3,6 @@
 #define APMSDSA
 #include <vector>
 #include <type_traits>
-#include <iomanip>
 #include <stdlib.h>
 #include "misc/AvlTree.hpp"
 #include "misc/BinarySearchTree.h"
@@ -153,19 +152,17 @@ public:
   
 
   void start() {
-    int input;
-    int year, month;
+    int input = 0;
     while(true) {
+      defaultPrompt(input);
       switch (input)
       {
       case 3:
-        cout << "Enter Year and Month: ";
-        cin >> year >> month;
-
+        getLands();
         break;
       
       default:
-        defaultPrompt(input);
+        cout << "Zamn, your choice doesn't exist! choose another one.";
         break;
       }
     }
@@ -210,7 +207,7 @@ public:
   private:
     void defaultPrompt(int &input)
     {
-      system("cls");
+      // system("cls");
       cout << setfill('=') << setw(40) << "" << endl
            << setfill(' ') << "** APMS System -- 1.3.77 -- All Rights Reserved" << endl
            << setfill('=') << setw(40) << "" << endl
@@ -224,6 +221,35 @@ public:
                   << "Invalid input; please re-enter.\n";
       }
     }
+
+    void getLands() {
+      int input = -1, year = 0, month = 0;
+      while(input) {
+        cout << "How would you like to access the lands? " << endl
+             << "1: List all lands" << endl
+             << "2: List lands in a Wilaya" << endl
+             << "3: List lands in a City" << endl
+             << "4: List lands in a Area" << endl
+             << "5: Access a specific land" << endl
+             << "Enter your query number: ";
+        cin >> input;
+        switch (input)
+        {
+        case 1:
+          cout << setfill('=') << setw(40) << "" << endl;
+          wilayas.iterate([](Wilaya *wil) -> bool {
+            cout << *wil << endl;
+            return true; 
+          });
+          input = 0;
+          break;
+
+        default:
+          break;
+        }
+      }
+
+    } 
 };
 
 

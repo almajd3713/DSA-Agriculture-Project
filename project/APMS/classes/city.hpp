@@ -32,5 +32,7 @@ public:
     bool operator<(const City&) const;
     City &operator=(const City&);
     bool operator==(const City&);
+
+    friend ostream& operator<<(ostream&, const City&);
 };
 

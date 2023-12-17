@@ -86,3 +86,11 @@ void Area::Print_Area_By_Year(int year)
 
     }
 }
+
+ostream& operator<<(ostream& os, const Area& area) {
+    cout << setfill('.') << setw(40) << "" << endl;
+    os << "Area ID: " << area.getId() << endl;
+    os << "Area: " << area.getName() << endl;
+    cout << setfill('.') << setw(40) << "" << endl;
+    return os;
+}

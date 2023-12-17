@@ -74,3 +74,22 @@ City& City::operator=(const City& rhs) {
 bool City::operator==(const City& rhs) {
     return id == rhs.id;
 }
+
+ostream &operator<<(ostream &os, const City& cit)
+{
+    // os << "Land ID: " << land.id << endl;
+    // os << "Farmer: " << land.farmer->getName() << endl;
+    // os << "Annual Reports: " << endl;
+    // for (auto year : land.reports)
+    // {
+    //     os << *year << endl;
+    // }
+    cout << setfill('-') << setw(40) << "" << endl;
+    os << "City ID: " << cit.getCityId() << endl;
+    os << "City: " << cit.getName() << endl;
+    for(Area* area: cit.getArea()) {
+        os << *area;
+    }
+    cout << setfill('-') << setw(40) << "" << endl;
+    return os;
+}
