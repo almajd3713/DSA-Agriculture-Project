@@ -1,6 +1,5 @@
 
 #include "worker.hpp"
-using namespace std;
 
 Worker::Worker()
   : id{0}, name{""}, age{0}, gender{Gender::male} {}

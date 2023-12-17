@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <unordered_map>
 #include "product_category.hpp"
-using namespace std;
 
 class Production {
   int waterConsumption;

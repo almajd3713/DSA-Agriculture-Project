@@ -1,11 +1,12 @@
 #pragma once
 #ifndef WORKERDSA
 #define WORKERDSA
-#include <string>
+// #include <string>
 #include "enums.hpp"
-#include <iomanip>
-#include <iostream>
-using namespace std;
+#include "../misc/includes.hpp"
+// #include <iomanip>
+// #include <iostream>
+
 
 class Land;
 class Worker {

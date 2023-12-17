@@ -1,7 +1,5 @@
 #include "wilaya.hpp"
-#include <algorithm>
 
-using namespace std;
 
 
 // Wilaya::Wilaya() {

@@ -1,6 +1,5 @@
 #include<algorithm>
 #include "city.hpp"
-using namespace std;
 
 
 City::City() {

@@ -2,13 +2,9 @@
 #ifndef JSONREADERDSA
 #define JSONREADERDSA
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <filesystem>
+#include "includes.hpp"
 #include "./../../lib/json.hpp"
 using json = nlohmann::json;
-using namespace std;
 
 #include "exceptions.hpp"
 
@@ -22,7 +18,7 @@ class DBMS {
 
   bool fileExists() {
     // cout <<  << endl;
-    return filesystem::exists(filePath);
+    return exists(filePath);
   }
 
   public:

@@ -1,11 +1,9 @@
-
+#pragma once
 #ifndef PRODUCTDSA
 #define PRODUCTDSA
-#include <string>
 #include "enums.hpp"
-#include <iostream>
+#include "../misc/includes.hpp"
 
-using namespace std;
 
 class ProductCategory {
   string name;

@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <queue>
 #include <functional>
-using namespace std;       
 
 // BSTree class
 //

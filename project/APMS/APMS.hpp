@@ -1,10 +1,12 @@
 #pragma once
 #ifndef APMSDSA
 #define APMSDSA
-#include <vector>
-#include <type_traits>
-#include <stdlib.h>
+// #include <vector>
+// #include <type_traits>
+// #include <stdlib.h>
+#include "misc/includes.hpp"
 #include "misc/AvlTree.hpp"
+#include "../lib/color.hpp"
 #include "misc/BinarySearchTree.h"
 #include "misc/DBMS.hpp"
 #include "classes/wilaya.hpp"
@@ -208,15 +210,19 @@ public:
     void defaultPrompt(int &input)
     {
       // system("cls");
-      cout << setfill('=') << setw(40) << "" << endl
+      cout << setfill('=') << setw(60) << "" << endl
            << setfill(' ') << "** APMS System -- 1.3.77 -- All Rights Reserved" << endl
-           << setfill('=') << setw(40) << "" << endl
+           << setfill('=') << setw(60) << "" << endl
            << setfill(' ') << "1: Print all lands" << endl
-           << setfill('=') << setw(40) << "" << endl;
+           << setfill('=') << setw(60) << "" << endl;
       while (std::cout << "Enter query: " && !(std::cin >> input))
       {
-        std::cin.clear();                                                   // clear bad input flag
+        std::cin.clear();                                                   
+        // clear bad input flag
+        // This error doesnt actually exist. So it is ignored by the intellisense
+        #ifndef __INTELLISENSE__
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // discard input
+        #endif
         std::cout << endl
                   << "Invalid input; please re-enter.\n";
       }
