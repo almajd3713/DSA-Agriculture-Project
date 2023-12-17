@@ -1,7 +1,5 @@
 #include "wilaya.hpp"
-#include <algorithm>
 
-using namespace std;
 
 
 // Wilaya::Wilaya() {
@@ -87,3 +85,25 @@ bool Wilaya::operator<(const Wilaya& rhs) const {
 bool Wilaya::operator==(const Wilaya& rhs) {
   return id == rhs.id;
 }
+
+ostream &operator<<(ostream &os, const Wilaya& wil)
+{
+  // os << "Land ID: " << land.id << endl;
+  // os << "Farmer: " << land.farmer->getName() << endl;
+  // os << "Annual Reports: " << endl;
+  // for (auto year : land.reports)
+  // {
+  //   os << *year << endl;
+  // }
+  os << "Wilaya ID: " << wil.getWilayaId() << endl;
+  os << "Wilaya: " << wil.getName() << endl;
+  os << "Cities: " << endl;
+  cout << setfill('=') << setw(40) << "" << endl;
+  for(City* cit: wil.getCity()) {
+    os << "\t" << *cit;
+  }
+  cout << setfill('=') << setw(40) << "" << endl;
+
+  return os;
+}
+

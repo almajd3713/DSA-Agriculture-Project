@@ -24,10 +24,10 @@ int AnnualReport::getYear() const {
 void AnnualReport::setYear(int new_year) {
   year = new_year;
 }
-vector<MonthlyReport*> AnnualReport::getMonthlyReport() const {
+vector<MonthlyReport*> AnnualReport::getMonths() const {
   return months;
 }
-void AnnualReport::setMonthlyReport(vector<MonthlyReport*> new_months) {
+void AnnualReport::setMonths(vector<MonthlyReport*> new_months) {
   months = new_months;
 }
 
@@ -68,4 +68,12 @@ ostream& operator<<(ostream& os, const AnnualReport& report) {
     os << *worker << endl;
   }
   return os;
+}
+
+MonthlyReport* AnnualReport::getMonthlyReport(int month) {
+  if(months.size() < 12) {
+    if(months[0]->getMonth() > month) return nullptr;
+    else return months[12 - month - 1];
+  }
+  else return months[month - 1];
 }

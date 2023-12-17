@@ -32,6 +32,9 @@ public:
 	//overloading < operator
 	bool operator<(const Wilaya&) const;
 	bool operator==(const Wilaya&);
+
+	friend ostream &operator<<(ostream&, const Wilaya&);
+	string printWilaya(int);
 };
 
 

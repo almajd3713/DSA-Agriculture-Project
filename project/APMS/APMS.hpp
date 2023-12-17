@@ -1,9 +1,12 @@
 #pragma once
 #ifndef APMSDSA
 #define APMSDSA
-#include <vector>
-#include <type_traits>
+// #include <vector>
+// #include <type_traits>
+// #include <stdlib.h>
+#include "misc/includes.hpp"
 #include "misc/AvlTree.hpp"
+#include "../lib/color.hpp"
 #include "misc/BinarySearchTree.h"
 #include "misc/DBMS.hpp"
 #include "classes/wilaya.hpp"
@@ -46,6 +49,7 @@ class APMS {
   BSTree<Area*> areas;
   BSTree<Land*> lands;
   BSTree<Farmer*> farmers;
+  vector<string> categories;
 
   // vector<City>& addCities(auto cities) {
 
@@ -53,8 +57,8 @@ class APMS {
 
 
 public:
-  APMS(): wilayas{BSTree<Wilaya*>()}, cities{BSTree<City*>()}, areas{BSTree<Area*>()}, lands{BSTree<Land*>()}, rawFile{DBMS()}, farmers{BSTree<Farmer*>()} {}
-  APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya*>()}, cities{BSTree<City*>()}, areas{BSTree<Area*>()}, lands{BSTree<Land*>()}, farmers{BSTree<Farmer*>()} {}
+  APMS(): wilayas{BSTree<Wilaya*>()}, cities{BSTree<City*>()}, areas{BSTree<Area*>()}, lands{BSTree<Land*>()}, rawFile{DBMS()}, farmers{BSTree<Farmer*>()}, categories{vector<string>()} {}
+  APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya*>()}, cities{BSTree<City*>()}, areas{BSTree<Area*>()}, lands{BSTree<Land*>()}, farmers{BSTree<Farmer*>()}, categories{vector<string>()} {}
   
   void load() {
     rawFile.read();
@@ -83,7 +87,8 @@ public:
                 (*land)["farmer"]["id"],
                 (*land)["farmer"]["age"],
                 (*land)["farmer"]["name"],
-                (*land)["farmer"]["gender"]
+                (*land)["farmer"]["gender"],
+                lnd
             );
             lnd->setFarmer(frmr);
             farmers.insert(frmr);
@@ -93,16 +98,6 @@ public:
               AnnualReport* report = new AnnualReport();
               lnd->addYear(report);
               report->setYear((*year)["year"]);
-              // Farmer* frmr = new Farmer(
-                // (*year)["farmer"]["id"],
-                // (*year)["farmer"]["age"],
-                // (*year)["farmer"]["name"],
-                // (*year)["farmer"]["gender"]
-              // );
-              // frmr->setId((*year)["farmer"]["id"]);
-              // frmr->setAge((*year)["farmer"]["age"]);
-              // frmr->setName((*year)["farmer"]["name"]);
-              // lnd->setFarmer(frmr);
               for(auto worker = (*year)["workers"].begin(); worker != (*year)["workers"].end(); worker++) {
                 Worker* wkr = new Worker(
                   (*worker)["id"],
@@ -118,17 +113,17 @@ public:
                 mo->setMonth((*month)["month"]);
                 auto landData = (*month)["data"];
                 Production* lndData = new Production();
-                mo->setLandData(lndData);
-                unordered_map<string, ProductCategory> prod;
+                mo->setProduction(lndData);
+                unordered_map<string, ProductCategory*> prod;
                 for(auto product = landData["products"].begin(); product != landData["products"].end(); product++) {
-                  prod[(string)(*product)["name"]] = ProductCategory(
+                  prod[(string)(*product)["name"]] = new ProductCategory(
                     (string)(*product)["name"],
                     (double)(*product)["basePrice"],
                     (double)(*product)["production"],
                     (PesticideSeverity)(*product)["pesticideSeverity"]
                   );
                 }
-                lndData->setcategories(prod);
+                lndData->setCategories(prod);
                 lndData->setWaterConsumption(landData["waterConsumption"]);
                 lndData->setElectricityConsumption(landData["electricityConsumption"]);
               }
@@ -141,18 +136,127 @@ public:
 
   void printLandWorkersByYear(int id, int year) {
     // Accessing the lands using the areas name using getById
-    Land* l = *lands.getById(id);
-    l->printAnualReport(year);
+    Area* area = *areas.getById(id);
+    for(auto land = area->getLands().begin(); land != area->getLands().end(); land++) {
+      for(auto report = (*land)->getReports().begin(); report != (*land)->getReports().end(); report++) {
+        if((*report)->getYear() == year) {
+          cout << "Land ID: " << (*land)->getId() << endl;
+          cout << "Land Farmer: " << (*land)->getFarmer()->getName() << endl;
+          cout << "Land Workers: " << endl;
+          for(auto worker = (*report)->getWorkers().begin(); worker != (*report)->getWorkers().end(); worker++) {
+            cout << (*worker)->getName() << endl;
+          }
+        }
+      }
+    }
+  }
+
+  
+
+  void start() {
+    int input = 0;
+    while(true) {
+      defaultPrompt(input);
+      switch (input)
+      {
+      case 3:
+        getLands();
+        break;
+      
+      default:
+        cout << "Zamn, your choice doesn't exist! choose another one.";
+        break;
+      }
+    }
+  }
+
+  void addCategory(string cat) {
+    categories.push_back(cat);
+  }
 
 
+  void getWinner(int year, int month, string category) {
+    // check if cateogries exists to begin with
+    if(find(categories.begin(), categories.end(), category) == categories.end()) return;
 
-  // BSTree<Wilaya> getWilayas() const {
-  //   return wilayas;
-  // }
+    Land* winner = nullptr;
+    double ratio = 0;
+    cout << "start winners loop..." << endl;
+    lands.iterate([year, month, category, &winner, &ratio](Land* land) -> bool {
+      AnnualReport* y = land->getAnnualReport(year);
+      if(y) {
+        MonthlyReport* m = y->getMonthlyReport(month);
+        if(m) {
+          Production* prod = m->getProduction();
+          ProductCategory* cat = prod->getCategory(category);
+          if(cat) {
+            // cout << land->getFarmer()->getName() << ": " << cat->getRatio(prod->getWaterConsumption()) << endl;
+            if(
+              !winner || (
+                ratio < cat->getRatio(prod->getWaterConsumption())
+              )) {
+              winner = land;
+              ratio = cat->getRatio(prod->getWaterConsumption());
+            }
+          }
+        }
+      }
+      return true;
+    });
+    cout << "Final Winner of the month is " << winner->getFarmer()->getName() << "!" << "They got a ratio of " << ratio << endl;
+  }
+
+  private:
+    void defaultPrompt(int &input)
+    {
+      // system("cls");
+      cout << setfill('=') << setw(60) << "" << endl
+           << setfill(' ') << "** APMS System -- 1.3.77 -- All Rights Reserved" << endl
+           << setfill('=') << setw(60) << "" << endl
+           << setfill(' ') << "1: Print all lands" << endl
+           << setfill('=') << setw(60) << "" << endl;
+      while (std::cout << "Enter query: " && !(std::cin >> input))
+      {
+        std::cin.clear();                                                   
+        // clear bad input flag
+        // This error doesnt actually exist. So it is ignored by the intellisense
+        #ifndef __INTELLISENSE__
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // discard input
+        #endif
+        std::cout << endl
+                  << "Invalid input; please re-enter.\n";
+      }
+    }
+
+    void getLands() {
+      int input = -1, year = 0, month = 0;
+      while(input) {
+        cout << "How would you like to access the lands? " << endl
+             << "1: List all lands" << endl
+             << "2: List lands in a Wilaya" << endl
+             << "3: List lands in a City" << endl
+             << "4: List lands in a Area" << endl
+             << "5: Access a specific land" << endl
+             << "Enter your query number: ";
+        cin >> input;
+        switch (input)
+        {
+        case 1:
+          cout << setfill('=') << setw(40) << "" << endl;
+          wilayas.iterate([](Wilaya *wil) -> bool {
+            cout << *wil << endl;
+            return true; 
+          });
+          input = 0;
+          break;
+
+        default:
+          break;
+        }
+      }
+
+    } 
 };
-
-
-
 
 
 

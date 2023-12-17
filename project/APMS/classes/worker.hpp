@@ -1,12 +1,14 @@
 #pragma once
 #ifndef WORKERDSA
 #define WORKERDSA
-#include <string>
+// #include <string>
 #include "enums.hpp"
-#include <iostream>
-using namespace std;
+#include "../misc/includes.hpp"
+// #include <iomanip>
+// #include <iostream>
 
 
+class Land;
 class Worker {
   friend ostream& operator<<(ostream& out, const Worker&);
   protected:
@@ -26,6 +28,8 @@ class Worker {
     void setId(int);
     int getAge() const;
     void setAge(int);
+
+    
     string getName() const;
     void setName(string);
     Gender getGender() const;
@@ -38,19 +42,21 @@ class Worker {
 
 class Farmer : public Worker {
   friend ostream& operator<<(ostream&, const Farmer&);
+    Land* land;
+
 
   public:
     Farmer();
-    Farmer(int, int, string, Gender);
-    Farmer(const Farmer&);
-    Farmer(Farmer&&);
+    Farmer(int, int, string, Gender, Land*);
+    Farmer(const Farmer &);
+    Farmer(Farmer &&);
     ~Farmer();
 
-    
-
-    Farmer& operator=(const Farmer&);
-    bool operator==(const Farmer&);
-    bool operator<(const Farmer&);
+    Farmer &operator=(const Farmer &);
+    bool operator==(const Farmer &);
+    bool operator<(const Farmer &);
+    Land *getLand() const;
+    void setLand(Land*);
 };
 
 

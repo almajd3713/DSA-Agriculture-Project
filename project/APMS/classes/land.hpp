@@ -30,6 +30,7 @@ friend ostream& operator<<(ostream&, const Land&);
     vector<Worker*> getWorkers() const;
     void setWorkers(const vector<Worker*>&);
     //
+    AnnualReport* getAnnualReport(int year);
     void printAnualReport(int year);
     void printMonthlyReport(int year, int month);
     void addYear(AnnualReport*);

@@ -98,35 +98,29 @@ ostream &operator<<(ostream &os, const Land &land)
   return os;
 }
 // must be implimented with hash table
-void Land::printAnualReport(int year)
-{
-  cout << "Land ID: " << id << endl;
-  cout << *farmer << endl;
-  for (auto report : reports)
-  {
-    if (report->getYear() == year)
-    {
+// void Land::printAnualReport(int year)
+// {
+  // cout << "Land ID: " << id << endl;
 
+  // for (auto report : reports)
+  // {
+  //   if (report->getYear() == year)
+  //   {
+
+void Land::printAnualReport(int year) {
+  cout << "Land ID: " << id << endl;
+  for (auto report : reports) {
+    cout << *farmer << endl;
+    if (report->getYear() == year) {
+      
       cout << *report << endl;
     }
   }
 }
-// modified later using hash table
-void Land::printMonthlyReport(int year, int m)
-{
-  cout << "Land ID: " << id << endl;
-  cout << *farmer << endl;
-  for (auto report : reports)
-  {
-    if (report->getYear() == year)
-    {
-      for (auto month : report->getMonthlyReport())
-      {
-        if (month->getMonth() == m)
-        {
-          cout << *month << endl;
-        }
-      }
-    }
+
+AnnualReport* Land::getAnnualReport(int year) {
+  for(AnnualReport* y: reports) {
+    if(y->getYear() == year) return y;
   }
+  return nullptr;
 }

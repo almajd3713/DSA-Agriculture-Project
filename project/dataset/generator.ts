@@ -39,22 +39,29 @@ function farmerGen(): Types.Farmer {
 
 function landDataGen(): Types.LandData {
   let products = getProductSubset().map(prod => new Classes.Product(prod,RNG.rndNum(30, 200), RNG.rndNum(100, 5000), RNG.rndNum(0, 1)))
-  let land = new Classes.LandData(products, RNG.rndNum(0, 10000), RNG.rndNum(0, 10000))
+  let land = new Classes.LandData(products, (1000 * products.length) + RNG.rndNum(100 * products.length, 1000 * products.length), RNG.rndNum(20 * products.length, 60 * products.length))
   return land
 }
 function monthlyRepGen(month: number): Types.MonthlyReport {
   return new Classes.MonthlyReport(month + 1, landDataGen())
 }
-function yearlyRepGen(year: number, startingMonth = 0): Types.AnnualReport {
-  let workers = new Array(RNG.rndNum(0, 20)).fill(1).map(_ => workerGen())
+function yearlyRepGen(year: number, startingMonth: number, prevWorkers?: Classes.HumanWorker[]): Types.AnnualReport {
+  let workers = (prevWorkers ? prevWorkers : new Array(RNG.rndNum(0, 20)).fill(1)).map((_, i) => {
+    if(prevWorkers) {
+      prevWorkers[i].age++
+      return prevWorkers[i]
+    }
+    else return workerGen()
+  })
   let months = new Array(12 - startingMonth).fill(1).map((_, i) => monthlyRepGen(i + startingMonth))
   return new Classes.AnnualReport(year, months, workers)
 }
 function landGen(): Types.Land {
   let landFormYear = RNG.rndNum(BASE_YEAR, CURRENT_YEAR)
-  let rep = new Array(CURRENT_YEAR - landFormYear + 1).fill(1).map((_, i) => {
-    if(i) return yearlyRepGen(landFormYear + i, 0)
-    else return yearlyRepGen(landFormYear + i, RNG.rndNum(1, 12))
+  let rep = new Array(CURRENT_YEAR - landFormYear + 1).fill(1)
+  rep.forEach((_, i, arr) => {
+    if(i) arr[i] = yearlyRepGen(landFormYear + i, 0, arr[i - 1].workers)
+    else arr[i] = yearlyRepGen(landFormYear + i, RNG.rndNum(1, 11))
   })
   return new Classes.Land(RNG.rndNum(200000, 300000), farmerGen(), rep)
 }

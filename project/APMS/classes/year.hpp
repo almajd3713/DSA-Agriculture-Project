@@ -21,8 +21,8 @@ class AnnualReport {
 
     int getYear() const;
     void setYear(int);
-    vector<MonthlyReport*> getMonthlyReport() const;
-    void setMonthlyReport(vector<MonthlyReport*>);
+    vector<MonthlyReport*> getMonths() const;
+    void setMonths(vector<MonthlyReport*>);
     vector<Worker*> getWorkers() const;
     void setWorkers(const vector<Worker*>&);
     
@@ -30,6 +30,8 @@ class AnnualReport {
     void addWorker(Worker*);
     void removeWorker(Worker*);
     void addMonth(MonthlyReport*);
+
+    MonthlyReport* getMonthlyReport(int month);
     // Why would you remove a month? Lord knows
     // void removeMonth(MonthlyReport*);
     // void removeMonth(int);

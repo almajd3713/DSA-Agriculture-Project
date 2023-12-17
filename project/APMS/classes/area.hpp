@@ -34,8 +34,5 @@ public:
     //print  the data  of area by year 
     void Print_Area_By_Year(int year);
 
-
-
-
-
+    friend ostream& operator<<(ostream&, const Area&);
 };

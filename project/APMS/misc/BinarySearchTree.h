@@ -4,7 +4,8 @@
 #include "exceptions.hpp"
 #include <iostream>
 #include <algorithm>
-using namespace std;       
+#include <queue>
+#include <functional>
 
 // BSTree class
 //
@@ -24,7 +25,7 @@ using namespace std;
 
 template <typename Comparable>
 class BSTree
-{
+{ 
   public:
     BSTree( ) : root{ nullptr }
     {
@@ -155,12 +156,30 @@ class BSTree
     {
         remove( x, root );
     }
+
+    Comparable getRoot() {
+        return root->element;
+    }
   
     ///function to return object by id
     Comparable* getById(const int& id) {
         return getById(id, root);
     }
 
+    void iterate(function<bool(Comparable)> const& func) {
+        queue<BinaryNode*> q;
+        BinaryNode* p = root;
+        if(p) {
+            q.push(p);
+            while(!q.empty()) {
+                p = q.front();
+                q.pop();
+                if(!func(p->element)) return; 
+                if(p->left) q.push(p->left);
+                if(p->right) q.push(p->right);
+            }
+        }
+    }
 
   private:
     struct BinaryNode
@@ -194,7 +213,7 @@ class BSTree
     else {
         return getById(id, t->right);
     }
-}
+    }
 
     /**
      * Internal method to insert into a subtree.
@@ -370,6 +389,8 @@ class BSTree
         else
             return new BinaryNode{ t->element, clone( t->left ), clone( t->right ) };
     }
+
+
 };
 
 #endif

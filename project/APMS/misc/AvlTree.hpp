@@ -4,7 +4,6 @@
 #include "exceptions.hpp"
 #include <algorithm>
 #include <iostream> 
-using namespace std;
 
 // AvlTree class
 //

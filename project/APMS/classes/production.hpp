@@ -6,17 +6,16 @@
 #include <algorithm>
 #include <unordered_map>
 #include "product_category.hpp"
-using namespace std;
 
 class Production {
 friend ostream& operator<<(ostream&, const Production&);//left for redwan to do it (unordered_map issues :( 
   int waterConsumption;
   int electricityConsumption;
-  unordered_map<string, ProductCategory> categories;
+  unordered_map<string, ProductCategory*> categories;
 
   public:
     Production();
-    Production(int, int, const unordered_map<string, ProductCategory>&);
+    Production(int, int, const unordered_map<string, ProductCategory*>&);
     Production(const Production&);
     Production(Production&&);
     ~Production();
@@ -25,11 +24,13 @@ friend ostream& operator<<(ostream&, const Production&);//left for redwan to do 
     void setWaterConsumption(int);
     int getElectricityConsumption() const;
     void setElectricityConsumption(int);
-    unordered_map<string, ProductCategory> getcategories() const;
-    void setcategories(unordered_map<string, ProductCategory>);
+    unordered_map<string, ProductCategory*> getCategories() const;
+    void setCategories(unordered_map<string, ProductCategory*>);
+
+    ProductCategory* getCategory(string cat);
     
     void addProduct(const string&, double, double, PesticideSeverity);
-    void addProduct(const ProductCategory&);
+    void addProduct(ProductCategory*);
 
     Production& operator=(const Production& rhs) {
       electricityConsumption = rhs.electricityConsumption;
@@ -37,6 +38,9 @@ friend ostream& operator<<(ostream&, const Production&);//left for redwan to do 
       categories = rhs.categories;
       return *this;
     }
+
+    friend ostream& operator<<(ostream&, const Production&);
+
 
 };
 
