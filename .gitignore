@@ -5,3 +5,4 @@ node_modules
 directives/*
 project/APMS/classes/old
 project/**/data.json
+project/**/data_new.json
