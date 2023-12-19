@@ -13,5 +13,15 @@ void defaultConfig(APMS& apms) {
   apms.addCategory("Olive");
 }
 
+enum prompts {
+  MENU, 
+  INFO, MODIFY,
+  WILAYAS, CITIES, AREAS, LANDS, FARMERS,
+  WINNERS, PENALTIES,
+  TOTAL_SALES
+};
+
+
+
 
 #endif

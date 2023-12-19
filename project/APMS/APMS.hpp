@@ -161,19 +161,28 @@ public:
     }
   }
 
-  
+  void printMenu()
+  {
+    cout << setfill('=') << setw(60) << "" << endl
+         << setfill(' ') << dye::yellow("** APMS System -- 1.3.77 -- All Rights Reserved") << endl
+         << setfill('=') << setw(60) << dye::yellow("") << endl
+         << setfill(' ') << dye::yellow("1: Access information") << endl
+         << setfill(' ') << dye::yellow("2: Modify, add, or delete data") << endl
+         << setfill(' ') << dye::yellow("3: Save changes into database") << endl
+         << setfill(' ') << dye::yellow("0: Exit the terminal") << endl
+         << setfill('=') << setw(60) << dye::yellow("") << endl;
+  }
 
   void start() {
     int input = 0;
     printMenu();
     while(true) {
-      input = defaultPrompt(input);
-      switch (input)
-      {
-      case 3:
-        getLands();
+      promptAndValidate(input, "Enter query: ");
+      switch (input) {
+      case 1:
+        readDataPrompt();
         break;
-      case 4:
+      case 2:
         getWinnerPrompt();
         break;
       
@@ -183,6 +192,40 @@ public:
         break;
       }
     }
+  }
+
+  void readDataPrompt() {
+    int input = 0;
+    cout << dye::blue("What would you like to access?") << endl
+         << "1: Summarized information" << endl
+         << "2: Detailed information" << endl
+         << "3: Total sales" << endl
+         << "4: Penalties" << endl
+         << "5: Electricity Consumption" << endl
+         << "6: Water Consumption" << endl;
+    do {
+      promptAndValidate(input, "Enter your query: ");
+      switch(input) {
+        case 1:
+          cout << dye::blue("What information do you want to access?") << endl
+               << "1: The entire database" << endl
+               << "2: Information about a Wilaya" << endl
+               << "3: Information about a City" << endl
+               << "4: Information about an Area" << endl
+               << "5: Information about a Land" << endl
+               << "6: Information about a Farmer" << endl;
+          do {
+            promptAndValidate(input, "Enter your query: ");
+            switch(input) {
+              case 6:
+                promptAndValidate(input, "Enter the farmer's ID: ");
+                Farmer* desired = farmers.getById(input);
+                if(desired) cout << *desired;
+                else cout << "ERR: Farmer with this ID was not found" << endl;
+            }
+          } while(input);
+      }
+    } while(input);
   }
 
   void addCategory(string cat) {
@@ -226,20 +269,26 @@ public:
   private:
     template <typename T>
     bool promptAndValidate(T& input, string message, bool is_integer = true/* , function<bool(T)> const& func */) {
-      cout << message;
       if(is_integer) {
         input = 0;
         while(!input) {
+          cout << message;
           string str; size_t pos;
           getline(cin, str);
           // Check if string contains number so it can proceed
-          bool contains_number = false;
-          for(int i = 0; i < str.size(); i++) if(isdigit(str[i])) {
-            contains_number = true;
-            break;
+          bool contains_number = true;
+          for(char ch: str) {
+            if(!isdigit(ch)) {
+              contains_number = false;
+              break;
+            }
           }
           if(contains_number) { 
-            input = stoi(str, &pos);
+            try {input = stoi(str, &pos);}
+            catch(const std::out_of_range& e) {
+              cout << dye::red("ERR: ID is beyond the range. Insert a more...logical number.") << endl;
+              continue;
+            }
             if(pos != str.size()) {
               // cin.clear();
               // #ifndef __INTELLISENSE__
@@ -256,42 +305,6 @@ public:
       }
       return true;
     }
-
-    void printMenu() {
-      cout << setfill('=') << setw(60) << "" << endl
-           << setfill(' ') << "** APMS System -- 1.3.77 -- All Rights Reserved" << endl
-           << setfill('=') << setw(60) << "" << endl
-           << setfill(' ') << "1: Print all lands" << endl
-           << setfill('=') << setw(60) << "" << endl;
-    }
-    int defaultPrompt(int &input)
-    {
-      // system("cls");
-      // cout << "Enter query: "; cin >> input;
-      // if(!cin.good()) {
-      //   cout << dye::red("Error: wrong input type. Please enter a number.") << endl;
-      //   cin.clear();
-      //   #ifndef __INTELLISENSE__
-      //   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // discard input
-      //   #endif
-      //   return defaultPrompt(input);
-      // }
-      promptAndValidate(input, "Enter query: ");
-        
-      return input;
-    }
-      // while (std::cout << "Enter query: " && !(std::cin >> input))
-      // {
-      //   std::cin.clear();                                                   
-      //   // clear bad input flag
-      //   // This error doesnt actually exist. So it is ignored by the intellisense
-      //   #ifndef __INTELLISENSE__
-      //   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // discard input
-      //   #endif
-      //   std::cout << endl
-      //             << "This option does not exist. Use another one" << endl;
-      // }
-  
 
     void getWinnerPrompt() {
       int year = 0, month = 0, input = -1;
@@ -362,7 +375,6 @@ public:
           break;
         }
       }
-
     } 
 
     
