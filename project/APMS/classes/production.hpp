@@ -41,8 +41,10 @@ friend ostream& operator<<(ostream&, const Production&);//left for redwan to do 
 
     friend ostream& operator<<(ostream&, const Production&);
 
-   //left foe redwan to deal with ordered map for summrised sales
-   int summrisedSales();
+  // left foe redwan to deal with ordered map for summrised sales
+  int summarizedSales();
+  friend void to_json(json&, const Production&);
+
 };
 
 

@@ -77,12 +77,25 @@ MonthlyReport* AnnualReport::getMonthlyReport(int month) {
   }
   else return months[month - 1];
 }
+
 int summrisedSalesperyear(){
   int sum=0;
   AnnualReport AnnualReport;
   for(auto month:AnnualReport.getMonths()){
-    sum+=month->getProduction()->summrisedSales();
+    sum += month->getProduction()->summarizedSales();
   }
   return sum;
 }
 
+
+void to_json(json& j, const AnnualReport& report) {
+  j = {
+    {"year", report.getYear()}
+  };
+  for(MonthlyReport* mRep: report.getMonths()) {
+    j["months"].push_back(*mRep);
+  }
+  for(Worker* worker: report.getWorkers()) {
+    j["workers"].push_back(*worker);
+  }
+}

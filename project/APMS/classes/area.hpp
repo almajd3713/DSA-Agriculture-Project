@@ -44,4 +44,5 @@ public:
 
     void print_area_monthly_farmer_sales(int year,int month);
     void print_area_yearly_farmer_sales(int year);
+    friend void to_json(json&, const Area&);
 };

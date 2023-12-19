@@ -162,7 +162,7 @@ class BSTree
     }
   
     ///function to return object by id
-    Comparable* getById(const int& id) {
+    Comparable getById(const int& id) {
         return getById(id, root);
     }
 
@@ -200,12 +200,12 @@ class BSTree
 
     BinaryNode *root;
     //internal function to return object by id
-    Comparable* getById(const int id, BinaryNode* t) {
+    Comparable getById(const int id, BinaryNode* t) {
     if(t == nullptr) {
         return nullptr;
     }
     else if((t->element)->getId() == id) {
-        return &(t->element);
+        return t->element;
     }
     else if((t->element)->getId() > id) {
         return getById(id, t->left);

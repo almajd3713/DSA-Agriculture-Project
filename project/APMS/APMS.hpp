@@ -139,16 +139,22 @@ public:
     }
   }
 
-  void printLandWorkersByYear(int id, int year)
-  {
+  void save(string path) {
+    cout << "Starting saving progress..." << endl;
+    json j;
+    wilayas.iterate([&j](Wilaya* wil) -> bool {
+      j.push_back(*wil);
+      return true;
+    });
+    rawFile.write(j, path);
+  }
+
+  void printLandWorkersByYear(int id, int year) {
     // Accessing the lands using the areas name using getById
-    Area *area = *areas.getById(id);
-    for (auto land = area->getLands().begin(); land != area->getLands().end(); land++)
-    {
-      for (auto report = (*land)->getReports().begin(); report != (*land)->getReports().end(); report++)
-      {
-        if ((*report)->getYear() == year)
-        {
+    Area* area = areas.getById(id);
+    for(auto land = area->getLands().begin(); land != area->getLands().end(); land++) {
+      for(auto report = (*land)->getReports().begin(); report != (*land)->getReports().end(); report++) {
+        if((*report)->getYear() == year) {
           cout << "Land ID: " << (*land)->getId() << endl;
           cout << "Land Farmer: " << (*land)->getFarmer()->getName() << endl;
           cout << "Land Workers: " << endl;
@@ -161,27 +167,86 @@ public:
     }
   }
 
-  void start()
+  void printMenu()
   {
+    cout << setfill('=') << setw(60) << "" << endl
+         << setfill(' ') << dye::yellow("** APMS System -- 1.3.77 -- All Rights Reserved") << endl
+         << setfill('=') << setw(60) << dye::yellow("") << endl
+         << setfill(' ') << dye::yellow("1: Access information") << endl
+         << setfill(' ') << dye::yellow("2: Modify, add, or delete data") << endl
+         << setfill(' ') << dye::yellow("3: Save changes into database") << endl
+         << setfill(' ') << dye::yellow("0: Exit the terminal") << endl
+         << setfill('=') << setw(60) << dye::yellow("") << endl;
+  }
+
+  void start() {
     int input = 0;
-    while (true)
-    {
-      defaultPrompt(input);
-      switch (input)
-      {
-      case 3:
-        getLands();
+    printMenu();
+    while(true) {
+      promptAndValidate(input, "Enter query: ");
+      switch (input) {
+      case 1:
+        readDataPrompt();
+        break;
+      case 2:
+        getWinnerPrompt();
         break;
 
       default:
-        cout << "Zamn, your choice doesn't exist! choose another one.";
+        cout << "This option does not exist. Try another one" << endl;
+        input = 0;
         break;
       }
     }
   }
 
-  void addCategory(string cat)
-  {
+  void readDataPrompt() {
+    int input = 0;
+    cout << dye::blue("What would you like to access?") << endl
+         << "1: Summarized information" << endl
+         << "2: Detailed information" << endl
+         << "3: Total sales" << endl
+         << "4: Penalties" << endl
+         << "5: Electricity Consumption" << endl
+         << "6: Water Consumption" << endl;
+    do {
+      promptAndValidate(input, "Enter your query: ");
+      switch(input) {
+        case 1:
+          cout << dye::blue("What information do you want to access?") << endl
+               << "1: The entire database" << endl
+               << "2: Information about a Wilaya" << endl
+               << "3: Information about a City" << endl
+               << "4: Information about an Area" << endl
+               << "5: Information about a Land" << endl
+               << "6: Information about a Farmer" << endl;
+          do {
+            promptAndValidate(input, "Enter your query: ");
+            switch(input) {
+              case 1:
+                int check;
+                cout << dye::black_on_white("WARNING: ") << "Printing the entire database can print up to " << dye::red("MILLIONS") << " of lines. Are you sure you want to continue? ";
+                promptAndValidate(check, "? ");
+                if(input) 
+                  print_yearly_country_info(2020);
+              case 6:
+                promptAndValidate(input, "Enter the farmer's ID: ");
+                Farmer* desired = farmers.getById(input);
+                if(desired) cout << *desired;
+                else cout << "ERR: Farmer with this ID was not found" << endl;
+            }
+          } while(input);
+          break;
+        case 3:
+          int year;
+          promptAndValidate(input, "Enter the city ID: ");
+          promptAndValidate(year, "Enter The year: ");
+          List_yearly_farmer_sales_in_city(input, year);
+      }
+    } while(input);
+  }
+
+  void addCategory(string cat) {
     categories.push_back(cat);
   }
 
@@ -195,7 +260,7 @@ public:
     double ratio = 0;
     cout << "start winners loop..." << endl;
     lands.iterate([year, month, category, &winner, &ratio](Land *land) -> bool
-                  {
+      {
       AnnualReport* y = land->getAnnualReport(year);
       if(y) {
         MonthlyReport* m = y->getMonthlyReport(month);
@@ -220,28 +285,7 @@ public:
   }
 
 private:
-  void defaultPrompt(int &input)
-  {
-    // system("cls");
-    cout << setfill('=') << setw(60) << "" << endl
-         << setfill(' ') << "** APMS System -- 1.3.77 -- All Rights Reserved" << endl
-         << setfill('=') << setw(60) << "" << endl
-         << setfill(' ') << "1: Print all lands" << endl
-         << setfill('=') << setw(60) << "" << endl;
-    while (std::cout << "Enter query: " && !(std::cin >> input))
-    {
-      std::cin.clear();
-// clear bad input flag
-// This error doesnt actually exist. So it is ignored by the intellisense
-#ifndef __INTELLISENSE__
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // discard input
-#endif
-      std::cout << endl
-                << "Invalid input; please re-enter.\n";
-    }
-  }
-
-  void getLands()
+  void getLandsPrompt()
   {
     int input = -1, year = 0, month = 0;
     while (input)
@@ -368,19 +412,19 @@ private:
   // print land detailed info by  month
   void print_monthly_land_info(int landId, int year, int month)
   {
-    Land *land = *lands.getById(landId);
+    Land *land = lands.getById(landId);
     land->printMonthlyReport(year, month); // contains the check if the land exists
   }
   // print land detailed info by  year
   void print_monthly_land_info(int landId, int year)
   {
-    Land *land = *lands.getById(landId);
+    Land *land = lands.getById(landId);
     land->printAnnualReport(year); // contains the check if the land exists
   }
   // print land summary info by  month
   void print_monthly_land_sales(int landid, int year, int month)
   {
-    Land *land = *lands.getById(landid);
+    Land *land = lands.getById(landid);
     int result = land->get_land_total_sales_per_month(year, month); // contains the check if the land exists
     if (result != 0)
       cout << "the total sales of the land " << landid << " in the month " << month << " of the year " << year << " is :" << result << " DA" << endl;
@@ -390,7 +434,7 @@ private:
   // print land summary info by  year
   void print_yearly_land_sales(int landid, int year)
   {
-    Land *land = *lands.getById(landid);
+    Land *land = lands.getById(landid);
     int result = land->get_land_total_sales_per_year(year); // contains the check if the land exists
     if (result != 0)
       cout << "the total sales of the land " << landid << " in the year " << year << " is :" << result << " DA" << endl;
@@ -401,21 +445,21 @@ private:
   // print area detailed info by  month
   void print_monthly_area_info(int areaId, int year, int month)
   {
-    Area *area = *areas.getById(areaId);
+    Area *area = areas.getById(areaId);
     area->Print_Area_By_month(year, month); // contains the check if the area exists
   }
 
   // print area detailed info by  year
   void print_yearly_area_info(int areaId, int year)
   {
-    Area *area = *areas.getById(areaId);
+    Area *area = areas.getById(areaId);
     area->Print_Area_By_Year(year); // contains the check if the area exists
   }
 
   // print area summary info by  month
   void print_monthly_area_sales(int areaid, int year, int month)
   {
-    Area *area = *areas.getById(areaid);
+    Area *area = areas.getById(areaid);
     int result = area->get_area_total_sales_per_month(year, month); // contains the check if the area exists
     if (result != 0)
       cout << "the total sales of the area " << area->getName() << "with ID : " << areaid << " in the month " << month << " of the year " << year << " is :" << result << " DA" << endl;
@@ -426,7 +470,7 @@ private:
   // print area summary info by  year
   void print_yearly_area_sales(int areaid, int year)
   {
-    Area *area = *areas.getById(areaid);
+    Area *area = areas.getById(areaid);
     int result = area->get_area_total_sales_per_year(year); // contains the check if the area exists
     if (result != 0)
       cout << "the total sales of the area " << area->getName() << "with ID : " << areaid << " of the year " << year << " is :" << result << " DA" << endl;
@@ -437,21 +481,21 @@ private:
   // print city detailed info by  month
   void print_monthly_city_info(int cityId, int year, int month)
   {
-    City *city = *cities.getById(cityId);
+    City *city = cities.getById(cityId);
     city->print_city_by_month(year, month); // contains the check if the city exists
   }
 
   // print city detailed info by  year
   void print_monthly_city_info(int cityId, int year)
   {
-    City *city = *cities.getById(cityId);
+    City *city = cities.getById(cityId);
     city->print_city_by_year(year); // contains the check if the city exists
   }
 
   // print city summary info by  month
   void print_monthly_city_sales(int cityid, int year, int month)
   {
-    City *city = *cities.getById(cityid);
+    City *city = cities.getById(cityid);
     int result = city->get_city_total_sales_per_month(year, month); // contains the check if the city exists
     if (result != 0)
       cout << "the total sales of the city " << city->getName() << "with ID : " << cityid << " in the month " << month << " of the year " << year << " is :" << result << " DA" << endl;
@@ -462,7 +506,7 @@ private:
   // print city summary info by  year
   void print_yearly_city_sales(int cityid, int year)
   {
-    City *city = *cities.getById(cityid);
+    City *city = cities.getById(cityid);
     int result = city->get_city_total_sales_per_year(year); // contains the check if the city exists
     if (result != 0)
       cout << "the total sales of the city " << city->getName() << "with ID : " << cityid << " in the year " << year << " is :" << result << " DA" << endl;
@@ -472,21 +516,21 @@ private:
   // print wilaya detailed info by  month
   void print_monthly_wilaya_info(int wilayaId, int year, int month)
   {
-    Wilaya *wilaya = *wilayas.getById(wilayaId);
+    Wilaya *wilaya = wilayas.getById(wilayaId);
     wilaya->print_wilaya_by_month(year, month); // contains the check if the wilaya exists
   }
 
   // print wilaya detailed info by  year
   void print_monthly_wilaya_info(int wilayaId, int year)
   {
-    Wilaya *wilaya = *wilayas.getById(wilayaId);
+    Wilaya *wilaya = wilayas.getById(wilayaId);
     wilaya->print_wilaya_by_year(year); // contains the check if the wilaya exists
   }
 
   // print wilaya summary info by  month
   void print_monthly_wilaya_sales(int wilayaid, int year, int month)
   {
-    Wilaya *wilaya = *wilayas.getById(wilayaid);
+    Wilaya *wilaya = wilayas.getById(wilayaid);
     int result = wilaya->get_wilaya_total_sales_per_month(year, month); // contains the check if the wilaya exists
     if (result != 0)
       cout << "the total sales of the wilaya " << wilaya->getName() << "with ID : " << wilayaid << " in the month " << month << " of the year " << year << " is :" << result << " DA" << endl;
@@ -497,7 +541,7 @@ private:
   // print wilaya summary info by  year
   void print_yearly_wilaya_sales(int wilayaid, int year)
   {
-    Wilaya *wilaya = *wilayas.getById(wilayaid);
+    Wilaya *wilaya = wilayas.getById(wilayaid);
     int result = wilaya->get_wilaya_total_sales_per_year(year); // contains the check if the wilaya exists
     if (result != 0)
       cout << "the total sales of the wilaya " << wilaya->getName() << "with ID : " << wilayaid << " in the year " << year << " is :" << result << " DA" << endl;
@@ -556,49 +600,49 @@ private:
   // Listing all the sales of a farmer in a land in a month
   void List_monthly_farmer_sales(int LandID, int year, int month)
   {
-    Land *land = *lands.getById(LandID);
+    Land *land = lands.getById(LandID);
     land->print_monthly_farmer_sales(year, month);
   }
   // Listing all the sales of a farmer in a land in a year
   void List_yearly_farmer_sales(int LandID, int year)
   {
-    Land *land = *lands.getById(LandID);
+    Land *land = lands.getById(LandID);
     land->print_yearly_farmer_sales(year);
   }
   // Listing all the sales of a farmer in a area in a month
   void List_monthly_farmer_sales_in_area(int areaID, int year, int month)
   {
-    Area *area = *areas.getById(areaID);
+    Area *area = areas.getById(areaID);
     area->print_area_monthly_farmer_sales(year, month);
   }
   // Listing all the sales of a farmer in a area in a year
   void List_yearly_farmer_sales_in_area(int areaID, int year)
   {
-    Area *area = *areas.getById(areaID);
+    Area *area = areas.getById(areaID);
     area->print_area_yearly_farmer_sales(year);
   }
   // Listing all the sales of a farmer in a city in a month
   void List_monthly_farmer_sales_in_city(int cityID, int year, int month)
   {
-    City *city = *cities.getById(cityID);
+    City *city = cities.getById(cityID);
     city->print_city_monthly_farmer_sales(year, month);
   }
   // Listing all the sales of a farmer in a city in a year
   void List_yearly_farmer_sales_in_city(int cityID, int year)
   {
-    City *city = *cities.getById(cityID);
+    City *city = cities.getById(cityID);
     city->print_city_yearly_farmer_sales(year);
   }
   // Listing all the sales of a farmer in a wilaya in a month
   void List_monthly_farmer_sales_in_wilaya(int wilayaID, int year, int month)
   {
-    Wilaya *wilaya = *wilayas.getById(wilayaID);
+    Wilaya *wilaya = wilayas.getById(wilayaID);
     wilaya->print_wilaya_monthly_farmer_sales(year, month);
   }
   // Listing all the sales of a farmer in a wilaya in a year
   void List_yearly_farmer_sales_in_wilaya(int wilayaID, int year)
   {
-    Wilaya *wilaya = *wilayas.getById(wilayaID);
+    Wilaya *wilaya = wilayas.getById(wilayaID);
     wilaya->print_wilaya_yearly_farmer_sales(year);
   }
   // Listing all the sales of a farmer in a country in a month
@@ -614,11 +658,130 @@ private:
   void List_yearly_farmer_sales_in_country(int year)
   {
     // iterating over all the wilayas
-    wilayas.iterate([year](Wilaya *wilaya) -> bool
-                    {
+    wilayas.iterate([year](Wilaya *wilaya) -> bool {
       wilaya->print_wilaya_yearly_farmer_sales(year);
-      return true; });
-  }
+      return true; 
+      });
+    }
+      // return true;
+  //   });
+  //   cout << dye::yellow("Winner in the ") << dye::green(category) << dye::yellow(" category:") << endl << *(winner->getFarmer()) << endl;
+  // }
+
+  
+
+  private:
+    template <typename T>
+    bool promptAndValidate(T& input, string message, bool is_integer = true/* , function<bool(T)> const& func */) {
+      if(is_integer) {
+        input = 0;
+        while(!input) {
+          cout << message;
+          string str; size_t pos;
+          getline(cin, str);
+          // Check if string contains number so it can proceed
+          bool contains_number = true;
+          for(char ch: str) {
+            if(!isdigit(ch)) {
+              contains_number = false;
+              break;
+            }
+          }
+          if(contains_number) { 
+            try {input = stoi(str, &pos);}
+            catch(const std::out_of_range& e) {
+              cout << dye::red("ERR: ID is beyond the range. Insert a more...logical number.") << endl;
+              continue;
+            }
+            if(pos != str.size()) {
+              // cin.clear();
+              // #ifndef __INTELLISENSE__
+              // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // discard input
+              // #endif
+              cout << dye::red("ERR: wrong input type. Please type again") << endl;
+              input = 0;
+            }
+          } else {
+            cout << dye::red("ERR: wrong input type. Please type again") << endl;
+            input = 0;
+          }
+        }
+      }
+      return true;
+    }
+
+    void getWinnerPrompt() {
+      int year = 0, month = 0, input = -1;
+      while(input) {
+        cout << dye::blue("How would you like to list the winners") << endl
+             << "1: List all winners in all categories" << endl
+             << "2: List all winner for a certain category" << endl
+             << "3: List winners for a certain year" << endl
+             << "4: List winners for a certain month" << endl;
+        promptAndValidate(input, "Enter your query: ");
+        switch(input) {
+          case 4:
+            while(!(year || month)) {
+              promptAndValidate(year, "Enter the year: ");
+              promptAndValidate(month, "Enter the month: ");
+            }
+            cout << "Select category from below: " << endl;
+            int i = 1;
+            for(string cat: categories) {
+              cout << "Category " << i++ << ": " << cat << endl;
+            }
+            promptAndValidate(input, "Enter the category: ");
+            while(input > 5 || input < 1) {
+              cout << dye::red("ERR: input doesn't exist. Please try again");
+              promptAndValidate(input, "Enter the category: ");
+            }
+            getWinner(year, month, categories[input - 1]);
+            break;
+        }
+      }
+    }
+
+    // void getLands() {
+    //   int input = -1, year = 0, month = 0; Land* land = nullptr;
+    //   cout << dye::blue("How would you like to access the lands? ") << endl
+    //        << "1: List all lands" << endl
+    //        << "2: List lands in a Wilaya" << endl
+    //        << "3: List lands in a City" << endl
+    //        << "4: List lands in a Area" << endl
+    //        << "5: Access a specific land" << endl;
+    //   while(input) {
+    //     promptAndValidate(input, "Enter your query: ");
+    //     switch (input)
+    //     {
+    //     case 1:
+    //       cout << setfill('=') << setw(40) << "" << endl;
+    //       wilayas.iterate([](Wilaya *wil) -> bool {
+    //         cout << *wil << endl;
+    //         return true; 
+    //       });
+    //       input = 0;
+    //       break;
+    //     case 5:
+    //       int inputId;
+    //       while(!land) {
+    //         cout << dye::light_green("Enter the ID of the land: ");
+    //         cin >> inputId;
+    //         land = lands.getById(inputId);
+            
+    //         if(!land) cout << dye::red("ERR: Land not found") << endl;
+    //       } 
+    //       cout << *land;
+    //       input = 0;
+    //       break;
+
+
+    //     default:
+    //       break;
+    //     }
+    //   }
+    // } 
+
+    
 };
 
 #endif

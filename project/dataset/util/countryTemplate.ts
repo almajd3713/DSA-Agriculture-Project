@@ -154,9 +154,9 @@ let countryTemplateNoId = {
     "Mansooura ": ["EL M'hir", "Haraza"]
   },
 
-  "Boumerdes": {
-    "Ouled moussa ": ["elhlaymiya", " elkouadria"],
-    " Ouled hadadj": [" sbaate", " bartela"]
+  Boumerdes: {
+    "Ouled moussa": ["elhlaymiya", "elkouadria"],
+    "Ouled hadadj": ["sbaate", "bartela"]
   },
 
   "El Tarf": {

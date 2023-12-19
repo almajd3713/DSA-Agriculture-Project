@@ -40,3 +40,10 @@ ostream& operator<<(ostream& os, const MonthlyReport& report) {
   os << *report.data<< endl;
   return os;
 }
+
+void to_json(json& j, const MonthlyReport& report) {
+  j = json {
+    {"month", report.getMonth()},
+    {"data", (json)*report.getProduction()}
+  };
+}

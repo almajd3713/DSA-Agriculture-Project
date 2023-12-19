@@ -49,8 +49,7 @@ friend ostream& operator<<(ostream&, const Land&);
    void print_monthly_farmer_sales(int year,int month);
    void print_yearly_farmer_sales(int year);
 
-
-   
+    friend void to_json(json&, const Land&);
 };
 
 

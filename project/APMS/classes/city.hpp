@@ -16,7 +16,7 @@ public:
     //getter and setter
 
     string getName()const;
-    int getCityId()const;
+    int getId()const;
     std::vector<Area*> getArea()const;
     void setName(const string &name);
     void setArea(const vector<Area*>& areas);
@@ -41,5 +41,6 @@ public:
 
     void print_city_monthly_farmer_sales(int year,int month);
     void print_city_yearly_farmer_sales(int year);
+    friend void to_json(json&, const City&);
 };
 

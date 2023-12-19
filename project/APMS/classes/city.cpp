@@ -25,7 +25,8 @@ std::string City::getName() const {
     return name;
 }
 
-int City::getCityId() const {
+int City::getId() const
+{
     return id;
 }
 
@@ -84,7 +85,7 @@ ostream &operator<<(ostream &os, const City& cit)
     //     os << *year << endl;
     // }
     cout << setfill('-') << setw(40) << "" << endl;
-    os << "City ID: " << cit.getCityId() << endl;
+    os << "City ID: " << cit.getId() << endl;
     os << "City: " << cit.getName() << endl;
     for(Area* area: cit.getArea()) {
         os << *area;
@@ -150,4 +151,14 @@ void City::print_city_yearly_farmer_sales(int year)
             area->print_area_yearly_farmer_sales(year);
             cout<<"============================================"<<endl;
         }
+}
+
+void to_json(json& j, const City& cit) {
+    j = json{
+        {"id", cit.getId()},
+        {"name", cit.getName()},
+        {"lands", "Bazingen"}};
+    for(Area* area: cit.getArea()) {
+        j["areas"].push_back(*area);
+    } 
 }

@@ -80,3 +80,12 @@ ostream& operator<<(ostream& out, const ProductCategory& rhs) {
 
   return out;
 }
+
+void to_json(json& j, const ProductCategory& cat) {
+  j = json {
+    {"name", cat.getName()},
+    {"basePrice", cat.getBasePrice()},
+    {"production", cat.getProduction()},
+    {"pesticideSeverity", cat.getPestSeverity()}
+  };
+}

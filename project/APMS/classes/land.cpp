@@ -121,7 +121,7 @@ int Land :: get_land_total_sales_per_year(int year){
   if(report == nullptr) 
    return 0;
   for( auto *month : report->getMonths()){
-   Sum+= month->getProduction()->summrisedSales();
+    Sum += month->getProduction()->summarizedSales();
   }
   return Sum;
 
@@ -163,43 +163,53 @@ int Land::get_land_total_sales_per_month(int year,int month){
   MonthlyReport * mReport = report->getMonthlyReport(month);
   if(mReport == nullptr) 
    return 0;
-  Sum+= mReport->getProduction()->summrisedSales();
+  Sum += mReport->getProduction()->summarizedSales();
   return Sum;
 }
 
-  void Land::print_monthly_farmer_sales(int year,int month)
-  {
-     cout << "Farmer: " << farmer->getName() << endl;
-    AnnualReport* report = getAnnualReport(year);
-    if(report != nullptr) {
-      MonthlyReport* mReport = report->getMonthlyReport(month);
-      if(mReport != nullptr) {
-        cout << "Monthly Sales: " << mReport->getProduction()->summrisedSales() << endl;
-      }
-      else {
-        cout << "No report for this month" << endl;
-      }
+void Land::print_monthly_farmer_sales(int year,int month)
+{
+    cout << "Farmer: " << farmer->getName() << endl;
+  AnnualReport* report = getAnnualReport(year);
+  if(report != nullptr) {
+    MonthlyReport* mReport = report->getMonthlyReport(month);
+    if(mReport != nullptr) {
+      cout << "Monthly Sales: " << mReport->getProduction()->summarizedSales() << endl;
     }
     else {
-      cout << "No report for this year" << endl;
+      cout << "No report for this month" << endl;
     }
   }
+  else {
+    cout << "No report for this year" << endl;
+  }
+}
 
 
-    void Land::print_yearly_farmer_sales(int year)
-    {
-      cout << "Farmer: " << farmer->getName() << endl;
-      AnnualReport* report = getAnnualReport(year);
-      if(report != nullptr) {
-     //iterrating over the months and print sales of each farmer
-        int sum=0;
-        for(auto month:report->getMonths()){
-          sum+=month->getProduction()->summrisedSales();
-        }
-        cout << "Yearly Sales: " << sum << endl;
-      }
-      else {
-        cout << "No report for this year" << endl;
-      }
-
+void Land::print_yearly_farmer_sales(int year)
+{
+  cout << "Farmer: " << farmer->getName() << endl;
+  AnnualReport* report = getAnnualReport(year);
+  if(report != nullptr) {
+  //iterrating over the months and print sales of each farmer
+    int sum=0;
+    for(auto month:report->getMonths()){
+      sum += month->getProduction()->summarizedSales();
     }
+    cout << "Yearly Sales: " << sum << endl;
+  }
+  else {
+    cout << "No report for this year" << endl;
+  }
+
+}
+
+void to_json(json& j, const Land& land) {
+  j = json {
+    {"id", land.getId()},
+    {"farmer", (json)*land.getFarmer()}
+  };
+  for(AnnualReport* rep: land.getReports()) {
+    j["report"].push_back(*rep);
+  }
+}

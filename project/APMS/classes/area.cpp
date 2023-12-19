@@ -121,20 +121,39 @@ ostream& operator<<(ostream& os, const Area& area) {
     return os;
 }
 
-  void Area::print_area_monthly_farmer_sales(int year,int month)
-  {       cout<<"Area: " << name << endl;
-        cout<<"Year :"<<year<<" Month :"<<month<<endl;
-        for(auto land : lands)
-        {
-            land->print_monthly_farmer_sales(year,month);
-            cout<<"============================================"<<endl;
-        }
+void Area::print_area_monthly_farmer_sales(int year,int month)
+{       cout<<"Area: " << name << endl;
+    cout<<"Year :"<<year<<" Month :"<<month<<endl;
+    for(auto land : lands)
+    {
+        land->print_monthly_farmer_sales(year,month);
+        cout<<"============================================"<<endl;
+    }
+}
+void Area:: print_area_yearly_farmer_sales(int year)
+{     cout<<"Area: " << name << endl;
+    cout<<"Year :"<<year<<endl;
+    for(auto land : lands)
+    {
+        land->print_yearly_farmer_sales(year);
+        cout<<"============================================"<<endl;
+    }
+}
+
+// ostream& operator<<(ostream& os, const Area& area) {
+//     cout << setfill('.') << setw(40) << "" << endl;
+//     os << "Area ID: " << area.getId() << endl;
+//     os << "Area: " << area.getName() << endl;
+//     cout << setfill('.') << setw(40) << "" << endl;
+//     return os;
+// }
+
+void to_json(json& j, const Area& area) {
+  j = json{
+    {"name", area.getName()},
+    {"id", area.getId()},
+  };
+  for(Land* land: area.getLands()) {
+    j["lands"].push_back(*land);
   }
-  void Area:: print_area_yearly_farmer_sales(int year)
-  {     cout<<"Area: " << name << endl;
-        cout<<"Year :"<<year<<endl;
-        for(auto land : lands)
-        {
-            land->print_yearly_farmer_sales(year);
-            cout<<"============================================"<<endl;
-        }}
+}
