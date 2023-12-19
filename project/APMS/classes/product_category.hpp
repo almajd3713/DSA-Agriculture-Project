@@ -6,6 +6,7 @@
 
 
 class ProductCategory {
+  friend ostream& operator<<(ostream&, const ProductCategory&);
   string name;
   double basePrice;
   double production;

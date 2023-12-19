@@ -25,7 +25,8 @@ std::string City::getName() const {
     return name;
 }
 
-int City::getCityId() const {
+int City::getId() const
+{
     return id;
 }
 
@@ -84,7 +85,7 @@ ostream &operator<<(ostream &os, const City& cit)
     //     os << *year << endl;
     // }
     cout << setfill('-') << setw(40) << "" << endl;
-    os << "City ID: " << cit.getCityId() << endl;
+    os << "City ID: " << cit.getId() << endl;
     os << "City: " << cit.getName() << endl;
     for(Area* area: cit.getArea()) {
         os << *area;
@@ -92,13 +93,71 @@ ostream &operator<<(ostream &os, const City& cit)
     cout << setfill('-') << setw(40) << "" << endl;
     return os;
 }
+//print resumed 
+void City::print_city_by_month(const int year,const int& month)
+{
+    cout<< "Year :"<<year<<endl;
+    cout<<"----------------------------------------"<<endl;
+    for(auto area : areas)
+    {
+        area->Print_Area_By_month(year,month);
+    }
+}
+void City::print_city_by_year(const int& year)
+{
+    cout<< "Year :"<<year<<endl;
+    cout<<"----------------------------------------"<<endl;
+    for(auto area : areas)
+    {
+        area->Print_Area_By_Year(year);
+    }
+}
+int City::get_city_total_sales_per_year(int year)
+{
+    int total=0;
+    for(auto area : areas)
+    {
+        total+=area->get_area_total_sales_per_year(year);
+    }
+    return total;
+}
+int City::get_city_total_sales_per_month(int year,int month)
+{
+    int total=0;
+    for(auto area : areas)
+    {
+        total+=area->get_area_total_sales_per_month(year,month);
+    }
+    return total;
+}
+
+ void City::print_city_monthly_farmer_sales(int year,int month)
+ {
+        cout<<"City: " << name << endl;
+        cout<<"Year :"<<year<<" Month :"<<month<<endl;
+        for(auto area : areas)
+        {
+            area->print_area_monthly_farmer_sales(year,month);
+            cout<<"============================================"<<endl;
+        }
+ }
+    
+void City::print_city_yearly_farmer_sales(int year)
+{
+        cout<<"City: " << name << endl;
+        cout<<"Year :"<<year<<endl;
+        for(auto area : areas)
+        {
+            area->print_area_yearly_farmer_sales(year);
+            cout<<"============================================"<<endl;
+        }
+}
 
 void to_json(json& j, const City& cit) {
-    j = json {
-        {"id", cit.getCityId()},
+    j = json{
+        {"id", cit.getId()},
         {"name", cit.getName()},
-        {"lands", "Bazingen"}
-    };
+        {"lands", "Bazingen"}};
     for(Area* area: cit.getArea()) {
         j["areas"].push_back(*area);
     } 

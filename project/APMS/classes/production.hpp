@@ -8,6 +8,7 @@
 #include "product_category.hpp"
 
 class Production {
+friend ostream& operator<<(ostream&, const Production&);//left for redwan to do it (unordered_map issues :( 
   int waterConsumption;
   int electricityConsumption;
   unordered_map<string, ProductCategory*> categories;
@@ -39,7 +40,10 @@ class Production {
     }
 
     friend ostream& operator<<(ostream&, const Production&);
-    friend void to_json(json&, const Production&);
+
+  // left foe redwan to deal with ordered map for summrised sales
+  int summarizedSales();
+  friend void to_json(json&, const Production&);
 
 };
 

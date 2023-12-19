@@ -80,3 +80,11 @@ void to_json(json& j, const Production& production) {
     j["products"].push_back(*val);
   }
 }
+
+int Production::summarizedSales() {
+  for(const pair<const string, ProductCategory*>& entry: getCategories()) {
+    // ProductCategory* cat = entry.second;
+    
+  }
+  return 1;
+}

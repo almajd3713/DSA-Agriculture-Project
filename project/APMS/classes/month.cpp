@@ -37,7 +37,7 @@ void MonthlyReport::setProduction(Production* new_data) {
 ostream& operator<<(ostream& os, const MonthlyReport& report) {
   os << "Month: " << report.month << endl;
   os << "Land Data: " << endl;
-  os << *(report.data) << endl;
+  os << *report.data<< endl;
   return os;
 }
 
