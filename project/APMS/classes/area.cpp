@@ -94,3 +94,13 @@ ostream& operator<<(ostream& os, const Area& area) {
     cout << setfill('.') << setw(40) << "" << endl;
     return os;
 }
+
+void to_json(json& j, const Area& area) {
+  j = json{
+    {"name", area.getName()},
+    {"id", area.getId()},
+  };
+  for(Land* land: area.getLands()) {
+    j["lands"].push_back(*land);
+  }
+}

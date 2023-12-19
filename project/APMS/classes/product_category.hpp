@@ -32,6 +32,7 @@ class ProductCategory {
   void setPestSeverity(PesticideSeverity);
 
   ProductCategory& operator=(const ProductCategory&);
+  friend void to_json(json&, const ProductCategory&);
   
 };
 

@@ -35,4 +35,5 @@ public:
     void Print_Area_By_Year(int year);
 
     friend ostream& operator<<(ostream&, const Area&);
+    friend void to_json(json&, const Area&);
 };

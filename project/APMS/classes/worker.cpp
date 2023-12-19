@@ -108,3 +108,21 @@ Land* Farmer::getLand() const {
 void Farmer::setLand(Land* new_land) {
   land = new_land;
 }
+
+void to_json(json& j, const Worker& worker) {
+  j = {
+    {"name", worker.getName()},
+    {"id", worker.getId()},
+    {"age", worker.getAge()},
+    {"gender", worker.getGender()}
+  };
+}
+
+void to_json(json& j, const Farmer& farmer) {
+  j = {
+    {"name", farmer.getName()},
+    {"id", farmer.getId()},
+    {"age", farmer.getAge()},
+    {"gender", farmer.getGender()}
+  };
+}

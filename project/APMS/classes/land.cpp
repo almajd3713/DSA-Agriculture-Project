@@ -102,3 +102,13 @@ AnnualReport* Land::getAnnualReport(int year) {
   }
   return nullptr;
 }
+
+void to_json(json& j, const Land& land) {
+  j = json {
+    {"id", land.getId()},
+    {"farmer", (json)*land.getFarmer()}
+  };
+  for(AnnualReport* rep: land.getReports()) {
+    j["report"].push_back(*rep);
+  }
+}

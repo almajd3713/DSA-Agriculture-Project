@@ -68,3 +68,12 @@ ProductCategory& ProductCategory::operator=(const ProductCategory& rhs) {
   pestSeverity = rhs.pestSeverity;
   return *this;
 }
+
+void to_json(json& j, const ProductCategory& cat) {
+  j = json {
+    {"name", cat.getName()},
+    {"basePrice", cat.getBasePrice()},
+    {"production", cat.getProduction()},
+    {"pesticideSeverity", cat.getPestSeverity()}
+  };
+}

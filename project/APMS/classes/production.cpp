@@ -70,3 +70,13 @@ ProductCategory* Production::getCategory(string cat) {
   if(categories.find(cat) != categories.end()) return categories[cat];
   else return nullptr;
 }
+
+void to_json(json& j, const Production& production) {
+  j = json {
+    {"waterConsumption", production.getWaterConsumption()},
+    {"electricityConsumption", production.getElectricityConsumption()}
+  };
+  for(const auto&[key, val]: production.getCategories()) {
+    j["products"].push_back(*val);
+  }
+}

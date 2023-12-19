@@ -19,6 +19,7 @@ class MonthlyReport {
     Production* getProduction() const;
     void setProduction(Production*);
     
+    friend void to_json(json&, const MonthlyReport&);
 };
 
 

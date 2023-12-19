@@ -39,7 +39,7 @@ class Production {
     }
 
     friend ostream& operator<<(ostream&, const Production&);
-
+    friend void to_json(json&, const Production&);
 
 };
 

@@ -11,10 +11,10 @@ The data sample
 TODO:
 
 - [x] Script for generating data
-- [ ] Predefined data (Real Wilayas, cities, ...)
+- [X] Predefined data (Real Wilayas, cities, ...)
 - [ ] Actual project
   - [x] JSON Reader/Writer
-  - [ ] Data Structures
+  - [X] Data Structures
   - [ ] Functions
   - [ ] Terminal Prompter
 - [ ] Directives on the data structure used

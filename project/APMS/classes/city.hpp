@@ -34,5 +34,6 @@ public:
     bool operator==(const City&);
 
     friend ostream& operator<<(ostream&, const City&);
+    friend void to_json(json&, const City&);
 };
 

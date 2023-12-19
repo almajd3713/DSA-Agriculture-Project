@@ -134,6 +134,16 @@ public:
     }
   }
 
+  void save(string path) {
+    cout << "Starting saving progress..." << endl;
+    json j;
+    wilayas.iterate([&j](Wilaya* wil) -> bool {
+      j.push_back(*wil);
+      return true;
+    });
+    rawFile.write(j, path);
+  }
+
   void printLandWorkersByYear(int id, int year) {
     // Accessing the lands using the areas name using getById
     Area* area = areas.getById(id);
