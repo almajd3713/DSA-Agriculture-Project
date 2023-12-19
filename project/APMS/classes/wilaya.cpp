@@ -107,3 +107,12 @@ ostream &operator<<(ostream &os, const Wilaya& wil)
   return os;
 }
 
+void to_json(json& j, const Wilaya& wil) {
+  j = json{
+    {"name", wil.getName()},
+    {"id", wil.getWilayaId()},
+  };
+  for(City* cit: wil.getCity()) {
+    j["cities"].push_back(*cit);
+  }
+}

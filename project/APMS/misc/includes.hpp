@@ -15,6 +15,8 @@
 #include <fstream>
 #include <unordered_map>
 
+#include "../../lib/json.hpp"
+
 using std::cout, std::cin, std::endl, std::stoi;
 using std::ostream, std::ifstream, std::ofstream;
 using std::string, std::move;
@@ -24,5 +26,6 @@ using std::setw, std::setfill;
 using std::queue, std::function;
 using std::is_pointer;
 
+using json = nlohmann::json;
 
 #endif

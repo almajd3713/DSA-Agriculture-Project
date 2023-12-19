@@ -38,6 +38,8 @@ class Worker {
     Worker& operator=(const Worker&);
     bool operator==(const Worker&);
     bool operator<(const Worker&);
+
+    friend void to_json(json&, const Worker&);
 };
 
 class Farmer : public Worker {
@@ -57,6 +59,9 @@ class Farmer : public Worker {
     bool operator<(const Farmer &);
     Land *getLand() const;
     void setLand(Land*);
+
+    friend void to_json(json&, const Farmer&);
+
 };
 
 

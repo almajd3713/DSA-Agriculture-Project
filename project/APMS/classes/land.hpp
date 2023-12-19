@@ -41,6 +41,8 @@ friend ostream& operator<<(ostream&, const Land&);
     bool operator<(const Land&);
     bool operator==(const Land&);
     Land& operator=(const Land&);
+
+    friend void to_json(json&, const Land&);
 };
 
 

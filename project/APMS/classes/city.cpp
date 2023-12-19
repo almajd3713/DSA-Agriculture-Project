@@ -92,3 +92,14 @@ ostream &operator<<(ostream &os, const City& cit)
     cout << setfill('-') << setw(40) << "" << endl;
     return os;
 }
+
+void to_json(json& j, const City& cit) {
+    j = json {
+        {"id", cit.getCityId()},
+        {"name", cit.getName()},
+        {"lands", "Bazingen"}
+    };
+    for(Area* area: cit.getArea()) {
+        j["areas"].push_back(*area);
+    } 
+}

@@ -4,8 +4,6 @@
 
 #include "includes.hpp"
 #include "./../../lib/json.hpp"
-using json = nlohmann::json;
-
 #include "exceptions.hpp"
 
 
@@ -44,14 +42,16 @@ class DBMS {
       fileReader.close();
       cout << "Data has been read" << endl;
     }
-    void write() {
-      fileWriter.open(filePath);
+    void write(json &j, string new_path)
+    {
+      fileWriter.open(new_path);
       if(!fileWriter.is_open())
         throw fileCouldNotBeOpenedException();
+      fileData = j;
       fileWriter << fileData.dump();
       fileWriter.close();
     }
-    
+
     json& operator[](const string& accessor) {
       if(!fileExists()) throw fileDoesNotExistException();
       return fileData[accessor];

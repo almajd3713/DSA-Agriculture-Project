@@ -35,6 +35,8 @@ public:
 
 	friend ostream &operator<<(ostream&, const Wilaya&);
 	string printWilaya(int);
+
+	friend void to_json(json&, const Wilaya&);
 };
 
 

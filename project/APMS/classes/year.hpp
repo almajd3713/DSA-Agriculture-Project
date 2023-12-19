@@ -35,6 +35,8 @@ class AnnualReport {
     // Why would you remove a month? Lord knows
     // void removeMonth(MonthlyReport*);
     // void removeMonth(int);
+
+    friend void to_json(json&, const AnnualReport&);
 };
 
 
