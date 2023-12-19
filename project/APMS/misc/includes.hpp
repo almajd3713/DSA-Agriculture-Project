@@ -1,3 +1,4 @@
+#pragma once
 #ifndef INCLUDESDSA
 #define INCLUDESDSA
 
@@ -14,7 +15,7 @@
 #include <fstream>
 #include <unordered_map>
 
-using std::cout, std::cin, std::endl;
+using std::cout, std::cin, std::endl, std::stoi;
 using std::ostream, std::ifstream, std::ofstream;
 using std::string, std::move;
 using std::filesystem::exists;

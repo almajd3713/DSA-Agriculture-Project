@@ -95,12 +95,12 @@ ostream &operator<<(ostream &os, const Wilaya& wil)
   // {
   //   os << *year << endl;
   // }
+  cout << setfill('=') << setw(40) << "" << endl;
   os << "Wilaya ID: " << wil.getWilayaId() << endl;
   os << "Wilaya: " << wil.getName() << endl;
   os << "Cities: " << endl;
-  cout << setfill('=') << setw(40) << "" << endl;
   for(City* cit: wil.getCity()) {
-    os << "\t" << *cit;
+    os << *cit;
   }
   cout << setfill('=') << setw(40) << "" << endl;
 

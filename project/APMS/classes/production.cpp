@@ -61,6 +61,7 @@ ostream &operator<<(ostream& os, const Production& data) {
     << "Total sales: " << it.second->getGrossSales() << endl
     << "Net sales: " << it.second->getPureSales() << endl
     << "==============================" << endl;
+    i++;
   }
   return os;
 };

@@ -136,7 +136,7 @@ public:
 
   void printLandWorkersByYear(int id, int year) {
     // Accessing the lands using the areas name using getById
-    Area* area = *areas.getById(id);
+    Area* area = areas.getById(id);
     for(auto land = area->getLands().begin(); land != area->getLands().end(); land++) {
       for(auto report = (*land)->getReports().begin(); report != (*land)->getReports().end(); report++) {
         if((*report)->getYear() == year) {
@@ -155,16 +155,21 @@ public:
 
   void start() {
     int input = 0;
+    printMenu();
     while(true) {
-      defaultPrompt(input);
+      input = defaultPrompt(input);
       switch (input)
       {
       case 3:
         getLands();
         break;
+      case 4:
+        getWinnerPrompt();
+        break;
       
       default:
-        cout << "Zamn, your choice doesn't exist! choose another one.";
+        cout << "This option does not exist. Try another one" << endl;
+        input = 0;
         break;
       }
     }
@@ -203,42 +208,122 @@ public:
       }
       return true;
     });
-    cout << "Final Winner of the month is " << winner->getFarmer()->getName() << "!" << "They got a ratio of " << ratio << endl;
+    cout << dye::yellow("Winner in the ") << dye::green(category) << dye::yellow(" category:") << endl << *(winner->getFarmer()) << endl;
   }
 
+  
+
   private:
-    void defaultPrompt(int &input)
-    {
-      // system("cls");
+    template <typename T>
+    bool promptAndValidate(T& input, string message, bool is_integer = true/* , function<bool(T)> const& func */) {
+      cout << message;
+      if(is_integer) {
+        input = 0;
+        while(!input) {
+          string str; size_t pos;
+          getline(cin, str);
+          // Check if string contains number so it can proceed
+          bool contains_number = false;
+          for(int i = 0; i < str.size(); i++) if(isdigit(str[i])) {
+            contains_number = true;
+            break;
+          }
+          if(contains_number) { 
+            input = stoi(str, &pos);
+            if(pos != str.size()) {
+              // cin.clear();
+              // #ifndef __INTELLISENSE__
+              // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // discard input
+              // #endif
+              cout << dye::red("ERR: wrong input type. Please type again") << endl;
+              input = 0;
+            }
+          } else {
+            cout << dye::red("ERR: wrong input type. Please type again") << endl;
+            input = 0;
+          }
+        }
+      }
+      return true;
+    }
+
+    void printMenu() {
       cout << setfill('=') << setw(60) << "" << endl
            << setfill(' ') << "** APMS System -- 1.3.77 -- All Rights Reserved" << endl
            << setfill('=') << setw(60) << "" << endl
            << setfill(' ') << "1: Print all lands" << endl
            << setfill('=') << setw(60) << "" << endl;
-      while (std::cout << "Enter query: " && !(std::cin >> input))
-      {
-        std::cin.clear();                                                   
-        // clear bad input flag
-        // This error doesnt actually exist. So it is ignored by the intellisense
-        #ifndef __INTELLISENSE__
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // discard input
-        #endif
-        std::cout << endl
-                  << "Invalid input; please re-enter.\n";
+    }
+    int defaultPrompt(int &input)
+    {
+      // system("cls");
+      // cout << "Enter query: "; cin >> input;
+      // if(!cin.good()) {
+      //   cout << dye::red("Error: wrong input type. Please enter a number.") << endl;
+      //   cin.clear();
+      //   #ifndef __INTELLISENSE__
+      //   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // discard input
+      //   #endif
+      //   return defaultPrompt(input);
+      // }
+      promptAndValidate(input, "Enter query: ");
+        
+      return input;
+    }
+      // while (std::cout << "Enter query: " && !(std::cin >> input))
+      // {
+      //   std::cin.clear();                                                   
+      //   // clear bad input flag
+      //   // This error doesnt actually exist. So it is ignored by the intellisense
+      //   #ifndef __INTELLISENSE__
+      //   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // discard input
+      //   #endif
+      //   std::cout << endl
+      //             << "This option does not exist. Use another one" << endl;
+      // }
+  
+
+    void getWinnerPrompt() {
+      int year = 0, month = 0, input = -1;
+      while(input) {
+        cout << dye::blue("How would you like to list the winners") << endl
+             << "1: List all winners in all categories" << endl
+             << "2: List all winner for a certain category" << endl
+             << "3: List winners for a certain year" << endl
+             << "4: List winners for a certain month" << endl;
+        promptAndValidate(input, "Enter your query: ");
+        switch(input) {
+          case 4:
+            while(!(year || month)) {
+              promptAndValidate(year, "Enter the year: ");
+              promptAndValidate(month, "Enter the month: ");
+            }
+            cout << "Select category from below: " << endl;
+            int i = 1;
+            for(string cat: categories) {
+              cout << "Category " << i++ << ": " << cat << endl;
+            }
+            promptAndValidate(input, "Enter the category: ");
+            while(input > 5 || input < 1) {
+              cout << dye::red("ERR: input doesn't exist. Please try again");
+              promptAndValidate(input, "Enter the category: ");
+            }
+            getWinner(year, month, categories[input - 1]);
+            break;
+        }
       }
     }
 
     void getLands() {
-      int input = -1, year = 0, month = 0;
+      int input = -1, year = 0, month = 0; Land* land = nullptr;
+      cout << dye::blue("How would you like to access the lands? ") << endl
+           << "1: List all lands" << endl
+           << "2: List lands in a Wilaya" << endl
+           << "3: List lands in a City" << endl
+           << "4: List lands in a Area" << endl
+           << "5: Access a specific land" << endl;
       while(input) {
-        cout << "How would you like to access the lands? " << endl
-             << "1: List all lands" << endl
-             << "2: List lands in a Wilaya" << endl
-             << "3: List lands in a City" << endl
-             << "4: List lands in a Area" << endl
-             << "5: Access a specific land" << endl
-             << "Enter your query number: ";
-        cin >> input;
+        promptAndValidate(input, "Enter your query: ");
         switch (input)
         {
         case 1:
@@ -249,6 +334,19 @@ public:
           });
           input = 0;
           break;
+        case 5:
+          int inputId;
+          while(!land) {
+            cout << dye::light_green("Enter the ID of the land: ");
+            cin >> inputId;
+            land = lands.getById(inputId);
+            
+            if(!land) cout << dye::red("ERR: Land not found") << endl;
+          } 
+          cout << *land;
+          input = 0;
+          break;
+
 
         default:
           break;
@@ -256,6 +354,8 @@ public:
       }
 
     } 
+
+    
 };
 
 

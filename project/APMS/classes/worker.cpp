@@ -94,7 +94,7 @@ ostream& operator<<(ostream & out,const Farmer&rhs)
   out << "name : " << rhs.getName() << endl;
   out << "ID: " << rhs.getId()  << endl;
   out<< "Age: " << rhs.getAge() << endl;
-  out<<"gender: " << rhs.getGender() << endl;
+  out<<"gender: " << (rhs.getGender() ? "Female" : "Male") << endl;
   return out;
 
 }
