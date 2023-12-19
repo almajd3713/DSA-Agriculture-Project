@@ -97,6 +97,36 @@ ostream &operator<<(ostream &os, const Land &land)
   }
   return os;
 }
+
+void Land:: printMonthlyReport(int year, int month)
+{    
+  cout << "Land ID: " << id << endl;
+  AnnualReport* report = getAnnualReport(year);
+  if(report != nullptr) {
+    MonthlyReport* mReport = report->getMonthlyReport(month);
+    if(mReport != nullptr) {
+      cout << *mReport << endl;
+    }
+    else {
+      cout << "No report for this month" << endl;
+    }
+  }
+  else {
+    cout << "No report for this year" << endl;
+  }
+}
+int Land :: get_land_total_sales_per_year(int year){
+  int Sum=0;
+  AnnualReport * report =getAnnualReport(year);
+  if(report == nullptr) 
+   return 0;
+  for( auto *month : report->getMonths()){
+   Sum+= month->getProduction()->summrisedSales();
+  }
+  return Sum;
+
+}
+
 // must be implimented with hash table
 // void Land::printAnualReport(int year)
 // {
@@ -107,14 +137,14 @@ ostream &operator<<(ostream &os, const Land &land)
   //   if (report->getYear() == year)
   //   {
 
-void Land::printAnualReport(int year) {
+void Land::printAnnualReport(int year) {
   cout << "Land ID: " << id << endl;
-  for (auto report : reports) {
-    cout << *farmer << endl;
-    if (report->getYear() == year) {
-      
-      cout << *report << endl;
-    }
+ AnnualReport* report = getAnnualReport(year);
+  if(report != nullptr) {
+    cout << *report << endl;
+  }
+  else {
+    cout << "No report for this year" << endl;
   }
 }
 
@@ -124,3 +154,52 @@ AnnualReport* Land::getAnnualReport(int year) {
   }
   return nullptr;
 }
+
+int Land::get_land_total_sales_per_month(int year,int month){
+  int Sum=0;
+  AnnualReport * report =getAnnualReport(year);
+  if(report == nullptr) 
+   return 0;
+  MonthlyReport * mReport = report->getMonthlyReport(month);
+  if(mReport == nullptr) 
+   return 0;
+  Sum+= mReport->getProduction()->summrisedSales();
+  return Sum;
+}
+
+  void Land::print_monthly_farmer_sales(int year,int month)
+  {
+     cout << "Farmer: " << farmer->getName() << endl;
+    AnnualReport* report = getAnnualReport(year);
+    if(report != nullptr) {
+      MonthlyReport* mReport = report->getMonthlyReport(month);
+      if(mReport != nullptr) {
+        cout << "Monthly Sales: " << mReport->getProduction()->summrisedSales() << endl;
+      }
+      else {
+        cout << "No report for this month" << endl;
+      }
+    }
+    else {
+      cout << "No report for this year" << endl;
+    }
+  }
+
+
+    void Land::print_yearly_farmer_sales(int year)
+    {
+      cout << "Farmer: " << farmer->getName() << endl;
+      AnnualReport* report = getAnnualReport(year);
+      if(report != nullptr) {
+     //iterrating over the months and print sales of each farmer
+        int sum=0;
+        for(auto month:report->getMonths()){
+          sum+=month->getProduction()->summrisedSales();
+        }
+        cout << "Yearly Sales: " << sum << endl;
+      }
+      else {
+        cout << "No report for this year" << endl;
+      }
+
+    }

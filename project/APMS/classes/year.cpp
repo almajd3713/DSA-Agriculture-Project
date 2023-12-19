@@ -77,3 +77,12 @@ MonthlyReport* AnnualReport::getMonthlyReport(int month) {
   }
   else return months[month - 1];
 }
+int summrisedSalesperyear(){
+  int sum=0;
+  AnnualReport AnnualReport;
+  for(auto month:AnnualReport.getMonths()){
+    sum+=month->getProduction()->summrisedSales();
+  }
+  return sum;
+}
+
