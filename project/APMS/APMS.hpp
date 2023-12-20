@@ -543,140 +543,255 @@ private:
   void print_monthly_land_info(int landId, int year, int month)
   {
     Land *land = lands.getById(landId);
-    land->printMonthlyReport(year, month); // contains the check if the land exists
+    //cheking if the land exists
+    if (land != nullptr)
+    {
+      land->printMonthlyReport(year, month);
+    }
+    else
+    {
+      cout << "the land with ID " << landId << " doesn't exist" << endl;
+    }
   }
   // print land detailed info by  year
   void print_yearly_land_info(int landId, int year)
   {
     Land *land = lands.getById(landId);
-    land->printAnnualReport(year); // contains the check if the land exists
+    //cheking if the land exists
+    if (land != nullptr)
+    {
+      land->printAnnualReport(year);
+    }
+    else
+    {
+      cout << "the land with ID " << landId << " doesn't exist" << endl;
+    }
   }
   // print land summary info by  month
   void print_monthly_land_sales(int landid, int year, int month)
   {
-    Land *land = lands.getById(landid);
+    Land *land =lands.getById(landid);
+    //cheking if the land exists
+    if(land == nullptr) {
+      cout << "the land with ID " << landid << " doesn't exist" << endl;
+    }
+    else{
     int result = land->get_land_total_sales_per_month(year, month); // contains the check if the land exists
     if (result != 0)
       cout << "the total sales of the land " << landid << " in the month " << month << " of the year " << year << " is :" << result << " DA" << endl;
     else
       cout << "  the land  " << landid << " has no sales in this month " << endl;
+    }
   }
   // print land summary info by  year
   void print_yearly_land_sales(int landid, int year)
   {
     Land *land = lands.getById(landid);
-    int result = land->get_land_total_sales_per_year(year); // contains the check if the land exists
-    if (result != 0)
-      cout << "the total sales of the land " << landid << " in the year " << year << " is :" << result << " DA" << endl;
+    //cheking if the land exists
+    if (land == nullptr)
+    {
+      cout << "the land with ID " << landid << " doesn't exist" << endl;
+    }
     else
-      cout << "  the land  " << landid << " has no sales in this year " << endl;
+    {
+      int result = land->get_land_total_sales_per_year(year); // contains the check if the land exists
+      if (result != 0)
+        cout << "the total sales of the land " << landid << " in the year " << year << " is :" << result << " DA" << endl;
+      else
+        cout << "  the land  " << landid << " has no sales in this year " << endl;
+    }
   }
 
   // print area detailed info by  month
   void print_monthly_area_info(int areaId, int year, int month)
   {
     Area *area = areas.getById(areaId);
-    area->Print_Area_By_month(year, month); // contains the check if the area exists
+    //cheking if the area exists
+    if (area != nullptr)
+    {
+      area->Print_Area_By_month(year, month);
+    }
+    else
+    {
+      cout << "the area with ID " << areaId << " doesn't exist" << endl;
+    }
   }
 
   // print area detailed info by  year
   void print_yearly_area_info(int areaId, int year)
   {
     Area *area = areas.getById(areaId);
-    area->Print_Area_By_Year(year); // contains the check if the area exists
+    //cheking if the area exists
+    if (area != nullptr)
+    {
+      area->Print_Area_By_Year(year);
+    }
+    else
+    {
+      cout << "the area with ID " << areaId << " doesn't exist" << endl;
+    }
+  
   }
 
   // print area summary info by  month
   void print_monthly_area_sales(int areaid, int year, int month)
   {
     Area *area = areas.getById(areaid);
+    //cheking if the area exists
+    if(area == nullptr) {
+      cout << "the area with ID " << areaid << " doesn't exist" << endl;
+    }
+    else{
     int result = area->get_area_total_sales_per_month(year, month); // contains the check if the area exists
     if (result != 0)
       cout << "the total sales of the area " << area->getName() << "with ID : " << areaid << " in the month " << month << " of the year " << year << " is :" << result << " DA" << endl;
     else
       cout << "  the area  " << area->getName() << "with ID : " << areaid << " has no sales in this month " << endl;
   }
-
+  }
   // print area summary info by  year
   void print_yearly_area_sales(int areaid, int year)
   {
     Area *area = areas.getById(areaid);
+    //cheking if the area exists
+    if(area == nullptr) {
+      cout << "the area with ID " << areaid << " doesn't exist" << endl;
+    }
+    else{
     int result = area->get_area_total_sales_per_year(year); // contains the check if the area exists
     if (result != 0)
       cout << "the total sales of the area " << area->getName() << "with ID : " << areaid << " of the year " << year << " is :" << result << " DA" << endl;
     else
       cout << "  the area  " << area->getName() << "with ID : " << areaid << " has no sales in this month " << endl;
   }
+  }
 
   // print city detailed info by  month
   void print_monthly_city_info(int cityId, int year, int month)
   {
     City *city = cities.getById(cityId);
-    city->print_city_by_month(year, month); // contains the check if the city exists
+    //cheking if the city exists
+    if (city != nullptr)
+    {
+      city->print_city_by_month(year, month);
+    }
+    else
+    {
+      cout << "the city with ID " << cityId << " doesn't exist" << endl;
+    }
   }
 
   // print city detailed info by  year
   void print_yearly_city_info(int cityId, int year)
   {
     City *city = cities.getById(cityId);
-    city->print_city_by_year(year); // contains the check if the city exists
+    //cheking if the city exists
+    if (city != nullptr)
+    {
+      city->print_city_by_year(year);
+    }
+    else
+    {
+      cout << "the city with ID " << cityId << " doesn't exist" << endl;
+    }
+   
   }
 
   // print city summary info by  month
   void print_monthly_city_sales(int cityid, int year, int month)
   {
     City *city = cities.getById(cityid);
+    //cheking if the city exists
+    if(city == nullptr) {
+      cout << "the city with ID " << cityid << " doesn't exist" << endl;
+    }
+    else{
     int result = city->get_city_total_sales_per_month(year, month); // contains the check if the city exists
     if (result != 0)
       cout << "the total sales of the city " << city->getName() << "with ID : " << cityid << " in the month " << month << " of the year " << year << " is :" << result << " DA" << endl;
     else
       cout << "  the city  " << city->getName() << "with ID : " << cityid << " has no sales in this month " << endl;
   }
+  }
 
   // print city summary info by  year
   void print_yearly_city_sales(int cityid, int year)
   {
     City *city = cities.getById(cityid);
+    //cheking if the city exists
+    if(city == nullptr) {
+      cout << "the city with ID " << cityid << " doesn't exist" << endl;
+    }
+    else{
     int result = city->get_city_total_sales_per_year(year); // contains the check if the city exists
     if (result != 0)
       cout << "the total sales of the city " << city->getName() << "with ID : " << cityid << " in the year " << year << " is :" << result << " DA" << endl;
     else
       cout << "  the city  " << city->getName() << "with ID : " << cityid << " has no sales in this year " << endl;
   }
+  }
   // print wilaya detailed info by  month
   void print_monthly_wilaya_info(int wilayaId, int year, int month)
   {
     Wilaya *wilaya = wilayas.getById(wilayaId);
-    wilaya->print_wilaya_by_month(year, month); // contains the check if the wilaya exists
+    //cheking if the wilaya exists
+    if (wilaya != nullptr)
+    {
+      wilaya->print_wilaya_by_month(year, month);
+    }
+    else
+    {
+      cout << "the wilaya with ID " << wilayaId << " doesn't exist" << endl;
+    }
   }
 
   // print wilaya detailed info by  year
   void print_yearly_wilaya_info(int wilayaId, int year)
   {
     Wilaya *wilaya = wilayas.getById(wilayaId);
-    wilaya->print_wilaya_by_year(year); // contains the check if the wilaya exists
+    //cheking if the wilaya exists
+    if (wilaya != nullptr)
+    {
+      wilaya->print_wilaya_by_year(year);
+    }
+    else
+    {
+      cout << "the wilaya with ID " << wilayaId << " doesn't exist" << endl;
+    }
   }
 
   // print wilaya summary info by  month
   void print_monthly_wilaya_sales(int wilayaid, int year, int month)
   {
     Wilaya *wilaya = wilayas.getById(wilayaid);
+    //cheking if the wilaya exists
+    if(wilaya == nullptr) {
+      cout << "the wilaya with ID " << wilayaid << " doesn't exist" << endl;
+    }
+    else{
     int result = wilaya->get_wilaya_total_sales_per_month(year, month); // contains the check if the wilaya exists
     if (result != 0)
       cout << "the total sales of the wilaya " << wilaya->getName() << "with ID : " << wilayaid << " in the month " << month << " of the year " << year << " is :" << result << " DA" << endl;
     else
       cout << "  the wilaya  " << wilaya->getName() << "with ID : " << wilayaid << " has no sales in this month " << endl;
   }
+  }
 
   // print wilaya summary info by  year
   void print_yearly_wilaya_sales(int wilayaid, int year)
   {
     Wilaya *wilaya = wilayas.getById(wilayaid);
+    //cheking if the wilaya exists
+    if(wilaya == nullptr) {
+      cout << "the wilaya with ID " << wilayaid << " doesn't exist" << endl;
+    }
+    else{
     int result = wilaya->get_wilaya_total_sales_per_year(year); // contains the check if the wilaya exists
     if (result != 0)
       cout << "the total sales of the wilaya " << wilaya->getName() << "with ID : " << wilayaid << " in the year " << year << " is :" << result << " DA" << endl;
     else
       cout << "  the wilaya  " << wilaya->getName() << "with ID : " << wilayaid << " has no sales in this year " << endl;
+  }
   }
   // print country detailed info by  month
   void print_monthly_country_info(int year, int month)
@@ -731,49 +846,113 @@ private:
   void List_monthly_farmer_sales(int LandID, int year, int month)
   {
     Land *land = lands.getById(LandID);
-    land->print_monthly_farmer_sales(year, month);
+    //cheking if the land exists
+    if (land != nullptr)
+    {
+      land->print_monthly_farmer_sales(year, month);
+    }
+    else
+    {
+      cout << "the land with ID " << LandID << " doesn't exist" << endl;
+    }
   }
   // Listing all the sales of a farmer in a land in a year
   void List_yearly_farmer_sales(int LandID, int year)
   {
     Land *land = lands.getById(LandID);
-    land->print_yearly_farmer_sales(year);
+    //cheking if the land exists
+    if (land != nullptr)
+    {
+      land->print_yearly_farmer_sales(year);
+    }
+    else
+    {
+      cout << "the land with ID " << LandID << " doesn't exist" << endl;
+    }
   }
   // Listing all the sales of a farmer in a area in a month
   void List_monthly_farmer_sales_in_area(int areaID, int year, int month)
   {
     Area *area = areas.getById(areaID);
-    area->print_area_monthly_farmer_sales(year, month);
+    //cheking if the area exists
+    if (area != nullptr)
+    {
+      area->print_area_monthly_farmer_sales(year, month);
+    }
+    else
+    {
+      cout << "the area with ID " << areaID << " doesn't exist" << endl;
+    }
   }
   // Listing all the sales of a farmer in a area in a year
   void List_yearly_farmer_sales_in_area(int areaID, int year)
   {
     Area *area = areas.getById(areaID);
-    area->print_area_yearly_farmer_sales(year);
+    //cheking if the area exists
+    if (area != nullptr)
+    {
+      area->print_area_yearly_farmer_sales(year);
+    }
+    else
+    {
+      cout << "the area with ID " << areaID << " doesn't exist" << endl;
+    }
   }
   // Listing all the sales of a farmer in a city in a month
   void List_monthly_farmer_sales_in_city(int cityID, int year, int month)
   {
     City *city = cities.getById(cityID);
-    city->print_city_monthly_farmer_sales(year, month);
+    //cheking if the city exists
+    if (city != nullptr)
+    {
+      city->print_city_monthly_farmer_sales(year, month);
+    }
+    else
+    {
+      cout << "the city with ID " << cityID << " doesn't exist" << endl;
+    }
   }
   // Listing all the sales of a farmer in a city in a year
   void List_yearly_farmer_sales_in_city(int cityID, int year)
   {
     City *city = cities.getById(cityID);
-    city->print_city_yearly_farmer_sales(year);
+    //cheking if the city exists
+    if (city != nullptr)
+    {
+      city->print_city_yearly_farmer_sales(year);
+    }
+    else
+    {
+      cout << "the city with ID " << cityID << " doesn't exist" << endl;
+    }
   }
   // Listing all the sales of a farmer in a wilaya in a month
   void List_monthly_farmer_sales_in_wilaya(int wilayaID, int year, int month)
   {
     Wilaya *wilaya = wilayas.getById(wilayaID);
-    wilaya->print_wilaya_monthly_farmer_sales(year, month);
+    //cheking if the wilaya exists
+    if (wilaya != nullptr)
+    {
+      wilaya->print_wilaya_monthly_farmer_sales(year, month);
+    }
+    else
+    {
+      cout << "the wilaya with ID " << wilayaID << " doesn't exist" << endl;
+    }
   }
   // Listing all the sales of a farmer in a wilaya in a year
   void List_yearly_farmer_sales_in_wilaya(int wilayaID, int year)
   {
     Wilaya *wilaya = wilayas.getById(wilayaID);
-    wilaya->print_wilaya_yearly_farmer_sales(year);
+    //cheking if the wilaya exists
+    if (wilaya != nullptr)
+    {
+      wilaya->print_wilaya_yearly_farmer_sales(year);
+    }
+    else
+    {
+      cout << "the wilaya with ID " << wilayaID << " doesn't exist" << endl;
+    }
   }
   // Listing all the sales of a farmer in a country in a month
   void List_monthly_farmer_sales_in_country(int year, int month)
