@@ -43,6 +43,11 @@ public:
 
 	void print_wilaya_monthly_farmer_sales(int year,int month);
 	void print_wilaya_yearly_farmer_sales(int year);
+
+
+	// functions to print the monthly and yearly penalty of the wilaya (query 3)
+	void print_wilaya_monthly_penalty(int year,int month,string category_name);
+	void print_wilaya_yearly_penalty(int year,string category_name);
 };
 
 

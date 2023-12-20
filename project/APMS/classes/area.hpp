@@ -41,7 +41,12 @@ public:
 
     friend ostream& operator<<(ostream&, const Area&);
 
-
+   //query two of the document project
     void print_area_monthly_farmer_sales(int year,int month);
     void print_area_yearly_farmer_sales(int year);
+   
+    // functions to print the monthly and yearly penalty of the area (query 3)
+    void print_Area_monthly_penalty(int year,int month,string category_name);
+    void print_Area_yearly_penalty(int year,string category_name);
+
 };

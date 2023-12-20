@@ -138,3 +138,32 @@ ostream& operator<<(ostream& os, const Area& area) {
             land->print_yearly_farmer_sales(year);
             cout<<"============================================"<<endl;
         }}
+
+// functions to print the monthly  penalty of the area
+
+ void Area::print_Area_monthly_penalty(int year,int month,string category_name)
+ {
+   //iterating over the years and then over the months
+    cout<<"Area: " << name << endl;
+    cout<<"Year :"<<year<<" Month :"<<month<<endl;
+    for(auto land : lands)
+    {
+        land->print_Land_monthly_penalty(year,month,category_name);
+        cout<<"============================================"<<endl;
+    }
+
+
+
+ }
+  void Area::print_Area_yearly_penalty(int year,string category_name)
+  {
+    //iterating over the years and then over the months
+    cout<<"Area: " << name << endl;
+    cout<<"Year :"<<year<<endl;
+    for(auto land : lands)
+    {
+        land->print_Land_yearly_penalty(year,category_name);
+        cout<<"============================================"<<endl;
+    }
+
+  }

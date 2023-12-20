@@ -45,11 +45,15 @@ friend ostream& operator<<(ostream&, const Land&);
    // these function are for resumed print that return  all the sales in specific year
    int get_land_total_sales_per_year(int year);
    int get_land_total_sales_per_month(int year,int month);
-
+   //query two of the document project 
    void print_monthly_farmer_sales(int year,int month);
    void print_yearly_farmer_sales(int year);
 
+// functions to print the monthly and yearly penalty of the land (query 3)
+void print_Land_monthly_penalty(int year,int month,string category_name); 
+void print_Land_yearly_penalty(int year,string category_name);
 
+  
    
 };
 

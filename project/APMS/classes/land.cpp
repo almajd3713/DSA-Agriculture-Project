@@ -203,3 +203,42 @@ int Land::get_land_total_sales_per_month(int year,int month){
       }
 
     }
+
+// functions to print the monthly  penalty of the land
+void Land::print_Land_monthly_penalty(int year,int month,string category_name)
+{
+   //iterating over the years and then over the months
+    AnnualReport * report =getAnnualReport(year);
+    if(report == nullptr)
+    {
+      cout<<"No report for this year"<<endl;
+      return;
+    }
+    MonthlyReport * mReport = report->getMonthlyReport(month);
+    if(mReport == nullptr)
+    {
+      cout<<"No report for this month"<<endl;
+      return;
+    }
+    cout<<"Farmer: "<<farmer->getName()<<endl;
+    cout<<"Monthly Penalty of the category  "<<category_name<<"is :"<<mReport->getProduction()->get_Category_Penalty(category_name)<<" DA"<<endl;
+
+} 
+// functions to print the yearly  penalty of the land
+void Land::print_Land_yearly_penalty(int year,string category_name)
+{
+    //iterating over the years and then over the months
+      AnnualReport * report =getAnnualReport(year);
+      if(report == nullptr)
+      {
+        cout<<"No report for this year"<<endl;
+        return;
+      }
+      cout<<"Farmer: "<<farmer->getName()<<endl;
+      int sum=0;
+      for(auto month:report->getMonths()){
+        sum+=month->getProduction()->get_Category_Penalty(category_name);
+      }
+      cout<<"Yearly Penalty of the category : "<<category_name<<" is : "<<sum<<" DA"<<endl;
+
+}

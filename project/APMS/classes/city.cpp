@@ -151,3 +151,25 @@ void City::print_city_yearly_farmer_sales(int year)
             cout<<"============================================"<<endl;
         }
 }
+//query 3
+void City::print_city_monthly_penalty(int year,int month,string category_name)
+{
+    cout<<"City: " << name << endl;
+    cout<<"Year :"<<year<<" Month :"<<month<<endl;
+    for(auto area : areas)
+    {
+        area->print_Area_monthly_penalty(year,month,category_name);
+        cout<<"============================================"<<endl;
+    }
+}
+//query 3
+void City::print_city_yearly_penalty(int year,string category_name)
+{
+    cout<<"City: " << name << endl;
+    cout<<"Year :"<<year<<endl;
+    for(auto area : areas)
+    {
+        area->print_Area_yearly_penalty(year,category_name);
+        cout<<"============================================"<<endl;
+    }
+}

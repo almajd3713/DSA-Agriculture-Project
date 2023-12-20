@@ -38,8 +38,11 @@ public:
     int get_city_total_sales_per_month(int year,int month);
 
     friend ostream& operator<<(ostream&, const City&);
-
+    //query two of the document project
     void print_city_monthly_farmer_sales(int year,int month);
     void print_city_yearly_farmer_sales(int year);
+    // functions to print the monthly and yearly  penalty of the city(query 3)
+    void print_city_monthly_penalty(int year,int month,string category_name);
+    void print_city_yearly_penalty(int year,string category_name);
 };
 

@@ -798,6 +798,138 @@ private:
       wilaya->print_wilaya_yearly_farmer_sales(year);
       return true; });
   }
+
+  //listing the penalties of a farmer  in a month in a specific category
+  void List_monthly_farmer_penalty(int landID, int year, int month, string category)
+  {
+    Land *land = *lands.getById(landID);
+    //cheking if the land exists
+    if (land != nullptr)
+    {
+      land->print_Land_monthly_penalty(year, month, category);
+    }
+    else
+    {
+      cout << "the land with ID " << landID << " doesn't exist" << endl;
+    }
+  }
+  //listing the penalties of a farmer  in a year in a specific category
+  void List_yearly_farmer_penalty(int landID, int year, string category)
+  {
+    Land *land = *lands.getById(landID);
+    //cheking if the land exists
+    if (land != nullptr)
+    {
+      land->print_Land_yearly_penalty(year, category);
+    }
+    else
+    {
+      cout << "the land with ID " << landID << " doesn't exist" << endl;
+    }
+  }
+  //listing the penalties of a farmer  in a month in a specific category
+  void List_area_monthly_farmers_penalties(int areaID, int year, int month, string category)
+  {
+    Area *area = *areas.getById(areaID);
+    //cheking if the area exists
+    if (area != nullptr)
+    {
+      area->print_Area_monthly_penalty(year, month, category);
+    }
+    else
+    {
+      cout << "the area with ID " << areaID << " doesn't exist" << endl;
+    }
+  }
+  //listing the penalties of a farmer  in a year in a specific category
+  void List_area_yearly_farmers_penalties(int areaID, int year, string category)
+  {
+    Area *area = *areas.getById(areaID);
+    //cheking if the area exists
+    if (area != nullptr)
+    {
+      area->print_Area_yearly_penalty(year, category);
+    }
+    else
+    {
+      cout << "the area with ID " << areaID << " doesn't exist" << endl;
+    }
+  }
+  //listing the penalties of a farmer  in a month in a specific category
+  void List_city_monthly_farmers_penalties(int cityID, int year, int month, string category)
+  {
+    City *city = *cities.getById(cityID);
+    //cheking if the city exists
+    if (city != nullptr)
+    {
+      city->print_city_monthly_penalty(year, month, category);
+    }
+    else
+    {
+      cout << "the city with ID " << cityID << " doesn't exist" << endl;
+    }
+  }
+  //listing the penalties of a farmer  in a year in a specific category
+  void List_city_yearly_farmers_penalties(int cityID, int year, string category)
+  {
+    City *city = *cities.getById(cityID);
+    //cheking if the city exists
+    if (city != nullptr)
+    {
+      city->print_city_yearly_penalty(year, category);
+    }
+    else
+    {
+      cout << "the city with ID " << cityID << " doesn't exist" << endl;
+    }
+  }
+  //listing the penalties of a farmer  in a month in a specific category
+  void List_wilaya_monthly_farmers_penalties(int wilayaID, int year, int month, string category)
+  {
+    Wilaya *wilaya = *wilayas.getById(wilayaID);
+    //cheking if the wilaya exists
+    if (wilaya != nullptr)
+    {
+      wilaya->print_wilaya_monthly_penalty(year, month, category);
+    }
+    else
+    {
+      cout << "the wilaya with ID " << wilayaID << " doesn't exist" << endl;
+    }
+  }
+  //listing the penalties of a farmer  in a year in a specific category
+  void List_wilaya_yearly_farmers_penalties(int wilayaID, int year, string category)
+  {
+    Wilaya *wilaya = *wilayas.getById(wilayaID);
+    //cheking if the wilaya exists
+    if (wilaya != nullptr)
+    {
+      wilaya->print_wilaya_yearly_penalty(year, category);
+    }
+    else
+    {
+      cout << "the wilaya with ID " << wilayaID << " doesn't exist" << endl;
+    }
+  }
+  //listing the penalties of a farmer  in a month in a specific category
+  void List_country_monthly_farmers_penalties(int year, int month, string category)
+  {
+    // iterating over all the wilayas
+    wilayas.iterate([year, month, category](Wilaya *wilaya) -> bool
+                    {
+      wilaya->print_wilaya_monthly_penalty(year, month, category);
+      return true; });
+  }
+  //listing the penalties of a farmer  in a year in a specific category
+  void List_country_yearly_farmers_penalties(int year, string category)
+  {
+    // iterating over all the wilayas
+    wilayas.iterate([year, category](Wilaya *wilaya) -> bool
+                    {
+      wilaya->print_wilaya_yearly_penalty(year, category);
+      return true; });
+  }
+ 
 };
 
 #endif

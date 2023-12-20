@@ -43,6 +43,9 @@ friend ostream& operator<<(ostream&, const Production&);//left for redwan to do 
 
    //left foe redwan to deal with ordered map for summrised sales
    int summrisedSales();
+
+   //left for redwan to deal with ordered map for summrised sales
+   float get_Category_Penalty(string category_name);
 };
 
 
