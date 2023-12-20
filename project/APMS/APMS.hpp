@@ -380,13 +380,13 @@ private:
     }
   }
   // print land detailed info by  year
-  void print_monthly_land_info(int landId, int year)
+  void print_yearly_land_info(int landId, int year,int choice)
   {
     Land *land = *lands.getById(landId);
     //cheking if the land exists
     if (land != nullptr)
     {
-      land->printAnnualReport(year);
+      land->printAnnualReport(year,choice);
     }
     else
     {
@@ -444,13 +444,13 @@ private:
   }
 
   // print area detailed info by  year
-  void print_yearly_area_info(int areaId, int year)
+  void print_yearly_area_info(int areaId, int year,int choice)
   {
     Area *area = *areas.getById(areaId);
     //cheking if the area exists
     if (area != nullptr)
     {
-      area->Print_Area_By_Year(year);
+      area->Print_Area_By_Year(year,choice);
     }
     else
     {
@@ -508,13 +508,13 @@ private:
   }
 
   // print city detailed info by  year
-  void print_monthly_city_info(int cityId, int year)
+  void print_yearly_city_info(int cityId, int year,int choice)
   {
     City *city = *cities.getById(cityId);
     //cheking if the city exists
     if (city != nullptr)
     {
-      city->print_city_by_year(year);
+      city->print_city_by_year(year,choice);
     }
     else
     {
@@ -572,13 +572,13 @@ private:
   }
 
   // print wilaya detailed info by  year
-  void print_monthly_wilaya_info(int wilayaId, int year)
+  void print_yearly_wilaya_info(int wilayaId, int year,int choice)
   {
     Wilaya *wilaya = *wilayas.getById(wilayaId);
     //cheking if the wilaya exists
     if (wilaya != nullptr)
     {
-      wilaya->print_wilaya_by_year(year);
+      wilaya->print_wilaya_by_year(year,choice);
     }
     else
     {
@@ -623,21 +623,42 @@ private:
   void print_monthly_country_info(int year, int month)
   {
     // iterating over all the wilayas
-
-    wilayas.iterate([year, month](Wilaya *wilaya) -> bool
-                    {
+    int sum2=0;
+      int sum1=0;
+      int sum3=0;
+    wilayas.iterate([year, month,&sum1,&sum2,&sum3](Wilaya *wilaya) -> bool
+       {
       wilaya->print_wilaya_by_month(year, month);
+      sum1+=wilaya->get_wilaya_total_sales_per_month(year, month);
+      sum2+=wilaya->get_wilaya_monthly_water_consumption(year, month);
+      sum3+=wilaya->get_wilaya_monthly_electricity_consumption(year, month);
       return true; });
+      //printing the sums
+      cout<<"the total sales of the country in the month "<<month<<" of the year "<<year<<" is :"<<sum1<<" DA"<<endl;
+      cout<<"the total water consumption of the country in the month "<<month<<" of the year "<<year<<" is :"<<sum2<<" m³"<<endl;
+      cout<<"the total electricity consumption of the country in the month "<<month<<" of the year "<<year<<" is :"<<sum3<<" KWh"<<endl;
   }
   // print country detailed info by  year
-  void print_yearly_country_info(int year)
+  void print_yearly_country_info(int year,int choice)
   {
+     int sum2=0;
+      int sum1=0;
+      int sum3=0;
     // iterating over all the wilayas
-    wilayas.iterate([year](Wilaya *wilaya) -> bool
-                    {
-                      wilaya->print_wilaya_by_year(year);
-                      return true;
-                    });
+    wilayas.iterate([year,choice,&sum1,&sum2,&sum3](Wilaya *wilaya) -> bool
+     {
+      wilaya->print_wilaya_by_year(year,choice);
+      sum1+=wilaya->get_wilaya_total_sales_per_year(year);
+      sum2+=wilaya->get_wilaya_yearly_water_consumption(year);
+      sum3+=wilaya->get_wilaya_yearly_electricity_consumption(year);
+
+
+      return true;
+      });
+      //printing the sums
+      cout<<"the total sales of the country in the year "<<year<<" is :"<<sum1<<" DA"<<endl;
+      cout<<"the total water consumption of the country in the year "<<year<<" is :"<<sum2<<" m³"<<endl;
+      cout<<"the total electricity consumption of the country in the year "<<year<<" is :"<<sum3<<" KWh"<<endl;
   }
   // print country summary info by  month
   void print_monthly_country_sales(int year, int month)

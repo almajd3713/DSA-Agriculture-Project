@@ -129,10 +129,14 @@ void Wilaya::print_wilaya_by_month(const int year, const int &month)
         cout << "\t" << *cit;
         cit->print_city_by_month(year, month);
     }
+    cout<< "the total_sales : " <<get_wilaya_total_sales_per_month(year,month)<<" DA "<<endl;
+    //water and electricity consumption
+    cout<<" total water consumption :"<<get_wilaya_monthly_water_consumption(year,month)<<" m^3 "<<endl;
+    cout<<" total electricity consumption :"<<get_wilaya_monthly_electricity_consumption(year,month)<<" KWh "<<endl;
     cout << setfill('=') << setw(40) << "" << endl;
 }
 
-void Wilaya::print_wilaya_by_year(const int &year)
+void Wilaya::print_wilaya_by_year(const int &year,int choice)
 {
     cout << "Wilaya ID: " << getWilayaId() << endl;
     cout << "Wilaya: " << getName() << endl;
@@ -141,8 +145,12 @@ void Wilaya::print_wilaya_by_year(const int &year)
     for (City *cit : getCity())
     {
         cout << "\t" << *cit;
-        cit->print_city_by_year(year);
+        cit->print_city_by_year(year,choice);
     }
+    cout<< "the total_sales : " <<get_wilaya_total_sales_per_year(year)<<" DA "<<endl;
+    //water and electricity consumption
+    cout<<" total water consumption :"<<get_wilaya_yearly_water_consumption(year)<<" m^3 "<<endl;
+    cout<<" total electricity consumption :"<<get_wilaya_yearly_electricity_consumption(year)<<" KWh "<<endl;
     cout << setfill('=') << setw(40) << "" << endl;
 }
 int Wilaya::get_wilaya_total_sales_per_year(int year)
@@ -210,3 +218,42 @@ void Wilaya::print_wilaya_yearly_penalty(int year, string category_name)
     }
     cout << setfill('=') << setw(40) << "" << endl;
 }
+//functions to get the water and electricity consumption of the wilaya
+int Wilaya::get_wilaya_yearly_water_consumption(int year)
+{
+    int total = 0;
+    for (City *cit : getCity())
+    {
+        total += cit->get_city_yearly_water_consumption(year);
+    }
+    return total;
+}
+int Wilaya::get_wilaya_yearly_electricity_consumption(int year)
+{
+    int total = 0;
+    for (City *cit : getCity())
+    {
+        total += cit->get_city_yearly_electricity_consumption(year);
+    }
+    return total;
+}
+//functions to get the water and electricity consumption of the wilaya in a month
+int Wilaya::get_wilaya_monthly_water_consumption(int year, int month)
+{
+    int total = 0;
+    for (City *cit : getCity())
+    {
+        total += cit->get_city_monthly_water_consumption(year, month);
+    }
+    return total;
+}
+int Wilaya::get_wilaya_monthly_electricity_consumption(int year, int month)
+{
+    int total = 0;
+    for (City *cit : getCity())
+    {
+        total += cit->get_city_monthly_electricity_consumption(year, month);
+    }
+    return total;
+}
+

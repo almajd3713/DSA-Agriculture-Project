@@ -31,7 +31,7 @@ friend ostream& operator<<(ostream&, const Land&);
     void setWorkers(const vector<Worker*>&);
     //
     AnnualReport* getAnnualReport(int year);
-    void printAnnualReport(int year);
+    void printAnnualReport(int year,int choice);
     void printMonthlyReport(int year, int month);
     void addYear(AnnualReport*);
     void removeYear(AnnualReport*);
@@ -52,6 +52,13 @@ friend ostream& operator<<(ostream&, const Land&);
 // functions to print the monthly and yearly penalty of the land (query 3)
 void print_Land_monthly_penalty(int year,int month,string category_name); 
 void print_Land_yearly_penalty(int year,string category_name);
+
+//functions to get the water and electricity consumption of the land
+int get_yearly_water_consumption(int year);
+int get_yearly_electricity_consumption(int year);
+//functions to get the water and electricity consumption of the land in a month
+int get_monthly_water_consumption(int year,int month);
+int get_monthly_electricity_consumption(int year,int month);
 
   
    

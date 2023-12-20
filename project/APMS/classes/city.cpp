@@ -101,15 +101,23 @@ void City::print_city_by_month(const int year,const int& month)
     {
         area->Print_Area_By_month(year,month);
     }
+    cout<<" total sales :"<<get_city_total_sales_per_month(year,month)<<" DA "<<endl;
+    //water and electricity consumption
+    cout<<" total water consumption :"<<get_city_monthly_water_consumption(year,month)<<" m^3 "<<endl;
+    cout<<" total electricity consumption :"<<get_city_monthly_electricity_consumption(year,month)<<" KWh "<<endl;
 }
-void City::print_city_by_year(const int& year)
+void City::print_city_by_year(const int& year,int choice)
 {
     cout<< "Year :"<<year<<endl;
     cout<<"----------------------------------------"<<endl;
     for(auto area : areas)
     {
-        area->Print_Area_By_Year(year);
+        area->Print_Area_By_Year(year,choice);
     }
+    cout<<" total sales :"<<get_city_total_sales_per_year(year)<<" DA "<<endl;
+    //water and electricity consumption
+    cout<<" total water consumption :"<<get_city_yearly_water_consumption(year)<<" m^3 "<<endl;
+    cout<<" total electricity consumption :"<<get_city_yearly_electricity_consumption(year)<<" KWh "<<endl;
 }
 int City::get_city_total_sales_per_year(int year)
 {
@@ -172,4 +180,42 @@ void City::print_city_yearly_penalty(int year,string category_name)
         area->print_Area_yearly_penalty(year,category_name);
         cout<<"============================================"<<endl;
     }
+}
+//functions to get the water and electricity consumption of the city
+int City::get_city_yearly_water_consumption(int year)
+{
+    int total=0;
+    for(auto area : areas)
+    {
+        total+=area->get_area_yearly_water_consumption(year);
+    }
+    return total;
+}
+int City::get_city_yearly_electricity_consumption(int year)
+{
+    int total=0;
+    for(auto area : areas)
+    {
+        total+=area->get_area_yearly_electricity_consumption(year);
+    }
+    return total;
+}
+//functions to get the water and electricity consumption of the city in a month
+int City::get_city_monthly_water_consumption(int year,int month)
+{
+    int total=0;
+    for(auto area : areas)
+    {
+        total+=area->get_area_monthly_water_consumption(year,month);
+    }
+    return total;
+}
+int City::get_city_monthly_electricity_consumption(int year,int month)
+{
+    int total=0;
+    for(auto area : areas)
+    {
+        total+=area->get_area_monthly_electricity_consumption(year,month);
+    }
+    return total;
 }
