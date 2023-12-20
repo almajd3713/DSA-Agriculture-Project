@@ -1,11 +1,11 @@
+#pragma once
 #ifndef BINARY_SEARCH_TREE_H
 #define BINARY_SEARCH_TREE_H
-
-#include "exceptions.hpp"
-#include <iostream>
 #include <algorithm>
 #include <queue>
 #include <functional>
+#include <iostream>
+using std::function, std::cout, std::ostream, std::endl, std::is_pointer, std::queue;
 
 // BSTree class
 //

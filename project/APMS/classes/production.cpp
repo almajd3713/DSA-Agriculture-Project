@@ -51,8 +51,7 @@ void Production::addProduct(const string& name, double bp, double pr, PesticideS
 
 ostream &operator<<(ostream& os, const Production& data) {
   os << "Water Consumption: " << data.getWaterConsumption() << endl
-     << "Electricity Consumption: " << data.getElectricityConsumption() << endl
-     << "Products: " << endl;
+     << "Electricity Consumption: " << data.getElectricityConsumption() << endl;
     int i = 1;
   for(auto& it: data.categories) {
     os << "Product " << i << ": " << it.first << endl
@@ -60,7 +59,7 @@ ostream &operator<<(ostream& os, const Production& data) {
     << "Price/unit: " << it.second->getBasePrice() << endl
     << "Total sales: " << it.second->getGrossSales() << endl
     << "Net sales: " << it.second->getPureSales() << endl
-    << "==============================" << endl;
+    << "==============================";
     i++;
   }
   return os;

@@ -4,7 +4,6 @@
 // #include <vector>
 // #include <type_traits>
 // #include <stdlib.h>
-#include "misc/includes.hpp"
 #include "misc/AvlTree.hpp"
 #include "../lib/color.hpp"
 #include "misc/BinarySearchTree.h"
@@ -180,16 +179,19 @@ public:
   }
 
   void start() {
-    int input = 0;
-    printMenu();
+    int input = 0; bool displayMenu = true;
     while(true) {
+      if(displayMenu) {
+        printMenu();
+        displayMenu = false;
+      }
       promptAndValidate(input, "Enter query: ");
       switch (input) {
       case 1:
-        readDataPrompt();
+        readDataPrompt(displayMenu);
         break;
       case 2:
-        getWinnerPrompt();
+        getWinnerPrompt(displayMenu);
         break;
 
       default:
@@ -200,8 +202,8 @@ public:
     }
   }
 
-  void readDataPrompt() {
-    int input = 0;
+  void readDataPrompt(bool& displayMenu) {
+    int input = 0, year, month;
     cout << dye::blue("What would you like to access?") << endl
          << "1: Summarized information" << endl
          << "2: Detailed information" << endl
@@ -219,7 +221,8 @@ public:
                << "3: Information about a City" << endl
                << "4: Information about an Area" << endl
                << "5: Information about a Land" << endl
-               << "6: Information about a Farmer" << endl;
+               << "6: Information about a Farmer" << endl
+               << "0: Return to the main menu" << endl;
           do {
             promptAndValidate(input, "Enter your query: ");
             switch(input) {
@@ -229,6 +232,126 @@ public:
                 promptAndValidate(check, "? ");
                 if(input) 
                   print_yearly_country_info(2020);
+                displayMenu = true;
+                return;
+              case 2:
+                cout << dye::blue("How would you like to access the Wilaya information?") << endl
+                     << "1: Data for a specific month" << endl
+                     << "2: Data for a specific year" << endl
+                     << "3: All available data" << endl;
+                while(input) {
+                  promptAndValidate(input, "Enter your query: ");
+                  switch(input) {
+                    case 1:
+                      promptAndValidate(input, "Enter the ID of the wilaya you want: ");
+                      promptAndValidate(year, "Enter the year you want: ");
+                      promptAndValidate(month, "Enter the month you want: ");
+                      print_monthly_wilaya_info(input, year, month);
+                      displayMenu = true;
+                      return;
+                    case 2:
+                      promptAndValidate(input, "Enter the ID of the wilaya you want: ");
+                      promptAndValidate(year, "Enter the year you want: ");
+                      print_yearly_wilaya_info(input, year);
+                      displayMenu = true;
+                      return;
+                    case 3:
+                      //TODO Fill this up zamn
+                      displayMenu = true;
+                      return;
+                  }
+                }
+                return;
+              case 3:
+                cout << dye::blue("How would you like to access the City information?") << endl
+                     << "1: Data for a specific month" << endl
+                     << "2: Data for a specific year" << endl
+                     << "3: All available data" << endl;
+                while (input)
+                {
+                  promptAndValidate(input, "Enter your query: ");
+                  switch (input)
+                  {
+                  case 1:
+                    promptAndValidate(input, "Enter the ID of the city you want: ");
+                    promptAndValidate(year, "Enter the year you want: ");
+                    promptAndValidate(month, "Enter the month you want: ");
+                    print_monthly_city_info(input, year, month);
+                    displayMenu = true;
+                    return;
+                  case 2:
+                    promptAndValidate(input, "Enter the ID of the city you want: ");
+                    promptAndValidate(year, "Enter the year you want: ");
+                    print_yearly_city_info(input, year);
+                    displayMenu = true;
+                    return;
+                  case 3:
+                    // TODO Fill this up zamn
+                    displayMenu = true;
+                    return;
+                  }
+                }
+                return;
+              case 4:
+                cout << dye::blue("How would you like to access the Area information?") << endl
+                     << "1: Data for a specific month" << endl
+                     << "2: Data for a specific year" << endl
+                     << "3: All available data" << endl;
+                while (input)
+                {
+                  promptAndValidate(input, "Enter your query: ");
+                  switch (input)
+                  {
+                  case 1:
+                    promptAndValidate(input, "Enter the ID of the area you want: ");
+                    promptAndValidate(year, "Enter the year you want: ");
+                    promptAndValidate(month, "Enter the month you want: ");
+                    print_monthly_area_info(input, year, month);
+                    displayMenu = true;
+                    return;
+                  case 2:
+                    promptAndValidate(input, "Enter the ID of the wilaya you want: ");
+                    promptAndValidate(year, "Enter the year you want: ");
+                    print_yearly_area_info(input, year);
+                    displayMenu = true;
+                    return;
+                  case 3:
+                    // TODO Fill this up zamn
+                    displayMenu = true;
+                    return;
+                  }
+                }
+                return;
+              case 5:
+                cout << dye::blue("How would you like to access the Land information?") << endl
+                     << "1: Data for a specific month" << endl
+                     << "2: Data for a specific year" << endl
+                     << "3: All available data" << endl;
+                while (input)
+                {
+                  promptAndValidate(input, "Enter your query: ");
+                  switch (input)
+                  {
+                  case 1:
+                    promptAndValidate(input, "Enter the ID of the land you want: ");
+                    promptAndValidate(year, "Enter the year you want: ");
+                    promptAndValidate(month, "Enter the month you want: ");
+                    print_monthly_land_info(input, year, month);
+                    displayMenu = true;
+                    return;
+                  case 2:
+                    promptAndValidate(input, "Enter the ID of the land you want: ");
+                    promptAndValidate(year, "Enter the year you want: ");
+                    print_yearly_land_info(input, year);
+                    displayMenu = true;
+                    return;
+                  case 3:
+                    // TODO Fill this up zamn
+                    displayMenu = true;
+                    return;
+                  }
+                }
+                return;
               case 6:
                 promptAndValidate(input, "Enter the farmer's ID: ");
                 Farmer* desired = farmers.getById(input);
@@ -238,11 +361,18 @@ public:
           } while(input);
           break;
         case 3:
-          int year;
-          promptAndValidate(input, "Enter the city ID: ");
-          promptAndValidate(year, "Enter The year: ");
-          List_yearly_farmer_sales_in_city(input, year);
-      }
+          cout << dye::blue("What information do you want to access?") << endl
+               << "1: The entire database" << endl
+               << "2: Sales by a Wilaya" << endl
+               << "3: Sales by a City" << endl
+               << "4: Sales by an Area" << endl
+               << "5: Sales by a Land" << endl
+               << "6: Sales by a Farmer" << endl
+               << "0: Return to the main menu" << endl;
+          do {
+            promptAndValidate(input, "Enter your query: ");
+          } while(input);
+        }
     } while(input);
   }
 
@@ -416,7 +546,7 @@ private:
     land->printMonthlyReport(year, month); // contains the check if the land exists
   }
   // print land detailed info by  year
-  void print_monthly_land_info(int landId, int year)
+  void print_yearly_land_info(int landId, int year)
   {
     Land *land = lands.getById(landId);
     land->printAnnualReport(year); // contains the check if the land exists
@@ -486,7 +616,7 @@ private:
   }
 
   // print city detailed info by  year
-  void print_monthly_city_info(int cityId, int year)
+  void print_yearly_city_info(int cityId, int year)
   {
     City *city = cities.getById(cityId);
     city->print_city_by_year(year); // contains the check if the city exists
@@ -521,7 +651,7 @@ private:
   }
 
   // print wilaya detailed info by  year
-  void print_monthly_wilaya_info(int wilayaId, int year)
+  void print_yearly_wilaya_info(int wilayaId, int year)
   {
     Wilaya *wilaya = wilayas.getById(wilayaId);
     wilaya->print_wilaya_by_year(year); // contains the check if the wilaya exists
@@ -710,7 +840,7 @@ private:
       return true;
     }
 
-    void getWinnerPrompt() {
+    void getWinnerPrompt(bool& displayMenu) {
       int year = 0, month = 0, input = -1;
       while(input) {
         cout << dye::blue("How would you like to list the winners") << endl
@@ -736,6 +866,7 @@ private:
               promptAndValidate(input, "Enter the category: ");
             }
             getWinner(year, month, categories[input - 1]);
+            displayMenu = true;
             break;
         }
       }

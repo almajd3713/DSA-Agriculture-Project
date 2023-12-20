@@ -1,6 +1,9 @@
 
 #include "month.hpp"
 
+string monthsStr[12] = {
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+};
 
 MonthlyReport::MonthlyReport() {
   month = 0;
@@ -35,9 +38,8 @@ void MonthlyReport::setProduction(Production* new_data) {
 }
 
 ostream& operator<<(ostream& os, const MonthlyReport& report) {
-  os << "Month: " << report.month << endl;
-  os << "Land Data: " << endl;
-  os << *report.data<< endl;
+  os << "Month: " << monthsStr[report.month - 1] << endl;
+  os << *report.data;
   return os;
 }
 

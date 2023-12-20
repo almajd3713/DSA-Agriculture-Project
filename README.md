@@ -6,7 +6,7 @@ This is a soon to be system for managing lands and stuff. This repo will contain
 ## Usage
 
 To use the program, go to `project/APMS/driver.cpp`. You will find more information there.
-The data sample 
+The data sample
 
 TODO:
 
@@ -19,3 +19,7 @@ TODO:
   - [ ] Terminal Prompter
 - [ ] Directives on the data structure used
 - [ ] Report
+
+Bugs:
+
+- Validating monthly/yearly functions to check if data exists or nah
