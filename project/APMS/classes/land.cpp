@@ -47,22 +47,6 @@ void Land::setFarmer(Farmer *new_farmer)
   farmer = new_farmer;
 }
 
-// vector<Worker*> Land::getWorkers() const {
-//   return workers;
-// }
-// void Land::setWorkers(const vector<Worker*>& new_workers) {
-//   workers = new_workers;
-// }
-
-// void Land::addWorker(Worker* wkr) {
-//   workers.push_back(wkr);
-// }
-
-// //TODO This stuff aaaaahhhhhhhhhh
-// void Land::removeWorker(Worker* wkr) {
-
-// }
-
 void Land::addYear(AnnualReport *rep)
 {
   reports.push_back(rep);
@@ -100,8 +84,7 @@ ostream &operator<<(ostream &os, const Land &land)
 
 void Land:: printMonthlyReport(int year, int month)
 {    
-  cout << "Land ID: " << id << endl;
-  cout << "Farmer: " << this->getFarmer()->getName() << endl;
+ 
   AnnualReport* report = getAnnualReport(year);
   if(report != nullptr) {
     MonthlyReport* mReport = report->getMonthlyReport(month);
@@ -121,8 +104,8 @@ void Land:: printMonthlyReport(int year, int month)
     cout << "No report for this year" << endl;
   }
 }
-int Land :: get_land_total_sales_per_year(int year){
-  int Sum=0;
+double Land :: get_land_total_sales_per_year(int year){
+  double Sum=0;
   AnnualReport * report =getAnnualReport(year);
   if(report == nullptr) 
    return 0;
@@ -167,8 +150,8 @@ AnnualReport* Land::getAnnualReport(int year) {
   return nullptr;
 }
 
-int Land::get_land_total_sales_per_month(int year,int month){
-  int Sum=0;
+double Land::get_land_total_sales_per_month(int year,int month){
+  double Sum=0;
   AnnualReport * report =getAnnualReport(year);
   if(report == nullptr) 
    return 0;
@@ -204,7 +187,7 @@ int Land::get_land_total_sales_per_month(int year,int month){
       AnnualReport* report = getAnnualReport(year);
       if(report != nullptr) {
      //iterrating over the months and print sales of each farmer
-        int sum=0;
+        double sum=0;
         for(auto month:report->getMonths()){
           sum+=month->getProduction()->summrisedSales();
         }
@@ -247,7 +230,7 @@ void Land::print_Land_yearly_penalty(int year,string category_name)
         return;
       }
       cout<<"Farmer: "<<farmer->getName()<<endl;
-      int sum=0;
+      double sum=0;
       for(auto month:report->getMonths()){
         sum+=month->getProduction()->get_Category_Penalty(category_name);
       }
@@ -255,7 +238,7 @@ void Land::print_Land_yearly_penalty(int year,string category_name)
 
 }
 // functions to print the monthly  water and elctricity consumption of the land
-int Land::get_monthly_water_consumption(int year,int month){
+double Land::get_monthly_water_consumption(int year,int month){
   AnnualReport * report =getAnnualReport(year);
   if(report == nullptr)
   {
@@ -268,7 +251,7 @@ int Land::get_monthly_water_consumption(int year,int month){
   }
   return mReport->getProduction()->getWaterConsumption();
 }
-int Land::get_monthly_electricity_consumption(int year,int month){
+double Land::get_monthly_electricity_consumption(int year,int month){
   AnnualReport * report =getAnnualReport(year);
   if(report == nullptr)
   {
@@ -282,25 +265,25 @@ int Land::get_monthly_electricity_consumption(int year,int month){
   return mReport->getProduction()->getElectricityConsumption();
 }
 // functions to print the yearly  water and elctricity consumption of the land
-int Land::get_yearly_water_consumption(int year){
+double Land::get_yearly_water_consumption(int year){
   AnnualReport * report =getAnnualReport(year);
   if(report == nullptr)
   {
     return 0;
   }
-  int sum=0;
+  double sum=0;
   for(auto month:report->getMonths()){
     sum+=month->getProduction()->getWaterConsumption();
   }
   return sum;
 }
-int Land::get_yearly_electricity_consumption(int year){
+double Land::get_yearly_electricity_consumption(int year){
   AnnualReport * report =getAnnualReport(year);
   if(report == nullptr)
   {
     return 0;
   }
-  int sum=0;
+  double sum=0;
   for(auto month:report->getMonths()){
     sum+=month->getProduction()->getElectricityConsumption();
   }

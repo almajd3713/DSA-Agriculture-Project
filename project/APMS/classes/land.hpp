@@ -26,10 +26,10 @@ friend ostream& operator<<(ostream&, const Land&);
     void setReport(vector<AnnualReport*>);
     Farmer* getFarmer() const;
     void setFarmer(Farmer*);
-    //wtf is this
+    
     vector<Worker*> getWorkers() const;
     void setWorkers(const vector<Worker*>&);
-    //
+  
     AnnualReport* getAnnualReport(int year);
     void printAnnualReport(int year,int choice);
     void printMonthlyReport(int year, int month);
@@ -42,9 +42,10 @@ friend ostream& operator<<(ostream&, const Land&);
     bool operator<(const Land&);
     bool operator==(const Land&);
     Land& operator=(const Land&);
+
    // these function are for resumed print that return  all the sales in specific year
-   int get_land_total_sales_per_year(int year);
-   int get_land_total_sales_per_month(int year,int month);
+   double get_land_total_sales_per_year(int year);
+   double get_land_total_sales_per_month(int year,int month);
    //query two of the document project 
    void print_monthly_farmer_sales(int year,int month);
    void print_yearly_farmer_sales(int year);
@@ -54,11 +55,11 @@ void print_Land_monthly_penalty(int year,int month,string category_name);
 void print_Land_yearly_penalty(int year,string category_name);
 
 //functions to get the water and electricity consumption of the land
-int get_yearly_water_consumption(int year);
-int get_yearly_electricity_consumption(int year);
+double get_yearly_water_consumption(int year);
+double get_yearly_electricity_consumption(int year);
 //functions to get the water and electricity consumption of the land in a month
-int get_monthly_water_consumption(int year,int month);
-int get_monthly_electricity_consumption(int year,int month);
+double get_monthly_water_consumption(int year,int month);
+double get_monthly_electricity_consumption(int year,int month);
 
   
    

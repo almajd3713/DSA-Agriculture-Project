@@ -7,7 +7,7 @@ Production::Production() {
   categories = unordered_map<string, ProductCategory *>();
 }
 
-Production::Production(int wc, int ec, const unordered_map<string, ProductCategory*>&initcategories)
+Production::Production(double wc, double ec, const unordered_map<string, ProductCategory*>&initcategories)
 : waterConsumption{wc}, electricityConsumption{ec}, categories{initcategories} {}
 
 Production::Production(const Production& rhs)
@@ -20,17 +20,17 @@ Production::~Production() {
   categories.clear();
 }
 
-int Production::getWaterConsumption() const {
+double Production::getWaterConsumption() const {
   return waterConsumption;
 }
-void Production::setWaterConsumption(int new_waterConsumption) {
+void Production::setWaterConsumption(double new_waterConsumption) {
   waterConsumption = new_waterConsumption;
 }
 
-int Production::getElectricityConsumption() const {
+double Production::getElectricityConsumption() const {
   return electricityConsumption;
 }
-void Production::setElectricityConsumption(int new_electricityConsumption) {
+void Production::setElectricityConsumption(double new_electricityConsumption) {
   electricityConsumption = new_electricityConsumption;
 }
 

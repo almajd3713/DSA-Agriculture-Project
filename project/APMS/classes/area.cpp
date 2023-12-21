@@ -78,9 +78,9 @@ void Area::Print_Area_By_Year(int year,int choice)
 {
     cout<< "Year :"<<year<<endl;
     for(auto land : lands)
-    {
-        cout<<*land->getFarmer()<<endl;
-        land->printAnnualReport(year,choice);
+    {  
+        cout<<" farmer : " <<*land->getFarmer()<<endl;
+        land->printAnnualReport(year,choice);//prints id land and the total sales of the year
        
      }
       cout<<" area total sales :"<<get_area_total_sales_per_year(year)<<" DA "<<endl;
@@ -89,8 +89,8 @@ void Area::Print_Area_By_Year(int year,int choice)
         cout<<" area total electricity consumption :"<<get_area_yearly_electricity_consumption(year)<<" KWh "<<endl;
       
 }
-int Area::get_area_total_sales_per_year(int year){
-    int total_sales = 0;
+double Area::get_area_total_sales_per_year(int year){
+    double total_sales = 0;
     for(auto land : lands)
     {
         total_sales += land->get_land_total_sales_per_year(year);
@@ -98,9 +98,9 @@ int Area::get_area_total_sales_per_year(int year){
     return total_sales;
     
 }
- int Area::get_area_total_sales_per_month(int year,int month)
+ double Area::get_area_total_sales_per_month(int year,int month)
  {
-        int total_sales = 0;
+        double total_sales = 0;
         for(auto land : lands)
         {
             total_sales += land->get_land_total_sales_per_month(year,month);
@@ -112,7 +112,8 @@ void Area::Print_Area_By_month(int year,int month){
     cout<< "Year :"<<year<<" Month :"<<month<<endl;
     for(auto land : lands)
     {
-        cout<<*land->getFarmer()<<endl;
+        cout<<" farmer : " <<*land->getFarmer()<<endl;
+        cout<<" id : "<<land->getId()<<endl;
         land->printMonthlyReport(year,month);
      }
         cout<<" area total sales :"<<get_area_total_sales_per_month(year,month)<<" DA "<<endl;
@@ -178,18 +179,18 @@ ostream& operator<<(ostream& os, const Area& area) {
 
   }
 //functions to get the water and electricity consumption of the area
-int Area::get_area_yearly_water_consumption(int year)
+double Area::get_area_yearly_water_consumption(int year)
 {
-    int total=0;
+    double total=0;
     for(auto land : lands)
     {
         total+=land->get_yearly_water_consumption(year);
     }
     return total;
 }
-int Area::get_area_yearly_electricity_consumption(int year)
+double Area::get_area_yearly_electricity_consumption(int year)
 {
-    int total=0;
+    double total=0;
     for(auto land : lands)
     {
         total+=land->get_yearly_electricity_consumption(year);
@@ -197,18 +198,18 @@ int Area::get_area_yearly_electricity_consumption(int year)
     return total;
 }
 //functions to get the water and electricity consumption of the area in a month
-int Area::get_area_monthly_water_consumption(int year,int month)
+double Area::get_area_monthly_water_consumption(int year,int month)
 {
-    int total=0;
+    double total=0;
     for(auto land : lands)
     {
         total+=land->get_monthly_water_consumption(year,month);
     }
     return total;
 }
-int Area::get_area_monthly_electricity_consumption(int year,int month)
+double Area::get_area_monthly_electricity_consumption(int year,int month)
 {
-    int total=0;
+    double total=0;
     for(auto land : lands)
     {
         total+=land->get_monthly_electricity_consumption(year,month);

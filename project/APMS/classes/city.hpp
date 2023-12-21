@@ -34,8 +34,8 @@ public:
     bool operator==(const City&);
     void print_city_by_month(const int year,const int& month);
     void print_city_by_year(const int& year,int choice);
-    int get_city_total_sales_per_year(int year);
-    int get_city_total_sales_per_month(int year,int month);
+    double get_city_total_sales_per_year(int year);
+    double get_city_total_sales_per_month(int year,int month);
 
     friend ostream& operator<<(ostream&, const City&);
     //query two of the document project
@@ -45,10 +45,10 @@ public:
     void print_city_monthly_penalty(int year,int month,string category_name);
     void print_city_yearly_penalty(int year,string category_name);
     //functions to get the water and electricity consumption of the city
-    int get_city_yearly_water_consumption(int year);
-    int get_city_yearly_electricity_consumption(int year);
+    double get_city_yearly_water_consumption(int year);
+    double get_city_yearly_electricity_consumption(int year);
     //functions to get the water and electricity consumption of the city in a month
-    int get_city_monthly_water_consumption(int year,int month);
-    int get_city_monthly_electricity_consumption(int year,int month);
+    double get_city_monthly_water_consumption(int year,int month);
+    double get_city_monthly_electricity_consumption(int year,int month);
 };
 

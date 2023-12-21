@@ -371,7 +371,8 @@ private:
     Land *land = *lands.getById(landId);
     //cheking if the land exists
     if (land != nullptr)
-    {
+    {  cout << "Land ID: " << landId<< endl;
+       cout << "Farmer: " << land->getFarmer()->getName() << endl;
       land->printMonthlyReport(year, month);
     }
     else
@@ -434,7 +435,9 @@ private:
     Area *area = *areas.getById(areaId);
     //cheking if the area exists
     if (area != nullptr)
-    {
+    { 
+      cout << "Area ID: " << areaId<< endl;
+      cout << "Area: " << area->getName() << endl;
       area->Print_Area_By_month(year, month);
     }
     else
@@ -499,6 +502,8 @@ private:
     //cheking if the city exists
     if (city != nullptr)
     {
+       cout<<" city name :"<<city->getName()<<endl;
+      cout<< " city id : "<< city->getCityId()<<endl;
       city->print_city_by_month(year, month);
     }
     else
@@ -513,7 +518,10 @@ private:
     City *city = *cities.getById(cityId);
     //cheking if the city exists
     if (city != nullptr)
-    {
+    {   
+      cout<<" city name :"<<city->getName()<<endl;
+      cout<< " city id : "<< city->getCityId()<<endl;
+
       city->print_city_by_year(year,choice);
     }
     else
@@ -532,6 +540,7 @@ private:
       cout << "the city with ID " << cityid << " doesn't exist" << endl;
     }
     else{
+      
     int result = city->get_city_total_sales_per_month(year, month); // contains the check if the city exists
     if (result != 0)
       cout << "the total sales of the city " << city->getName() << "with ID : " << cityid << " in the month " << month << " of the year " << year << " is :" << result << " DA" << endl;
