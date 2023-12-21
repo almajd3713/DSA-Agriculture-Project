@@ -220,3 +220,42 @@ double City::get_city_monthly_electricity_consumption(int year,int month)
     }
     return total;
 }
+//functions to print the the summarized report of the city
+void City::print_city_summarized_by_year(int year)
+{
+    cout<<"City: " << name << endl;
+    cout<<"Year :"<<year<<endl;
+    for(auto area : areas)
+    {
+        area->print_area_summerized_by_year(year);
+        cout<<"============================================"<<endl;
+    }
+    double sales=get_city_total_sales_per_year(year);
+    double water=get_city_yearly_water_consumption(year);
+    double electricity=get_city_yearly_electricity_consumption(year);
+    cout<<"the city total sales is : "<<(sales > 1000000 ? sales / 1000000 : sales > 1000 ? sales / 1000 : sales); 
+  cout<<(sales > 1000000 ? "MDA" : sales > 1000 ? "KDA" : "DA")<<endl;
+  cout<<"the city total water consumption is : "<<(water > 1000000 ? water / 1000000 :  water);
+  cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
+  cout<<"the city total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
+  cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+}
+void City::print_city_summarized_by_month(int year,int month)
+{
+    cout<<"City: " << name << endl;
+    cout<<"Year :"<<year<<" Month :"<<month<<endl;
+    for(auto area : areas)
+    {
+        area->print_area_summerized_by_month(year,month);
+        cout<<"============================================"<<endl;
+    }
+    double sales=get_city_total_sales_per_month(year,month);
+    double water=get_city_monthly_water_consumption(year,month);
+    double electricity=get_city_monthly_electricity_consumption(year,month);
+    cout<<"the city total sales is : "<<(sales > 1000000 ? sales / 1000000 : sales > 1000 ? sales / 1000 : sales); 
+  cout<<(sales > 1000000 ? "MDA" : sales > 1000 ? "KDA" : "DA")<<endl;
+  cout<<"the city total water consumption is : "<<(water > 1000000 ? water / 1000000 :  water);
+  cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
+  cout<<"the city total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
+  cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+}

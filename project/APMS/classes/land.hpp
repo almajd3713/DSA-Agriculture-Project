@@ -61,6 +61,10 @@ double get_yearly_electricity_consumption(int year);
 double get_monthly_water_consumption(int year,int month);
 double get_monthly_electricity_consumption(int year,int month);
 
+//functions to print the the summarized report of the land
+void print_monthly_summarized_report(int year,int month);
+void print_yearly_summarized_report(int year);
+
   
    
 };

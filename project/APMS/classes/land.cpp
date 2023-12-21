@@ -92,9 +92,8 @@ void Land:: printMonthlyReport(int year, int month)
       cout << *mReport << endl;
       cout<< "the total_sales : " <<get_land_total_sales_per_month(year,month)<<" DA "<<endl;
       //water and electricity consumption
-      cout<<"the water consumption is : "<<get_monthly_water_consumption(year,month)<<" m3"<<endl;
-      cout<<"the electricity consumption is : "<<get_monthly_electricity_consumption(year,month)<<" Kwh"<<endl; 
-      
+      cout<<"the total water consumption is : "<<get_monthly_water_consumption(year,month)<<" m3"<<endl;
+      cout<<"the total electricity consumption is : "<<get_monthly_electricity_consumption(year,month)<<" Kwh"<<endl;  
     }
     else {
       cout << "No report for this month" << endl;
@@ -289,3 +288,57 @@ double Land::get_yearly_electricity_consumption(int year){
   }
   return sum;
 }
+
+//functions to print the the summarized report of the land
+void Land::print_monthly_summarized_report(int year,int month){
+  AnnualReport * report =getAnnualReport(year);
+  if(report == nullptr)
+  {
+    cout<<"No report for this year"<<endl;
+    return;
+  }
+  MonthlyReport * mReport = report->getMonthlyReport(month);
+  if(mReport == nullptr)
+  {
+    cout<<"No report for this month"<<endl;
+    return;
+  }
+  double sales=0;
+  double water=0;
+  double electricity=0;
+  cout<<"Farmer: "<<farmer->getName()<<endl;
+  cout<<"Monthly Summarized Report : "<<endl;
+  electricity=get_monthly_electricity_consumption(year,month);
+  water=get_monthly_water_consumption(year,month);
+  sales=mReport->getProduction()->summrisedSales();
+  cout<<"the total sales is : "<<(sales > 1000000 ? sales / 1000000 : sales > 1000 ? sales / 1000 : sales); 
+  cout<<(sales > 1000000 ? "MDA" : sales > 1000 ? "KDA" : "DA")<<endl;
+  cout<<"the total water consumption is : "<<(water > 1000000 ? water / 1000000 :  water);
+  cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
+  cout<<"the total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
+  cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+ 
+}
+
+ void Land::print_yearly_summarized_report(int year){
+  AnnualReport * report =getAnnualReport(year);
+  if(report == nullptr)
+  {
+    cout<<"No report for this year"<<endl;
+    return;
+  }
+  cout<<"Farmer: "<<farmer->getName()<<endl;
+  cout<<"Yearly Summarized Report : "<<endl;
+  double sales=0;
+  double water=0;
+  double electricity=0;
+  sales=get_land_total_sales_per_year(year);
+  water=get_yearly_water_consumption(year);
+  electricity=get_yearly_electricity_consumption(year);
+  cout<<"the total sales is : "<<(sales > 1000000 ? sales / 1000000 : sales > 1000 ? sales / 1000 : sales); 
+  cout<<(sales > 1000000 ? "MDA" : sales > 1000 ? "KDA" : "DA")<<endl;
+  cout<<"the total water consumption is : "<<(water > 1000000 ? water / 1000000 :  water);
+  cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
+  cout<<"the total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
+  cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+ }

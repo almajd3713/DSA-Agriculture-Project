@@ -54,6 +54,10 @@ public:
 	//functions to get the water and electricity consumption of the wilaya in a month
 	double get_wilaya_monthly_water_consumption(int year,int month);
 	double get_wilaya_monthly_electricity_consumption(int year,int month);
+
+	//functions to print the the summarized report of the wilaya
+	void print_wilaya_summarized_by_year(int year);
+	void print_wilaya_summarized_by_month(int year,int month);
 };
 
 

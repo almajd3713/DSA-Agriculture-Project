@@ -48,12 +48,19 @@ public:
     // functions to print the monthly and yearly penalty of the area (query 3)
     void print_Area_monthly_penalty(int year,int month,string category_name);
     void print_Area_yearly_penalty(int year,string category_name);
+    
     //functions to get the water and electricity consumption of the area
     double get_area_yearly_water_consumption(int year);
     double get_area_yearly_electricity_consumption(int year);
+
     //functions to get the water and electricity consumption of the area in a month
     double get_area_monthly_water_consumption(int year,int month);
     double get_area_monthly_electricity_consumption(int year,int month);
+
+
+    //functions to print the the summarized report of the area
+    void print_area_summerized_by_month(int year,int month);
+    void print_area_summerized_by_year(int year);
     
 
 };

@@ -257,3 +257,51 @@ double Wilaya::get_wilaya_monthly_electricity_consumption(int year, int month)
     return total;
 }
 
+//functions to print the the summarized report of the wilaya
+void Wilaya::print_wilaya_summarized_by_year(int year)
+{
+    cout << "Wilaya ID: " << getWilayaId() << endl;
+    cout << "Wilaya: " << getName() << endl;
+    cout << "Cities: " << endl;
+    cout << setfill('=') << setw(40) << "" << endl;
+    for (City *cit : getCity())
+    {
+        cout << "\t" << *cit;
+        cit->print_city_summarized_by_year(year);
+    }
+    cout << setfill('=') << setw(40) << "" << endl;
+    double sales = get_wilaya_total_sales_per_year(year);
+    double water = get_wilaya_yearly_water_consumption(year);
+    double electricity = get_wilaya_yearly_electricity_consumption(year);
+  cout<<"the wilaya total sales is : "<<(sales > 1000000 ? sales / 1000000 : sales > 1000 ? sales / 1000 : sales); 
+  cout<<(sales > 1000000 ? "MDA" : sales > 1000 ? "KDA" : "DA")<<endl;
+  cout<<"the wilaya total water consumption is : "<<(water > 1000000 ? water / 1000000 :  water);
+  cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
+  cout<<"the wilaya total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
+  cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+}
+
+   void Wilaya::print_wilaya_summarized_by_month(int year,int month)
+   {
+       cout << "Wilaya ID: " << getWilayaId() << endl;
+       cout << "Wilaya: " << getName() << endl;
+       cout << "Cities: " << endl;
+       cout << setfill('=') << setw(40) << "" << endl;
+       for (City *cit : getCity())
+       {
+           cout << "\t" << *cit;
+           cit->print_city_summarized_by_month(year,month);
+       }
+       cout << setfill('=') << setw(40) << "" << endl;
+       double sales = get_wilaya_total_sales_per_month(year,month);
+       double water = get_wilaya_monthly_water_consumption(year,month);
+       double electricity = get_wilaya_monthly_electricity_consumption(year,month);
+       cout<<"the wilaya total_sales : "<<(sales > 1000000 ? sales / 1000000 : sales > 1000 ? sales / 1000 : sales);
+       cout << (sales > 1000000 ? "MDA" : sales > 1000 ? "KDA" : "DA") << endl;
+       cout<<" the wilaya total water consumption :"<<(water > 1000000 ? water / 1000000 : water > 1000 ? water / 1000 : water);
+       cout << (water > 1000000 ? " M^3" : water > 1000 ? " K^3" : " ^3") << endl;
+       cout<<" the wilaya total electricity consumption :"<<(electricity > 1000000 ? electricity / 1000000 : electricity > 1000 ? electricity / 1000 : electricity);
+       cout << (electricity > 1000000 ? " MKWh" : electricity > 1000 ? " KKWh" : " KWh") << endl;
+   } 
+
+

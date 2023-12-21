@@ -52,15 +52,19 @@ void Production::addProduct(const string& name, double bp, double pr, PesticideS
 ostream &operator<<(ostream& os, const Production& data) {
   os << "Water Consumption: " << data.getWaterConsumption() <<" m³"<< endl
      << "Electricity Consumption: " << data.getElectricityConsumption() <<" kWh"<< endl
+     <<setfill('=') << setw(40) << "" << endl
      << "Products: " << endl;
     int i = 1;
   for(auto& it: data.categories) {
     os << "Product " << i << ": " << it.first << endl
     << "Production: " << it.second->getProduction() <<" KG"<< endl
     << "Price/unit: " << it.second->getBasePrice() <<" DA/KG"<< endl
-    << "Total sales: " << it.second->getGrossSales() << " DA"<<endl
-    << "Net sales: " << it.second->getPureSales() <<" DA"<< endl
+    << "Total sales: " << it.second->getGrossSales() <<(it.second->getGrossSales() > 1000000 ? it.second->getGrossSales()/ 1000000 : it.second->getGrossSales() > 1000 ? it.second->getGrossSales() / 1000 : it.second->getGrossSales()) 
+    <<(it.second->getGrossSales() > 1000000 ? "MDA" : it.second->getGrossSales() > 1000 ? "KDA" : "DA")<<endl
+    << "Net sales: " << it.second->getPureSales() <<(it.second->getPureSales()  > 1000000 ? it.second->getPureSales()  / 1000000 : it.second->getPureSales()  > 1000 ? it.second->getPureSales()  / 1000 : it.second->getPureSales() )
+    <<(it.second->getPureSales()  > 1000000 ? "MDA" : it.second->getPureSales()  > 1000 ? "KDA" : "DA")<<endl
     << "==============================" << endl;
+
   }
   return os;
 };
