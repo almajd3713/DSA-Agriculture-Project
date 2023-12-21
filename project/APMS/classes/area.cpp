@@ -76,12 +76,14 @@ bool Area::operator==(const Area& rhs) {
 //print function
 void Area::Print_Area_By_Year(int year)
 {
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<< "Year :"<<year<<endl;
     for(auto land : lands)
     {
         cout<<*land->getFarmer()<<endl;
         land->printAnnualReport(year);
      }
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 int Area::get_area_total_sales_per_year(int year){
     int total_sales = 0;
@@ -103,41 +105,50 @@ int Area::get_area_total_sales_per_year(int year){
 
  }
 void Area::Print_Area_By_month(int year,int month){
+    cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<< "Year :"<<year<<" Month :"<<month<<endl;
     for(auto land : lands)
     {
         cout<<*land->getFarmer()<<endl;
         land->printMonthlyReport(year,month);
      }
+    cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 // all the years in the area
 ostream& operator<<(ostream& os, const Area& area) {
+  os << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     os << "Area ID: " << area.id << endl;
     os << "Area Name: " << area.name << endl;
     os << "Lands: " << endl;
     for (auto land : area.lands) {
         os << *land << endl;
     }
+  os << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     return os;
 }
 
 void Area::print_area_monthly_farmer_sales(int year,int month)
-{       cout<<"Area: " << name << endl;
+{      
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;   
+     cout<<"Area: " << name << endl;
     cout<<"Year :"<<year<<" Month :"<<month<<endl;
     for(auto land : lands)
     {
         land->print_monthly_farmer_sales(year,month);
-        cout<<"============================================"<<endl;
+
     }
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 void Area:: print_area_yearly_farmer_sales(int year)
-{     cout<<"Area: " << name << endl;
+{
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+    cout<<"Area: " << name << endl;
     cout<<"Year :"<<year<<endl;
     for(auto land : lands)
     {
         land->print_yearly_farmer_sales(year);
-        cout<<"============================================"<<endl;
     }
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
 // ostream& operator<<(ostream& os, const Area& area) {

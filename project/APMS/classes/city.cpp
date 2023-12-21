@@ -83,33 +83,35 @@ ostream &operator<<(ostream &os, const City& cit)
     // {
     //     os << *year << endl;
     // }
-    cout << setfill('-') << setw(40) << "" << endl;
+    os << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     os << "City ID: " << cit.getId() << endl;
     os << "City: " << cit.getName() << endl;
     for(Area* area: cit.getArea()) {
         os << *area;
     }
-    cout << setfill('-') << setw(40) << "" << endl;
+    os << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     return os;
 }
 //print resumed 
 void City::print_city_by_month(const int year,const int& month)
 {
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<< "Year :"<<year<<endl;
-    cout<<"----------------------------------------"<<endl;
     for(auto area : areas)
     {
         area->Print_Area_By_month(year,month);
     }
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 void City::print_city_by_year(const int& year)
 {
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<< "Year :"<<year<<endl;
-    cout<<"----------------------------------------"<<endl;
     for(auto area : areas)
     {
         area->Print_Area_By_Year(year);
     }
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 int City::get_city_total_sales_per_year(int year)
 {
@@ -132,24 +134,27 @@ int City::get_city_total_sales_per_month(int year,int month)
 
  void City::print_city_monthly_farmer_sales(int year,int month)
  {
-        cout<<"City: " << name << endl;
-        cout<<"Year :"<<year<<" Month :"<<month<<endl;
-        for(auto area : areas)
-        {
-            area->print_area_monthly_farmer_sales(year,month);
-            cout<<"============================================"<<endl;
-        }
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+
+    cout<<"City: " << name << endl;
+    cout<<"Year :"<<year<<" Month :"<<month<<endl;
+    for(auto area : areas)
+    {
+        area->print_area_monthly_farmer_sales(year,month);
+    }
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
  }
     
 void City::print_city_yearly_farmer_sales(int year)
-{
-        cout<<"City: " << name << endl;
-        cout<<"Year :"<<year<<endl;
-        for(auto area : areas)
-        {
-            area->print_area_yearly_farmer_sales(year);
-            cout<<"============================================"<<endl;
-        }
+{ 
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+    cout<<"City: " << name << endl;
+    cout<<"Year: "<<year<<endl;
+    for(auto area : areas)
+    {
+        area->print_area_yearly_farmer_sales(year);
+    }
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
 void to_json(json& j, const City& cit) {

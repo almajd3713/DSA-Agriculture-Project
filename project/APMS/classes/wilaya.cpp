@@ -95,19 +95,19 @@ ostream &operator<<(ostream &os, const Wilaya& wil)
   // {
   //   os << *year << endl;
   // }
-  cout << setfill('=') << setw(40) << "" << endl;
-  os << "Wilaya ID: " << wil.getId() << endl;
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;  os << "Wilaya ID: " << wil.getId() << endl;
   os << "Wilaya: " << wil.getName() << endl;
   os << "Cities: " << endl;
   for(City* cit: wil.getCity()) {
     os << *cit;
   }
-  cout << setfill('=') << setw(40) << "" << endl;
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 
   return os;
 }
 // detailed print 
  void Wilaya::print_wilaya_by_month(const int year,const int& month) {
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout << "Wilaya ID: " << getId() << endl;
     cout << "Wilaya: " << getName() << endl;
     cout << "Cities: " << endl;
@@ -117,9 +117,11 @@ ostream &operator<<(ostream &os, const Wilaya& wil)
         cit->print_city_by_month(year,month);
     }
     cout << setfill('=') << setw(40) << "" << endl;
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
 void Wilaya::print_wilaya_by_year(const int& year) {
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout << "Wilaya ID: " << getId() << endl;
     cout << "Wilaya: " << getName() << endl;
     cout << "Cities: " << endl;
@@ -129,6 +131,7 @@ void Wilaya::print_wilaya_by_year(const int& year) {
         cit->print_city_by_year(year);
     }
     cout << setfill('=') << setw(40) << "" << endl;
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 int Wilaya::get_wilaya_total_sales_per_year(int year) {
     int total = 0;
@@ -146,22 +149,25 @@ int Wilaya::get_wilaya_total_sales_per_month(int year,int month) {
 }
 
 void Wilaya::print_wilaya_monthly_farmer_sales(int year,int month) {
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout << "Wilaya ID: " << getId() << endl;
     cout << "Wilaya: " << getName() << endl;
-    cout << setfill('=') << setw(40) << "" << endl;
+    
     for(City* cit: getCity()) {
         cit->print_city_monthly_farmer_sales(year,month);
     }
-    cout << setfill('=') << setw(40) << "" << endl;
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+    
 }
 void Wilaya::print_wilaya_yearly_farmer_sales(int year) {
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout << "Wilaya ID: " << getId() << endl;
     cout << "Wilaya: " << getName() << endl;
-    cout << setfill('=') << setw(40) << "" << endl;
+    
     for(City* cit: getCity()) {
         cit->print_city_yearly_farmer_sales(year);
     }
-    cout << setfill('=') << setw(40) << "" << endl;
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
 

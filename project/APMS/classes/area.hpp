@@ -38,7 +38,6 @@ public:
     int get_area_total_sales_per_year(int year);
     int get_area_total_sales_per_month(int year,int month);
 
-
     friend ostream& operator<<(ostream&, const Area&);
 
 

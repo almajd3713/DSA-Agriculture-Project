@@ -39,7 +39,7 @@ function farmerGen(): Types.Farmer {
 
 function landDataGen(): Types.LandData {
   let products = getProductSubset().map(prod => new Classes.Product(prod,RNG.rndNum(30, 200), RNG.rndNum(100, 5000), RNG.rndNum(0, 1)))
-  let land = new Classes.LandData(products, (1000 * products.length) + RNG.rndNum(100 * products.length, 1000 * products.length), RNG.rndNum(20 * products.length, 60 * products.length))
+  let land = new Classes.LandData(products, (1000 * products.length) + RNG.rndNum(100 * products.length, 1000 * products.length), RNG.rndNum(1000 * products.length, 7000 * products.length))
   return land
 }
 function monthlyRepGen(month: number): Types.MonthlyReport {

@@ -50,6 +50,7 @@ void Production::addProduct(const string& name, double bp, double pr, PesticideS
 }
 
 ostream &operator<<(ostream& os, const Production& data) {
+  os << dye::aqua(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   os << "Water Consumption: " << data.getWaterConsumption() << endl
      << "Electricity Consumption: " << data.getElectricityConsumption() << endl;
     int i = 1;
@@ -58,10 +59,10 @@ ostream &operator<<(ostream& os, const Production& data) {
     << "Production: " << it.second->getProduction() << endl
     << "Price/unit: " << it.second->getBasePrice() << endl
     << "Total sales: " << it.second->getGrossSales() << endl
-    << "Net sales: " << it.second->getPureSales() << endl
-    << "==============================";
+    << "Net sales: " << it.second->getPureSales() << endl;
     i++;
   }
+  os << dye::aqua(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   return os;
 };
 
@@ -81,9 +82,11 @@ void to_json(json& j, const Production& production) {
 }
 
 int Production::summarizedSales() {
+  double sum = 0;
   for(const pair<const string, ProductCategory*>& entry: getCategories()) {
-    // ProductCategory* cat = entry.second;
+    ProductCategory* cat = entry.second;
+    sum += cat->getPureSales();
     
   }
-  return 1;
+  return sum;
 }

@@ -70,6 +70,7 @@ ProductCategory& ProductCategory::operator=(const ProductCategory& rhs) {
 }
 
 ostream& operator<<(ostream& out, const ProductCategory& rhs) {
+  out << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   out << "Name: " << rhs.name << endl;
   out << "Base Price: " << rhs.basePrice << endl;
   out << "Production: " << rhs.production << endl;
@@ -77,6 +78,7 @@ ostream& operator<<(ostream& out, const ProductCategory& rhs) {
     out << "Pesticide Severity: " << rhs.pestSeverity << endl;
   out << "Penalty: " << rhs.getPenalty() << endl;
   out << "Pure Sales: " << rhs.getPureSales() << endl;
+  out << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 
   return out;
 }

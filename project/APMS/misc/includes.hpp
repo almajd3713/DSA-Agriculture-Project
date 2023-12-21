@@ -15,6 +15,7 @@
 #include <fstream>
 #include <unordered_map>
 
+#include "util.hpp"
 #include "../../lib/json.hpp"
 
 using std::cout, std::cin, std::endl, std::stoi;

@@ -88,6 +88,7 @@ Land &Land::operator=(const Land &rhs)
 // to be used in case we want to retrieve the report of a all years
 ostream &operator<<(ostream &os, const Land &land)
 {
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   os << "Land ID: " << land.id << endl;
   os << "Farmer: " << land.farmer->getName() << endl;
   os << "Annual Reports: " << endl;
@@ -96,10 +97,12 @@ ostream &operator<<(ostream &os, const Land &land)
     os << *year << endl;
   }
   return os;
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
 void Land:: printMonthlyReport(int year, int month)
-{    
+{
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   cout << "Land ID: " << id << endl;
   AnnualReport* report = getAnnualReport(year);
   if(report != nullptr) {
@@ -114,6 +117,7 @@ void Land:: printMonthlyReport(int year, int month)
   else {
     cout << "No report for this year" << endl;
   }
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 int Land :: get_land_total_sales_per_year(int year){
   int Sum=0;
@@ -138,6 +142,7 @@ int Land :: get_land_total_sales_per_year(int year){
   //   {
 
 void Land::printAnnualReport(int year) {
+    cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   cout << "Land ID: " << id << endl;
  AnnualReport* report = getAnnualReport(year);
   if(report != nullptr) {
@@ -146,6 +151,7 @@ void Land::printAnnualReport(int year) {
   else {
     cout << "No report for this year" << endl;
   }
+    cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
 AnnualReport* Land::getAnnualReport(int year) {
@@ -169,7 +175,8 @@ int Land::get_land_total_sales_per_month(int year,int month){
 
 void Land::print_monthly_farmer_sales(int year,int month)
 {
-    cout << "Farmer: " << farmer->getName() << endl;
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+  cout << "Farmer: " << farmer->getName() << endl;
   AnnualReport* report = getAnnualReport(year);
   if(report != nullptr) {
     MonthlyReport* mReport = report->getMonthlyReport(month);
@@ -183,11 +190,13 @@ void Land::print_monthly_farmer_sales(int year,int month)
   else {
     cout << "No report for this year" << endl;
   }
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
 
 void Land::print_yearly_farmer_sales(int year)
 {
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   cout << "Farmer: " << farmer->getName() << endl;
   AnnualReport* report = getAnnualReport(year);
   if(report != nullptr) {
@@ -201,7 +210,7 @@ void Land::print_yearly_farmer_sales(int year)
   else {
     cout << "No report for this year" << endl;
   }
-
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
 void to_json(json& j, const Land& land) {

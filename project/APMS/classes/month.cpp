@@ -38,8 +38,10 @@ void MonthlyReport::setProduction(Production* new_data) {
 }
 
 ostream& operator<<(ostream& os, const MonthlyReport& report) {
+  cout << dye::light_red(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   os << "Month: " << monthsStr[report.month - 1] << endl;
   os << *report.data;
+  cout << dye::light_red(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   return os;
 }
 

@@ -72,6 +72,7 @@ Farmer& Farmer::operator=(const Farmer& rhs) {
   name = rhs.name;
   age = rhs.age;
   gender = rhs.gender;
+  land = rhs.land;
   return *this;
 }
 
@@ -85,19 +86,19 @@ ostream& operator<<(ostream& out, const Worker& rhs)
   out << "name : " << rhs.getName() << endl;
   out << "ID: " << rhs.getId()  << endl;
   out<< "Age: " << rhs.getAge() << endl;
-  out<<"gender: " << rhs.getGender() << endl;
+  out<<"Gender: " << (rhs.getGender() ? "Female" : "Male") << endl;
   return out;
 }
-ostream& operator<<(ostream & out,const Farmer&rhs)
+ostream& operator<<(ostream & out,const Farmer& rhs)
 {
   out << "Farmer: " << endl;
   out << "name : " << rhs.getName() << endl;
   out << "ID: " << rhs.getId()  << endl;
   out<< "Age: " << rhs.getAge() << endl;
-  out<<"gender: " << (rhs.getGender() ? "Female" : "Male") << endl;
+  out<< "Gender: " << (rhs.getGender() ? "Female" : "Male") << endl;
   return out;
-
 }
+
 bool Farmer::operator<(const Farmer& rhs) {
   return id < rhs.id;
 }
