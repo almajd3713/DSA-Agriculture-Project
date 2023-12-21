@@ -7,7 +7,7 @@ Production::Production() {
   categories = unordered_map<string, ProductCategory *>();
 }
 
-Production::Production(int wc, int ec, const unordered_map<string, ProductCategory*>&initcategories)
+Production::Production(double wc, double ec, const unordered_map<string, ProductCategory*>&initcategories)
 : waterConsumption{wc}, electricityConsumption{ec}, categories{initcategories} {}
 
 Production::Production(const Production& rhs)
@@ -20,17 +20,17 @@ Production::~Production() {
   categories.clear();
 }
 
-int Production::getWaterConsumption() const {
+double Production::getWaterConsumption() const {
   return waterConsumption;
 }
-void Production::setWaterConsumption(int new_waterConsumption) {
+void Production::setWaterConsumption(double new_waterConsumption) {
   waterConsumption = new_waterConsumption;
 }
 
-int Production::getElectricityConsumption() const {
+double Production::getElectricityConsumption() const {
   return electricityConsumption;
 }
-void Production::setElectricityConsumption(int new_electricityConsumption) {
+void Production::setElectricityConsumption(double new_electricityConsumption) {
   electricityConsumption = new_electricityConsumption;
 }
 
@@ -51,16 +51,19 @@ void Production::addProduct(const string& name, double bp, double pr, PesticideS
 
 ostream &operator<<(ostream& os, const Production& data) {
   os << dye::aqua(stringRepeat("=", getConsoleWidth() / 2)) << endl;
-  os << "Water Consumption: " << data.getWaterConsumption() << endl
-     << "Electricity Consumption: " << data.getElectricityConsumption() << endl;
+  os << "Water Consumption: " << data.getWaterConsumption() <<" m³"<< endl
+     << "Electricity Consumption: " << data.getElectricityConsumption() <<" kWh"<< endl
+     <<setfill('=') << setw(40) << "" << endl
+     << "Products: " << endl;
     int i = 1;
   for(auto& it: data.categories) {
     os << "Product " << i << ": " << it.first << endl
-    << "Production: " << it.second->getProduction() << endl
-    << "Price/unit: " << it.second->getBasePrice() << endl
-    << "Total sales: " << it.second->getGrossSales() << endl
-    << "Net sales: " << it.second->getPureSales() << endl;
-    i++;
+    << "Production: " << it.second->getProduction() <<" KG"<< endl
+    << "Price/unit: " << it.second->getBasePrice() <<" DA/KG"<< endl
+    << "Total sales: " << it.second->getGrossSales() <<(it.second->getGrossSales() > 1000000 ? it.second->getGrossSales()/ 1000000 : it.second->getGrossSales() > 1000 ? it.second->getGrossSales() / 1000 : it.second->getGrossSales()) 
+    <<(it.second->getGrossSales() > 1000000 ? "MDA" : it.second->getGrossSales() > 1000 ? "KDA" : "DA")<<endl
+    << "Net sales: " << it.second->getPureSales() <<(it.second->getPureSales()  > 1000000 ? it.second->getPureSales()  / 1000000 : it.second->getPureSales()  > 1000 ? it.second->getPureSales()  / 1000 : it.second->getPureSales() )
+    <<(it.second->getPureSales()  > 1000000 ? "MDA" : it.second->getPureSales()  > 1000 ? "KDA" : "DA")<<endl;
   }
   os << dye::aqua(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   return os;
@@ -81,7 +84,7 @@ void to_json(json& j, const Production& production) {
   }
 }
 
-int Production::summarizedSales() {
+double Production::summarizedSales() {
   double sum = 0;
   for(const pair<const string, ProductCategory*>& entry: getCategories()) {
     ProductCategory* cat = entry.second;
@@ -89,4 +92,10 @@ int Production::summarizedSales() {
     
   }
   return sum;
+}
+
+double Production::get_Category_Penalty(const string& cat) {
+  if(categories.find(cat) != categories.end()) {
+    return categories[cat]->getPenalty();
+  }
 }

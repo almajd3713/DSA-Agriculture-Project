@@ -5,21 +5,21 @@
 
 class Production {
 friend ostream& operator<<(ostream&, const Production&);//left for redwan to do it (unordered_map issues :( 
-  int waterConsumption;
-  int electricityConsumption;
+  double waterConsumption;
+  double electricityConsumption;
   unordered_map<string, ProductCategory*> categories;
 
   public:
     Production();
-    Production(int, int, const unordered_map<string, ProductCategory*>&);
+    Production(double, double, const unordered_map<string, ProductCategory*>&);
     Production(const Production&);
     Production(Production&&);
     ~Production();
     
-    int getWaterConsumption() const;
-    void setWaterConsumption(int);
-    int getElectricityConsumption() const;
-    void setElectricityConsumption(int);
+    double getWaterConsumption() const;
+    void setWaterConsumption(double);
+    double getElectricityConsumption() const;
+    void setElectricityConsumption(double);
     unordered_map<string, ProductCategory*> getCategories() const;
     void setCategories(unordered_map<string, ProductCategory*>);
 
@@ -38,9 +38,13 @@ friend ostream& operator<<(ostream&, const Production&);//left for redwan to do 
     friend ostream& operator<<(ostream&, const Production&);
 
   // left foe redwan to deal with ordered map for summrised sales
-  int summarizedSales();
   friend void to_json(json&, const Production&);
 
+   //left foe redwan to deal with ordered map for summrised sales
+  double summarizedSales();
+
+  // left for redwan to deal with ordered map for summrised sales
+  double get_Category_Penalty(const string& );
 };
 
 

@@ -33,14 +33,28 @@ public:
     City &operator=(const City&);
     bool operator==(const City&);
     void print_city_by_month(const int year,const int& month);
-    void print_city_by_year(const int& year);
-    int get_city_total_sales_per_year(int year);
-    int get_city_total_sales_per_month(int year,int month);
+    void print_city_by_year(const int& year,int choice);
+    double get_city_total_sales_per_year(int year);
+    double get_city_total_sales_per_month(int year,int month);
 
     friend ostream& operator<<(ostream&, const City&);
-
+    //query two of the document project
     void print_city_monthly_farmer_sales(int year,int month);
     void print_city_yearly_farmer_sales(int year);
     friend void to_json(json&, const City&);
+    // functions to print the monthly and yearly  penalty of the city(query 3)
+    void print_city_monthly_penalty(int year,int month,string category_name);
+    void print_city_yearly_penalty(int year,string category_name);
+    //functions to get the water and electricity consumption of the city
+    double get_city_yearly_water_consumption(int year);
+    double get_city_yearly_electricity_consumption(int year);
+    //functions to get the water and electricity consumption of the city in a month
+    double get_city_monthly_water_consumption(int year,int month);
+    double get_city_monthly_electricity_consumption(int year,int month);
+
+    
+    //functions to print the the summarized report of the city
+    void print_city_summarized_by_year(int year);
+    void print_city_summarized_by_month(int year,int month);
 };
 

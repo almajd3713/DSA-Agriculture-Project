@@ -61,12 +61,6 @@ ostream& operator<<(ostream& os, const AnnualReport& report) {
   for (auto month : report.months) {
     os << *month << endl;
   }
-  os << "Workers: " << endl;
-  int number = 0;
-  for (auto worker : report.workers) {
-    os << "Worker " << number << ": " << endl;
-    os << *worker << endl;
-  }
   return os;
 }
 
@@ -78,7 +72,7 @@ MonthlyReport* AnnualReport::getMonthlyReport(int month) {
   else return months[month - 1];
 }
 
-int summrisedSalesperyear(){
+int summarizedSalesperyear(){
   int sum=0;
   AnnualReport AnnualReport;
   for(auto month:AnnualReport.getMonths()){
