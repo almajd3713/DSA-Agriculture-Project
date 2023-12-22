@@ -38,12 +38,12 @@ public:
     double get_area_total_sales_per_year(int year);
     double get_area_total_sales_per_month(int year,int month);
 
-
     friend ostream& operator<<(ostream&, const Area&);
 
    //query two of the document project
     void print_area_monthly_farmer_sales(int year,int month);
     void print_area_yearly_farmer_sales(int year);
+    friend void to_json(json&, const Area&);
    
     // functions to print the monthly and yearly penalty of the area (query 3)
     void print_Area_monthly_penalty(int year,int month,string category_name);
@@ -52,6 +52,9 @@ public:
     //functions to get the water and electricity consumption of the area
     double get_area_yearly_water_consumption(int year);
     double get_area_yearly_electricity_consumption(int year);
+    // Penalty get
+    double get_monthly_area_penalty(int, int, const string&);
+    double get_yearly_area_penalty(int, const string&);
 
     //functions to get the water and electricity consumption of the area in a month
     double get_area_monthly_water_consumption(int year,int month);

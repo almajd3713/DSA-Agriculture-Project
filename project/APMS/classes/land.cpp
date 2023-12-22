@@ -72,6 +72,7 @@ Land &Land::operator=(const Land &rhs)
 // to be used in case we want to retrieve the report of a all years
 ostream &operator<<(ostream &os, const Land &land)
 {
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   os << "Land ID: " << land.id << endl;
   os << "Farmer: " << land.farmer->getName() << endl;
   os << "Annual Reports: " << endl;
@@ -80,11 +81,13 @@ ostream &operator<<(ostream &os, const Land &land)
     os << *year << endl;
   }
   return os;
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
 void Land:: printMonthlyReport(int year, int month)
-{    
- 
+{
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+  cout << "Land ID: " << id << endl;
   AnnualReport* report = getAnnualReport(year);
   if(report != nullptr) {
     MonthlyReport* mReport = report->getMonthlyReport(month);
@@ -102,6 +105,7 @@ void Land:: printMonthlyReport(int year, int month)
   else {
     cout << "No report for this year" << endl;
   }
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 double Land :: get_land_total_sales_per_year(int year){
   double Sum=0;
@@ -109,13 +113,14 @@ double Land :: get_land_total_sales_per_year(int year){
   if(report == nullptr) 
    return 0;
   for( auto *month : report->getMonths()){
-   Sum+= month->getProduction()->summrisedSales();
+    Sum += month->getProduction()->summarizedSales();
   }
   return Sum;
 
 }
 
 void Land::printAnnualReport(int year,int choice) {
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   cout << "Land ID: " << id << endl;
  AnnualReport* report = getAnnualReport(year);
   if(report != nullptr) {
@@ -143,7 +148,7 @@ void Land::printAnnualReport(int year,int choice) {
   else {
     cout << "No report for this year" << endl;
   }
- 
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
 AnnualReport* Land::getAnnualReport(int year) {
@@ -161,27 +166,29 @@ double Land::get_land_total_sales_per_month(int year,int month){
   MonthlyReport * mReport = report->getMonthlyReport(month);
   if(mReport == nullptr) 
    return 0;
-  Sum= mReport->getProduction()->summrisedSales();
+  Sum = mReport->getProduction() ? mReport->getProduction()->summarizedSales() : 0;
   return Sum;
 }
 
-  void Land::print_monthly_farmer_sales(int year,int month)
-  {
-     cout << "Farmer: " << farmer->getName() << endl;
-    AnnualReport* report = getAnnualReport(year);
-    if(report != nullptr) {
-      MonthlyReport* mReport = report->getMonthlyReport(month);
-      if(mReport != nullptr) {
-        cout << "Monthly Sales: " << mReport->getProduction()->summrisedSales() << endl;
-      }
-      else {
-        cout << "No report for this month" << endl;
-      }
+void Land::print_monthly_farmer_sales(int year,int month)
+{
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+  cout << "Farmer: " << farmer->getName() << endl;
+  AnnualReport* report = getAnnualReport(year);
+  if(report != nullptr) {
+    MonthlyReport* mReport = report->getMonthlyReport(month);
+    if(mReport != nullptr) {
+      cout << "Monthly Sales: " << mReport->getProduction()->summarizedSales() << endl;
     }
     else {
-      cout << "No report for this year" << endl;
+      cout << "No report for this month" << endl;
     }
   }
+  else {
+    cout << "No report for this year" << endl;
+  }
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+}
 
 
     void Land::print_yearly_farmer_sales(int year)
@@ -192,10 +199,9 @@ double Land::get_land_total_sales_per_month(int year,int month){
      //iterrating over the months and print sales of each farmer
         double sum=0;
         for(auto month:report->getMonths()){
-          sum+=month->getProduction()->summrisedSales();
+          sum+=month->getProduction()->summarizedSales();
         }
-        cout << "Yearly Sales: " << sum <<(sum > 1000000 ? sum / 1000000 : sum > 1000 ? sum / 1000 : sum); 
-  cout<<(sum > 1000000 ? "MDA" : sum > 1000 ? "KDA" : "DA")<<endl;
+        cout << "Yearly Sales: " << sum <<" DA" <<endl;
       }
       else {
         cout << "No report for this year" << endl;
@@ -226,6 +232,22 @@ void Land::print_Land_monthly_penalty(int year,int month,string category_name)
   cout<<(sales > 1000000 ? "MDA" : sales > 1000 ? "KDA" : "DA")<<endl;
 
 } 
+// function to get monthly penalty
+double Land::get_monthly_land_penalty(int year, int month, const string& category_name) {
+  AnnualReport* report = getAnnualReport(year);
+  if(!report) return 0;
+  MonthlyReport* mRep = report->getMonthlyReport(month);
+  if(!mRep) return 0;
+  return mRep->getProduction()->get_Category_Penalty(category_name); 
+}
+double Land::get_yearly_land_penalty(int year, const string& category_name) {
+  double sum = 0;
+  for(int i = 1; i <= 12; i++) {
+    sum += get_monthly_land_penalty(year, i, category_name);
+  }
+  return sum;
+}
+
 // functions to print the yearly  penalty of the land
 void Land::print_Land_yearly_penalty(int year,string category_name)
 {
@@ -319,7 +341,7 @@ void Land::print_monthly_summarized_report(int year,int month){
   cout<<"Monthly Summarized Report : "<<endl;
   electricity=get_monthly_electricity_consumption(year,month);
   water=get_monthly_water_consumption(year,month);
-  sales=mReport->getProduction()->summrisedSales();
+  sales=mReport->getProduction()->summarizedSales();
   cout<<"the total sales is : "<<(sales > 1000000 ? sales / 1000000 : sales > 1000 ? sales / 1000 : sales); 
   cout<<(sales > 1000000 ? "MDA" : sales > 1000 ? "KDA" : "DA")<<endl;
   cout<<"the total water consumption is : "<<(water > 1000000 ? water / 1000000 :  water);

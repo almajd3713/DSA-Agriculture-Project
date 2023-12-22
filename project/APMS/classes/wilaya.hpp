@@ -16,7 +16,7 @@ public:
 	Wilaya(Wilaya&&);
 	~Wilaya();
 	//getter and setter
-	int getWilayaId()const;
+	int getId()const;
 	void setId(const int&);
 	string getName()const;
 	void setName(const string&);
@@ -39,11 +39,15 @@ public:
 	void print_wilaya_by_year(const int& year,int choice);
 	double get_wilaya_total_sales_per_year(int year);
 	double get_wilaya_total_sales_per_month(int year,int month);
+	// Penalties
+	double get_monthly_wilaya_penalty(int, int, const string&);
+	double get_yearly_wilaya_penalty(int, const string&);
 
 
 	void print_wilaya_monthly_farmer_sales(int year,int month);
 	void print_wilaya_yearly_farmer_sales(int year);
 
+	friend void to_json(json&, const Wilaya&);
 
 	// functions to print the monthly and yearly penalty of the wilaya (query 3)
 	void print_wilaya_monthly_penalty(int year,int month,string category_name);

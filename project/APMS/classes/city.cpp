@@ -1,4 +1,3 @@
-#include<algorithm>
 #include "city.hpp"
 
 
@@ -25,7 +24,8 @@ std::string City::getName() const {
     return name;
 }
 
-int City::getCityId() const {
+int City::getId() const
+{
     return id;
 }
 
@@ -83,20 +83,20 @@ ostream &operator<<(ostream &os, const City& cit)
     // {
     //     os << *year << endl;
     // }
-    cout << setfill('-') << setw(40) << "" << endl;
-    os << "City ID: " << cit.getCityId() << endl;
+    os << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+    os << "City ID: " << cit.getId() << endl;
     os << "City: " << cit.getName() << endl;
     for(Area* area: cit.getArea()) {
         os << *area;
     }
-    cout << setfill('-') << setw(40) << "" << endl;
+    os << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     return os;
 }
 //print resumed 
 void City::print_city_by_month(const int year,const int& month)
-{ 
+{
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<< "Year :"<<year<<endl;
-    cout<<"----------------------------------------"<<endl;
     for(auto area : areas)
     {
         area->Print_Area_By_month(year,month);
@@ -118,8 +118,8 @@ void City::print_city_by_month(const int year,const int& month)
 }
 void City::print_city_by_year(const int& year,int choice)
 {
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<< "Year :"<<year<<endl;
-    cout<<"----------------------------------------"<<endl;
     for(auto area : areas)
     {
         area->Print_Area_By_Year(year,choice);
@@ -163,25 +163,39 @@ double City::get_city_total_sales_per_month(int year,int month)
 
  void City::print_city_monthly_farmer_sales(int year,int month)
  {
-        cout<<"City: " << name << endl;
-        cout<<"Year :"<<year<<" Month :"<<month<<endl;
-        for(auto area : areas)
-        {
-            area->print_area_monthly_farmer_sales(year,month);
-            cout<<"============================================"<<endl;
-        }
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+
+    cout<<"City: " << name << endl;
+    cout<<"Year :"<<year<<" Month :"<<month<<endl;
+    for(auto area : areas)
+    {
+        area->print_area_monthly_farmer_sales(year,month);
+    }
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
  }
     
 void City::print_city_yearly_farmer_sales(int year)
-{
-        cout<<"City: " << name << endl;
-        cout<<"Year :"<<year<<endl;
-        for(auto area : areas)
-        {
-            area->print_area_yearly_farmer_sales(year);
-            cout<<"============================================"<<endl;
-        }
+{ 
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+    cout<<"City: " << name << endl;
+    cout<<"Year: "<<year<<endl;
+    for(auto area : areas)
+    {
+        area->print_area_yearly_farmer_sales(year);
+    }
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
+
+void to_json(json& j, const City& cit) {
+    j = json{
+        {"id", cit.getId()},
+        {"name", cit.getName()},
+        {"lands", "Bazingen"}};
+    for(Area* area: cit.getArea()) {
+        j["areas"].push_back(*area);
+    } 
+}
+
 //query 3
 void City::print_city_monthly_penalty(int year,int month,string category_name)
 {
@@ -280,4 +294,19 @@ void City::print_city_summarized_by_month(int year,int month)
   cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
   cout<<"the city total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+}
+
+double City::get_monthly_city_penalty(int year, int month, const string &category_name)
+{
+    double sum = 0;
+    for (Area *land : getArea())
+        sum += land->get_monthly_area_penalty(year, month, category_name);
+    return sum;
+}
+double City::get_yearly_city_penalty(int year, const string &category_name)
+{
+    double sum = 0;
+    for (Area *land : getArea())
+        sum += land->get_yearly_area_penalty(year, category_name);
+    return sum;
 }

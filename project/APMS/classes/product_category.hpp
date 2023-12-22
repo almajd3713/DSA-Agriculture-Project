@@ -3,7 +3,8 @@
 #define PRODUCTDSA
 #include "enums.hpp"
 #include "../misc/includes.hpp"
-
+#include "../../lib/color.hpp"
+#include "../misc/util.hpp"
 
 class ProductCategory {
   friend ostream& operator<<(ostream&, const ProductCategory&);
@@ -33,6 +34,7 @@ class ProductCategory {
   void setPestSeverity(PesticideSeverity);
 
   ProductCategory& operator=(const ProductCategory&);
+  friend void to_json(json&, const ProductCategory&);
   
 };
 

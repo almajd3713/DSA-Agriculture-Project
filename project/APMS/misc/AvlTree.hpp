@@ -1,11 +1,12 @@
 #ifndef AVL_TREE_H
 #define AVL_TREE_H
 
-#include "dsexceptions.h"
 #include <algorithm>
-#include <iostream> 
-using namespace std;
-
+#include <queue>
+#include <functional>
+#include <iostream>
+#include "exceptions.hpp"
+using std::function, std::cout, std::ostream, std::endl, std::is_pointer, std::queue;
 // AvlTree class
 //
 // CONSTRUCTION: zero parameter
@@ -166,21 +167,21 @@ class AvlTree
     }
 
   private:
-    struct AvlNode
+    struct BinaryNode
     {
         Comparable element;
-        AvlNode    *left;
-        AvlNode    *right;
+        BinaryNode    *left;
+        BinaryNode    *right;
         int        height;
 
-        AvlNode( const Comparable & ele, AvlNode *lt, AvlNode *rt, int h = 0 )
+        BinaryNode( const Comparable & ele, BinaryNode *lt, BinaryNode *rt, int h = 0 )
           : element{ ele }, left{ lt }, right{ rt }, height{ h } { }
         
-        AvlNode( Comparable && ele, AvlNode *lt, AvlNode *rt, int h = 0 )
+        BinaryNode( Comparable && ele, BinaryNode *lt, BinaryNode *rt, int h = 0 )
           : element{ std::move( ele ) }, left{ lt }, right{ rt }, height{ h } { }
     };
 
-    AvlNode *root;
+    BinaryNode *root;
 
     /**
      * Internal method to insert into a subtree.
@@ -188,10 +189,10 @@ class AvlTree
      * t is the node that roots the subtree.
      * Set the new root of the subtree.
      */
-    void insert( const Comparable & x, AvlNode * & t )
+    void insert( const Comparable & x, BinaryNode * & t )
     {
         if( t == nullptr )
-            t = new AvlNode{ x, nullptr, nullptr };
+            t = new BinaryNode{ x, nullptr, nullptr };
 		
         else if( x < t->element )
             insert( x, t->left );
@@ -208,10 +209,10 @@ class AvlTree
      * t is the node that roots the subtree.
      * Set the new root of the subtree.
      */
-    void insert( Comparable && x, AvlNode * & t )
+    void insert( Comparable && x, BinaryNode * & t )
     {
         if( t == nullptr )
-            t = new AvlNode{ std::move( x ), nullptr, nullptr };
+            t = new BinaryNode{ std::move( x ), nullptr, nullptr };
 		
         else if( x < t->element )
             insert( std::move( x ), t->left );
@@ -228,7 +229,7 @@ class AvlTree
      * t is the node that roots the subtree.
      * Set the new root of the subtree.
      */
-    void remove( const Comparable & x, AvlNode * & t )
+    void remove( const Comparable & x, BinaryNode * & t )
     {
         if( t == nullptr )
             return;   // Item not found; do nothing
@@ -247,7 +248,7 @@ class AvlTree
 		
         else
         {
-            AvlNode *oldNode = t;
+            BinaryNode *oldNode = t;
             t = ( t->left != nullptr ) ? t->left : t->right;
             delete oldNode;
         }
@@ -258,7 +259,7 @@ class AvlTree
     static const int ALLOWED_IMBALANCE = 1;
 
     // Assume t is balanced or within one of being balanced
-    void balance( AvlNode * & t )
+    void balance( BinaryNode * & t )
     {
         if( t == nullptr )
             return;
@@ -287,7 +288,7 @@ class AvlTree
      * Internal method to find the smallest item in a subtree t.
      * Return node containing the smallest item.
      */
-    AvlNode * findMin( AvlNode *t ) const
+    BinaryNode * findMin( BinaryNode *t ) const
     {
         if( t == nullptr )
             return nullptr;
@@ -302,7 +303,7 @@ class AvlTree
      * Internal method to find the largest item in a subtree t.
      * Return node containing the largest item.
      */
-    AvlNode * findMax( AvlNode *t ) const
+    BinaryNode * findMax( BinaryNode *t ) const
     {
         if( t != nullptr )
             while( t->right != nullptr )
@@ -315,7 +316,7 @@ class AvlTree
      * x is item to search for.
      * t is the node that roots the tree.
      */
-    bool contains( const Comparable & x, AvlNode *t ) const
+    bool contains( const Comparable & x, BinaryNode *t ) const
     {
         if( t == nullptr )
             return false;
@@ -333,7 +334,7 @@ class AvlTree
     /**
      * Internal method to make subtree empty.
      */
-    void makeEmpty( AvlNode * & t )
+    void makeEmpty( BinaryNode * & t )
     {
         if( t != nullptr )
         {
@@ -347,7 +348,7 @@ class AvlTree
     /**
      * Internal method to print a subtree rooted at t in sorted order.
      */
-    void printTree( AvlNode *t ) const
+    void printTree( BinaryNode *t ) const
     {
         if( t != nullptr )
         {
@@ -360,19 +361,19 @@ class AvlTree
     /**
      * Internal method to clone subtree.
      */
-    AvlNode * clone( AvlNode *t ) const
+    BinaryNode * clone( BinaryNode *t ) const
     {
         if( t == nullptr )
             return nullptr;
         else
-            return new AvlNode{ t->element, clone( t->left ), clone( t->right ), t->height };
+            return new BinaryNode{ t->element, clone( t->left ), clone( t->right ), t->height };
     }
 	
     // Avl manipulations
     /**
      * Return the height of node t or -1 if nullptr.
      */
-    int height( AvlNode *t ) const
+    int height( BinaryNode *t ) const
     {
         return t == nullptr ? -1 : t->height;
     }
@@ -389,9 +390,9 @@ class AvlTree
      */
 	 
 	// left left imbalance
-    void rotateWithLeftChild( AvlNode * & k2 )
+    void rotateWithLeftChild( BinaryNode * & k2 )
     {
-        AvlNode *k1 = k2->left;
+        BinaryNode *k1 = k2->left;
         k2->left = k1->right;
         k1->right = k2;
         k2->height = max( height( k2->left ), height( k2->right ) ) + 1;
@@ -406,9 +407,9 @@ class AvlTree
      */
 	 
 	// right right imbalance
-    void rotateWithRightChild( AvlNode * & k1 )
+    void rotateWithRightChild( BinaryNode * & k1 )
     {
-        AvlNode *k2 = k1->right;
+        BinaryNode *k2 = k1->right;
         k1->right = k2->left;
         k2->left = k1;
         k1->height = max( height( k1->left ), height( k1->right ) ) + 1;
@@ -424,7 +425,7 @@ class AvlTree
      */
 	 
 	// Left right imbalance
-    void doubleWithLeftChild( AvlNode * & k3 )
+    void doubleWithLeftChild( BinaryNode * & k3 )
     {
         rotateWithRightChild( k3->left );
         rotateWithLeftChild( k3 );
@@ -438,7 +439,7 @@ class AvlTree
      */
 	 
 	// right left imbalance
-    void doubleWithRightChild( AvlNode * & k1 )
+    void doubleWithRightChild( BinaryNode * & k1 )
     {
         rotateWithLeftChild( k1->right );
         rotateWithRightChild( k1 );

@@ -72,6 +72,7 @@ Farmer& Farmer::operator=(const Farmer& rhs) {
   name = rhs.name;
   age = rhs.age;
   gender = rhs.gender;
+  land = rhs.land;
   return *this;
 }
 
@@ -85,19 +86,19 @@ ostream& operator<<(ostream& out, const Worker& rhs)
   out << "name : " << rhs.getName() << endl;
   out << "ID: " << rhs.getId()  << endl;
   out<< "Age: " << rhs.getAge() << endl;
-  out<<"gender: " << rhs.getGender() << endl;
+  out<<"Gender: " << (rhs.getGender() ? "Female" : "Male") << endl;
   return out;
 }
-ostream& operator<<(ostream & out,const Farmer&rhs)
+ostream& operator<<(ostream & out,const Farmer& rhs)
 {
   out << "Farmer: " << endl;
   out << "name : " << rhs.getName() << endl;
   out << "ID: " << rhs.getId()  << endl;
   out<< "Age: " << rhs.getAge() << endl;
-  out<<"gender: " << rhs.getGender() << endl;
+  out<< "Gender: " << (rhs.getGender() ? "Female" : "Male") << endl;
   return out;
-
 }
+
 bool Farmer::operator<(const Farmer& rhs) {
   return id < rhs.id;
 }
@@ -107,4 +108,22 @@ Land* Farmer::getLand() const {
 }
 void Farmer::setLand(Land* new_land) {
   land = new_land;
+}
+
+void to_json(json& j, const Worker& worker) {
+  j = {
+    {"name", worker.getName()},
+    {"id", worker.getId()},
+    {"age", worker.getAge()},
+    {"gender", worker.getGender()}
+  };
+}
+
+void to_json(json& j, const Farmer& farmer) {
+  j = {
+    {"name", farmer.getName()},
+    {"id", farmer.getId()},
+    {"age", farmer.getAge()},
+    {"gender", farmer.getGender()}
+  };
 }

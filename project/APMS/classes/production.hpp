@@ -1,10 +1,6 @@
 
 #ifndef LANDDATADSA
 #define LANDDATADSA
-#include <string>
-#include <vector>
-#include <algorithm>
-#include <unordered_map>
 #include "product_category.hpp"
 
 class Production {
@@ -41,11 +37,14 @@ friend ostream& operator<<(ostream&, const Production&);//left for redwan to do 
 
     friend ostream& operator<<(ostream&, const Production&);
 
-   //left foe redwan to deal with ordered map for summrised sales
-   double summrisedSales();
+  // left foe redwan to deal with ordered map for summrised sales
+  friend void to_json(json&, const Production&);
 
-   //left for redwan to deal with ordered map for summrised sales
-   double get_Category_Penalty(string category_name);
+   //left foe redwan to deal with ordered map for summrised sales
+  double summarizedSales();
+
+  // left for redwan to deal with ordered map for summrised sales
+  double get_Category_Penalty(const string& );
 };
 
 

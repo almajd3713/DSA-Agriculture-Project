@@ -40,8 +40,7 @@ Wilaya::~Wilaya()
     cities.clear();
 }
 
-int Wilaya::getWilayaId() const
-{
+int Wilaya::getId() const {
     return id;
 }
 
@@ -98,29 +97,22 @@ bool Wilaya::operator==(const Wilaya &rhs)
 
 ostream &operator<<(ostream &os, const Wilaya &wil)
 {
-    // os << "Land ID: " << land.id << endl;
-    // os << "Farmer: " << land.farmer->getName() << endl;
-    // os << "Annual Reports: " << endl;
-    // for (auto year : land.reports)
-    // {
-    //   os << *year << endl;
-    // }
-    os << "Wilaya ID: " << wil.getWilayaId() << endl;
+    os << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+    os << "Wilaya ID: " << wil.getId() << endl;
     os << "Wilaya: " << wil.getName() << endl;
     os << "Cities: " << endl;
-    cout << setfill('=') << setw(40) << "" << endl;
     for (City *cit : wil.getCity())
     {
-        os << "\t" << *cit;
+        os << *cit;
     }
-    cout << setfill('=') << setw(40) << "" << endl;
+    os << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 
     return os;
 }
 // detailed print
 void Wilaya::print_wilaya_by_month(const int year, const int &month)
 {
-    cout << "Wilaya ID: " << getWilayaId() << endl;
+    cout << "Wilaya ID: " << getId() << endl;
     cout << "Wilaya: " << getName() << endl;
     cout << "Cities: " << endl;
     cout << setfill('=') << setw(40) << "" << endl;
@@ -144,11 +136,12 @@ void Wilaya::print_wilaya_by_month(const int year, const int &month)
         cout<<" area total electricity consumption :"<<electricity<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
     cout << setfill('=') << setw(40) << "" << endl;
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
 void Wilaya::print_wilaya_by_year(const int &year,int choice)
 {
-    cout << "Wilaya ID: " << getWilayaId() << endl;
+    cout << "Wilaya ID: " << getId() << endl;
     cout << "Wilaya: " << getName() << endl;
     cout << "Cities: " << endl;
     cout << setfill('=') << setw(40) << "" << endl;
@@ -172,6 +165,7 @@ void Wilaya::print_wilaya_by_year(const int &year,int choice)
         cout<<" area total electricity consumption :"<<electricity<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
     cout << setfill('=') << setw(40) << "" << endl;
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 double Wilaya::get_wilaya_total_sales_per_year(int year)
 {
@@ -194,49 +188,47 @@ double Wilaya::get_wilaya_total_sales_per_month(int year, int month)
 
 void Wilaya::print_wilaya_monthly_farmer_sales(int year, int month)
 {
-    cout << "Wilaya ID: " << getWilayaId() << endl;
+    cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+    cout << "Wilaya ID: " << getId() << endl;
     cout << "Wilaya: " << getName() << endl;
-    cout << setfill('=') << setw(40) << "" << endl;
     for (City *cit : getCity())
     {
         cit->print_city_monthly_farmer_sales(year, month);
     }
-    cout << setfill('=') << setw(40) << "" << endl;
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+    
 }
-void Wilaya::print_wilaya_yearly_farmer_sales(int year)
-{
-    cout << "Wilaya ID: " << getWilayaId() << endl;
+void Wilaya::print_wilaya_yearly_farmer_sales(int year) {
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+    cout << "Wilaya ID: " << getId() << endl;
     cout << "Wilaya: " << getName() << endl;
-    cout << setfill('=') << setw(40) << "" << endl;
-    for (City *cit : getCity())
-    {
+    
+    for(City* cit: getCity()) {
         cit->print_city_yearly_farmer_sales(year);
     }
-    cout << setfill('=') << setw(40) << "" << endl;
+  cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
 // functions to print the monthly and yearly penalty of the wilaya (query 3)
 void Wilaya::print_wilaya_monthly_penalty(int year, int month, string category_name)
 {
-    cout << "Wilaya ID: " << getWilayaId() << endl;
+    cout << "Wilaya ID: " << getId() << endl;
     cout << "Wilaya: " << getName() << endl;
     cout << setfill('=') << setw(40) << "" << endl;
     for (City *cit : getCity())
     {
         cit->print_city_monthly_penalty(year, month, category_name);
     }
-    cout << setfill('=') << setw(40) << "" << endl;
 }
 void Wilaya::print_wilaya_yearly_penalty(int year, string category_name)
 {
-    cout << "Wilaya ID: " << getWilayaId() << endl;
+    cout << "Wilaya ID: " << getId() << endl;
     cout << "Wilaya: " << getName() << endl;
     cout << setfill('=') << setw(40) << "" << endl;
     for (City *cit : getCity())
     {
         cit->print_city_yearly_penalty(year, category_name);
     }
-    cout << setfill('=') << setw(40) << "" << endl;
 }
 //functions to get the water and electricity consumption of the wilaya
 double Wilaya::get_wilaya_yearly_water_consumption(int year)
@@ -280,7 +272,7 @@ double Wilaya::get_wilaya_monthly_electricity_consumption(int year, int month)
 //functions to print the the summarized report of the wilaya
 void Wilaya::print_wilaya_summarized_by_year(int year)
 {
-    cout << "Wilaya ID: " << getWilayaId() << endl;
+    cout << "Wilaya ID: " << getId() << endl;
     cout << "Wilaya: " << getName() << endl;
     cout << "Cities: " << endl;
     cout << setfill('=') << setw(40) << "" << endl;
@@ -303,7 +295,7 @@ void Wilaya::print_wilaya_summarized_by_year(int year)
 
    void Wilaya::print_wilaya_summarized_by_month(int year,int month)
    {
-       cout << "Wilaya ID: " << getWilayaId() << endl;
+       cout << "Wilaya ID: " << getId() << endl;
        cout << "Wilaya: " << getName() << endl;
        cout << "Cities: " << endl;
        cout << setfill('=') << setw(40) << "" << endl;
@@ -325,3 +317,27 @@ void Wilaya::print_wilaya_summarized_by_year(int year)
    } 
 
 
+void to_json(json& j, const Wilaya& wil) {
+  j = json{
+    {"name", wil.getName()},
+    {"id", wil.getId()},
+  };
+  for(City* cit: wil.getCity()) {
+    j["cities"].push_back(*cit);
+  }
+}
+
+double Wilaya::get_monthly_wilaya_penalty(int year, int month, const string &category_name)
+{
+    double sum = 0;
+    for (City *land : getCity())
+        sum += land->get_monthly_city_penalty(year, month, category_name);
+    return sum;
+}
+double Wilaya::get_yearly_wilaya_penalty(int year, const string &category_name)
+{
+    double sum = 0;
+    for (City *land : getCity())
+        sum += land->get_yearly_city_penalty(year, category_name);
+    return sum;
+}

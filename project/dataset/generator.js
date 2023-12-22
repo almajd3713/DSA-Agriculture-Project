@@ -61,7 +61,7 @@ function farmerGen() {
 }
 function landDataGen() {
     let products = getProductSubset().map(prod => new Classes.Product(prod, RNG.rndNum(30, 200), RNG.rndNum(100, 5000), RNG.rndNum(0, 1)));
-    let land = new Classes.LandData(products, (1000 * products.length) + RNG.rndNum(100 * products.length, 1000 * products.length), RNG.rndNum(20 * products.length, 60 * products.length));
+    let land = new Classes.LandData(products, (1000 * products.length) + RNG.rndNum(100 * products.length, 1000 * products.length), RNG.rndNum(1000 * products.length, 7000 * products.length));
     return land;
 }
 function monthlyRepGen(month) {
@@ -79,7 +79,8 @@ function yearlyRepGen(year, startingMonth, prevWorkers) {
     let months = new Array(12 - startingMonth).fill(1).map((_, i) => monthlyRepGen(i + startingMonth));
     return new Classes.AnnualReport(year, months, workers);
 }
-function landGen() {
+function landGen(id) {
+    id = (id * 100) + RNG.rndNum(1, 99);
     let landFormYear = RNG.rndNum(BASE_YEAR, CURRENT_YEAR);
     let rep = new Array(CURRENT_YEAR - landFormYear + 1).fill(1);
     rep.forEach((_, i, arr) => {
@@ -88,20 +89,22 @@ function landGen() {
         else
             arr[i] = yearlyRepGen(landFormYear + i, RNG.rndNum(1, 11));
     });
-    return new Classes.Land(RNG.rndNum(200000, 300000), farmerGen(), rep);
+    return new Classes.Land(id, farmerGen(), rep);
 }
-function areaGen(area) {
-    let lands = new Array(3).fill(1).map(_ => landGen());
-    return new Classes.Area(RNG.rndNum(3000000, 4000000), area, lands);
+function areaGen(id, area) {
+    id = (id * 100) + RNG.rndNum(1, 99);
+    let lands = new Array(3).fill(1).map(_ => landGen(id));
+    return new Classes.Area(id, area, lands);
 }
-function cityGen(city) {
-    let areas = city[1].map(area => areaGen(area));
-    return new Classes.City(RNG.rndNum(2000000, 3000000), city[0], areas);
+function cityGen(id, city) {
+    id = (id * 100) + RNG.rndNum(1, 99);
+    let areas = city[1].map(area => areaGen(id, area));
+    return new Classes.City(id, city[0], areas);
 }
 function wilayaGen(name) {
     let wil = RNG.getWilaya(name);
     let id = wil.id;
-    let cities = Object.entries(wil.cities).map(entry => cityGen(entry));
+    let cities = Object.entries(wil.cities).map(entry => cityGen(id, entry));
     let wilaya = new Classes.Wilaya(name, id, cities);
     return wilaya;
 }

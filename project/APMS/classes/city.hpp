@@ -16,7 +16,7 @@ public:
     //getter and setter
 
     string getName()const;
-    int getCityId()const;
+    int getId()const;
     std::vector<Area*> getArea()const;
     void setName(const string &name);
     void setArea(const vector<Area*>& areas);
@@ -41,6 +41,7 @@ public:
     //query two of the document project
     void print_city_monthly_farmer_sales(int year,int month);
     void print_city_yearly_farmer_sales(int year);
+    friend void to_json(json&, const City&);
     // functions to print the monthly and yearly  penalty of the city(query 3)
     void print_city_monthly_penalty(int year,int month,string category_name);
     void print_city_yearly_penalty(int year,string category_name);
@@ -51,7 +52,9 @@ public:
     double get_city_monthly_water_consumption(int year,int month);
     double get_city_monthly_electricity_consumption(int year,int month);
 
-    
+    // Penalties
+    double get_monthly_city_penalty(int, int, const string&);
+    double get_yearly_city_penalty(int, const string&);
     //functions to print the the summarized report of the city
     void print_city_summarized_by_year(int year);
     void print_city_summarized_by_month(int year,int month);

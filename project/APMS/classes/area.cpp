@@ -76,6 +76,7 @@ bool Area::operator==(const Area& rhs) {
 //print function
 void Area::Print_Area_By_Year(int year,int choice)
 {
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<< "Year :"<<year<<endl;
     for(auto land : lands)
     {  
@@ -99,7 +100,7 @@ void Area::Print_Area_By_Year(int year,int choice)
       
 }
 double Area::get_area_total_sales_per_year(int year){
-    double total_sales = 0;
+double total_sales = 0;
     for(auto land : lands)
     {
         total_sales += land->get_land_total_sales_per_year(year);
@@ -118,6 +119,7 @@ double Area::get_area_total_sales_per_year(int year){
 
  }
 void Area::Print_Area_By_month(int year,int month){
+    cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<< "Year :"<<year<<" Month :"<<month<<endl;
     for(auto land : lands)
     {
@@ -141,33 +143,70 @@ void Area::Print_Area_By_month(int year,int month){
 }
 // all the years in the area
 ostream& operator<<(ostream& os, const Area& area) {
+  os << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     os << "Area ID: " << area.id << endl;
     os << "Area Name: " << area.name << endl;
     os << "Lands: " << endl;
     for (auto land : area.lands) {
         os << *land << endl;
     }
+  os << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     return os;
 }
 
-  void Area::print_area_monthly_farmer_sales(int year,int month)
-  {       cout<<"Area: " << name << endl;
-        cout<<"Year :"<<year<<" Month :"<<month<<endl;
-        for(auto land : lands)
-        {
-            land->print_monthly_farmer_sales(year,month);
-            cout<<"============================================"<<endl;
-        }
-  }
-  void Area:: print_area_yearly_farmer_sales(int year)
-  {     cout<<"Area: " << name << endl;
-        cout<<"Year :"<<year<<endl;
-        for(auto land : lands)
-        {
-            land->print_yearly_farmer_sales(year);
-            cout<<"============================================"<<endl;
-        }}
+void Area::print_area_monthly_farmer_sales(int year,int month)
+{      
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;   
+     cout<<"Area: " << name << endl;
+    cout<<"Year :"<<year<<" Month :"<<month<<endl;
+    for(auto land : lands)
+    {
+        land->print_monthly_farmer_sales(year,month);
 
+    }
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+}
+void Area:: print_area_yearly_farmer_sales(int year)
+{
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+    cout<<"Area: " << name << endl;
+    cout<<"Year :"<<year<<endl;
+    for(auto land : lands)
+    {
+        land->print_yearly_farmer_sales(year);
+    }
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+}
+
+// ostream& operator<<(ostream& os, const Area& area) {
+//     cout << setfill('.') << setw(40) << "" << endl;
+//     os << "Area ID: " << area.getId() << endl;
+//     os << "Area: " << area.getName() << endl;
+//     cout << setfill('.') << setw(40) << "" << endl;
+//     return os;
+// }
+
+void to_json(json& j, const Area& area) {
+  j = json{
+    {"name", area.getName()},
+    {"id", area.getId()},
+  };
+  for(Land* land: area.getLands()) {
+    j["lands"].push_back(*land);
+  }
+}
+double Area::get_monthly_area_penalty(int year, int month, const string& category_name) {
+    double sum = 0;
+    for(Land* land: getLands())
+        sum += land->get_monthly_land_penalty(year, month, category_name);
+    return sum;
+}
+double Area::get_yearly_area_penalty(int year, const string& category_name) {
+    double sum = 0;
+    for(Land* land: getLands())
+        sum += land->get_yearly_land_penalty(year, category_name);
+    return sum;
+}
 // functions to print the monthly  penalty of the area
 
  void Area::print_Area_monthly_penalty(int year,int month,string category_name)

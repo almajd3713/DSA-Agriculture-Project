@@ -46,10 +46,14 @@ friend ostream& operator<<(ostream&, const Land&);
    // these function are for resumed print that return  all the sales in specific year
    double get_land_total_sales_per_year(int year);
    double get_land_total_sales_per_month(int year,int month);
+   // Get penalties for months, years
+   double get_monthly_land_penalty(int, int, const string&);
+   double get_yearly_land_penalty(int, const string&);
    //query two of the document project 
    void print_monthly_farmer_sales(int year,int month);
    void print_yearly_farmer_sales(int year);
 
+    friend void to_json(json&, const Land&);
 // functions to print the monthly and yearly penalty of the land (query 3)
 void print_Land_monthly_penalty(int year,int month,string category_name); 
 void print_Land_yearly_penalty(int year,string category_name);

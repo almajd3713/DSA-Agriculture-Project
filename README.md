@@ -6,16 +6,20 @@ This is a soon to be system for managing lands and stuff. This repo will contain
 ## Usage
 
 To use the program, go to `project/APMS/driver.cpp`. You will find more information there.
-The data sample 
+The data sample
 
 TODO:
 
 - [x] Script for generating data
-- [ ] Predefined data (Real Wilayas, cities, ...)
+- [X] Predefined data (Real Wilayas, cities, ...)
 - [ ] Actual project
   - [x] JSON Reader/Writer
-  - [ ] Data Structures
+  - [X] Data Structures
   - [ ] Functions
   - [ ] Terminal Prompter
 - [ ] Directives on the data structure used
 - [ ] Report
+
+Bugs:
+
+- Validating monthly/yearly functions to check if data exists or nah

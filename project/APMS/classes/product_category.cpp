@@ -70,6 +70,7 @@ ProductCategory& ProductCategory::operator=(const ProductCategory& rhs) {
 }
 
 ostream& operator<<(ostream& out, const ProductCategory& rhs) {
+  out << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   out << "Name: " << rhs.name << endl;
   out << "Base Price: " << rhs.basePrice <<" DA"<< endl;
   out << "Production: " << rhs.production <<" KG"<< endl;
@@ -77,6 +78,15 @@ ostream& operator<<(ostream& out, const ProductCategory& rhs) {
   out << "Pesticide Severity: " << rhs.pestSeverity << endl;
   out << "Penalty: " << rhs.getPenalty() <<" DA" <<endl;
   out << "Pure Sales: " << rhs.getPureSales() << " DA"<<endl;
-
+  out << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   return out;
+}
+
+void to_json(json& j, const ProductCategory& cat) {
+  j = json {
+    {"name", cat.getName()},
+    {"basePrice", cat.getBasePrice()},
+    {"production", cat.getProduction()},
+    {"pesticideSeverity", cat.getPestSeverity()}
+  };
 }

@@ -67,16 +67,29 @@ ostream& operator<<(ostream& os, const AnnualReport& report) {
 MonthlyReport* AnnualReport::getMonthlyReport(int month) {
   if(months.size() < 12) {
     if(months[0]->getMonth() > month) return nullptr;
-    else return months[12 - month - 1];
+    else return months[12 - (12 - months.size()) - 1];
   }
   else return months[month - 1];
 }
-int summrisedSalesperyear(){
+
+int summarizedSalesperyear(){
   int sum=0;
   AnnualReport AnnualReport;
   for(auto month:AnnualReport.getMonths()){
-    sum+=month->getProduction()->summrisedSales();
+    sum += month->getProduction()->summarizedSales();
   }
   return sum;
 }
 
+
+void to_json(json& j, const AnnualReport& report) {
+  j = {
+    {"year", report.getYear()}
+  };
+  for(MonthlyReport* mRep: report.getMonths()) {
+    j["months"].push_back(*mRep);
+  }
+  for(Worker* worker: report.getWorkers()) {
+    j["workers"].push_back(*worker);
+  }
+}
