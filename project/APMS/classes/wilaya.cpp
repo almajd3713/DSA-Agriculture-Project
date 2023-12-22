@@ -199,7 +199,6 @@ void Wilaya::print_wilaya_monthly_penalty(int year, int month, string category_n
     {
         cit->print_city_monthly_penalty(year, month, category_name);
     }
-    cout << setfill('=') << setw(40) << "" << endl;
 }
 void Wilaya::print_wilaya_yearly_penalty(int year, string category_name)
 {
@@ -210,7 +209,6 @@ void Wilaya::print_wilaya_yearly_penalty(int year, string category_name)
     {
         cit->print_city_yearly_penalty(year, category_name);
     }
-    cout << setfill('=') << setw(40) << "" << endl;
 }
 //functions to get the water and electricity consumption of the wilaya
 double Wilaya::get_wilaya_yearly_water_consumption(int year)

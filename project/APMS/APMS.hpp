@@ -174,8 +174,7 @@ public:
          << setfill(' ') << dye::yellow("** APMS System -- 1.3.77 -- All Rights Reserved") << endl
          << setfill('=') << setw(60) << dye::yellow("") << endl
          << setfill(' ') << dye::yellow("1: Access information") << endl
-         << setfill(' ') << dye::yellow("2: Modify, add, or delete data") << endl
-         << setfill(' ') << dye::yellow("3: Save changes into database") << endl
+         << setfill(' ') << dye::yellow("2: Save changes into database") << endl
          << setfill(' ') << dye::yellow("0: Exit the terminal") << endl
          << setfill('=') << setw(60) << dye::yellow("") << endl;
   }
@@ -226,9 +225,6 @@ public:
       case 1:
         readDataPrompt(displayMenu);
         break;
-      case 2:
-        getWinnerPrompt(displayMenu);
-        break;
 
       default:
         cout << "This option does not exist. Try another one" << endl;
@@ -239,14 +235,15 @@ public:
   }
 
   void readDataPrompt(bool& displayMenu) {
-    int input = 0, input2, year, month, isDetailed;
+    int input = 0, input2,  year, month, isDetailed;
     cout << dye::blue("What would you like to access?") << endl
          << "1: General information" << endl
-         << "2: Total sales" << endl
+         << "2: Sales" << endl
          << "3: Penalties" << endl
          << "4: Winners in the monthly competition" << endl
          << "0: Return to main menu" << endl;
     do {
+      Farmer* desired;
       promptAndValidate(input, "Enter your query: ");
       switch(input) {
         case 1:
@@ -259,7 +256,7 @@ public:
                << "6: Information about the entire Database" << endl
                << "0: Return to the main menu" << endl;
           do {
-            promptAndValidate(input, "Enter your query: ", 0, 3);
+            promptAndValidate(input, "Enter your query: ", 0, 6);
             switch(input) {
               case 1:
                 cout << dye::blue("How would you like to access the Wilaya information?") << endl
@@ -275,9 +272,9 @@ public:
                       promptAndValidate(month, "Enter the month you want: ");
                       promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
                       if(isDetailed == 2) {
-                        print_monthly_wilaya_info(input2, year, month);
+                        print_monthly_wilaya_info(input2, year, month - 1);
                       } else {
-                         print_monthly_wilaya_summarized(input2, year, month);
+                         print_monthly_wilaya_summarized(input2, year, month - 1);
                       }
                       displayMenu = true;
                       return;
@@ -325,11 +322,11 @@ public:
                     promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
                     if (isDetailed == 2)
                     {
-                      print_monthly_city_info(input2, year, month);
+                      print_monthly_city_info(input2, year, month - 1);
                     }
                     else
                     {
-                      print_monthly_city_summarized(input2, year, month);
+                      print_monthly_city_summarized(input2, year, month - 1);
                     }
                     displayMenu = true;
                     return;
@@ -382,11 +379,11 @@ public:
                     promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
                     if (isDetailed == 2)
                     {
-                      print_monthly_area_info(input2, year, month);
+                      print_monthly_area_info(input2, year, month - 1);
                     }
                     else
                     {
-                      print_monthly_area_summarized(input2, year, month);
+                      print_monthly_area_summarized(input2, year, month - 1);
                     }
                     displayMenu = true;
                     return;
@@ -439,11 +436,11 @@ public:
                     promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
                     if (isDetailed == 2)
                     {
-                      print_monthly_land_info(input2, year, month);
+                      print_monthly_land_info(input2, year, month - 1);
                     }
                     else
                     {
-                      print_monthly_land_summarized(input2, year, month);
+                      print_monthly_land_summarized(input2, year, month - 1);
                     }
                     displayMenu = true;
                     return;
@@ -481,7 +478,7 @@ public:
                 return;
               case 5:
                 promptAndValidate(input, "Enter the farmer's ID: ");
-                Farmer* desired = farmers.getById(input);
+                desired = farmers.getById(input);
                 if(desired) cout << *desired;
                 else cout << "ERR: Farmer with this ID was not found" << endl;
                 displayMenu = true;
@@ -584,20 +581,20 @@ public:
                   promptAndValidate(input, "Enter your query: ", 1, 3);
                   switch(input) {
                     case 1:
-                      promptAndValidate(input, "Enter the ID of the Wilaya: ");
+                      promptAndValidate(input, "Enter the ID of the wilaya you want: ");
                       promptAndValidate(year, "Enter the year you want: ");
                       promptAndValidate(month, "Enter the month you want: ");
-                      List_monthly_farmer_sales_in_wilaya(input, year, month);
+                      List_monthly_farmer_sales_in_wilaya(input, year, month - 1);
                       displayMenu = true;
                       return;
                     case 2:
-                      promptAndValidate(input, "Enter the ID of the Wilaya");
+                      promptAndValidate(input, "Enter the ID of the wilaya you want: ");
                       promptAndValidate(year, "Enter the year you want: ");
                       List_yearly_farmer_sales_in_wilaya(input, year);
                       displayMenu = true;
                       return;
                     case 3:
-                      promptAndValidate(input, "Enter the ID of the Wilaya: ");
+                      promptAndValidate(input, "Enter the ID of the wilaya you want: ");
                       List_yearly_farmer_sales_in_wilaya(input, -1);
                       displayMenu = true;
                       return;
@@ -616,7 +613,7 @@ public:
                       promptAndValidate(input, "Enter the ID of the City: ");
                       promptAndValidate(year, "Enter the year you want: ");
                       promptAndValidate(month, "Enter the month you want: ");
-                      List_monthly_farmer_sales_in_city(input, year, month);
+                      List_monthly_farmer_sales_in_city(input, year, month - 1);
                       displayMenu = true;
                       return;
                     case 2:
@@ -645,7 +642,7 @@ public:
                       promptAndValidate(input, "Enter the ID of the Area: ");
                       promptAndValidate(year, "Enter the year you want: ");
                       promptAndValidate(month, "Enter the month you want: ");
-                      List_monthly_farmer_sales_in_area(input, year, month);
+                      List_monthly_farmer_sales_in_area(input, year, month - 1);
                       displayMenu = true;
                       return;
                     case 2:
@@ -674,7 +671,7 @@ public:
                       promptAndValidate(input, "Enter the ID of the Land: ");
                       promptAndValidate(year, "Enter the year you want: ");
                       promptAndValidate(month, "Enter the month you want: ");
-                      List_monthly_farmer_sales(input, year, month);
+                      List_monthly_farmer_sales(input, year, month - 1);
                       displayMenu = true;
                       return;
                     case 2:
@@ -780,9 +777,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_wilaya_monthly_farmers_penalties(input2, year, month, cat);
+                        List_wilaya_monthly_farmers_penalties(input2, year, month - 1, cat);
                     else
-                      List_wilaya_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
+                      List_wilaya_monthly_farmers_penalties(input2, year, month - 1, categories[input - 1]);
                     displayMenu = true;
                     return;
                   case 2:
@@ -795,9 +792,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_wilaya_monthly_farmers_penalties(input2, year, month, cat);
+                        List_wilaya_monthly_farmers_penalties(input2, year, month - 1, cat);
                     else
-                      List_wilaya_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
+                      List_wilaya_monthly_farmers_penalties(input2, year, month - 1, categories[input - 1]);
                     displayMenu = true;
                     return;
                   }
@@ -824,9 +821,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_city_monthly_farmers_penalties(input2, year, month, cat);
+                        List_city_monthly_farmers_penalties(input2, year, month - 1, cat);
                     else
-                      List_city_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
+                      List_city_monthly_farmers_penalties(input2, year, month - 1, categories[input - 1]);
                     displayMenu = true;
                     return;
                   case 2:
@@ -839,9 +836,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_city_monthly_farmers_penalties(input2, year, month, cat);
+                        List_city_monthly_farmers_penalties(input2, year, month - 1, cat);
                     else
-                      List_city_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
+                      List_city_monthly_farmers_penalties(input2, year, month - 1, categories[input - 1]);
                     displayMenu = true;
                     return;
                   }
@@ -868,9 +865,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_area_monthly_farmers_penalties(input2, year, month, cat);
+                        List_area_monthly_farmers_penalties(input2, year, month - 1, cat);
                     else
-                      List_area_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
+                      List_area_monthly_farmers_penalties(input2, year, month - 1, categories[input - 1]);
                     displayMenu = true;
                     return;
                   case 2:
@@ -883,9 +880,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_area_monthly_farmers_penalties(input2, year, month, cat);
+                        List_area_monthly_farmers_penalties(input2, year, month - 1, cat);
                     else
-                      List_area_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
+                      List_area_monthly_farmers_penalties(input2, year, month - 1, categories[input - 1]);
                     displayMenu = true;
                     return;
                   }
@@ -912,9 +909,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_monthly_farmer_penalty(input2, year, month, cat);
+                        List_monthly_farmer_penalty(input2, year, month - 1, cat);
                     else
-                      List_monthly_farmer_penalty(input2, year, month, categories[input - 1]);
+                      List_monthly_farmer_penalty(input2, year, month - 1, categories[input - 1]);
                     return;
                   case 2:
                     promptAndValidate(year, "Enter the year you want");
@@ -926,9 +923,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_monthly_farmer_penalty(input2, year, month, cat);
+                        List_monthly_farmer_penalty(input2, year, month - 1, cat);
                     else
-                      List_monthly_farmer_penalty(input2, year, month, categories[input - 1]);
+                      List_monthly_farmer_penalty(input2, year, month - 1, categories[input - 1]);
                     return;
                     displayMenu = true;
                     return;
@@ -936,6 +933,19 @@ public:
                 } while (input);
               }
           } while(input);
+        case 4:
+          cout << dye::blue("Which category you want to list the winners of?") << endl;
+          for(int i = 0; i < categories.size(); i++) 
+            cout << i + 1 << ": " << categories[i] << endl;
+          cout << categories.size() << ": Show for all categories" << endl;
+          promptAndValidate(input, "Enter your query: ");
+          promptAndValidate(year, "Enter the year you want: ");
+          promptAndValidate(month,"Enter the month you want: ");
+          if(input == categories.size())
+            for(const string& cat: categories) 
+              getWinner(year, month, cat);
+          else 
+            getWinner(year, month, categories[input - 1]);
         }
     } while(input);
   }
@@ -1635,7 +1645,7 @@ private:
         }
       }
       if(input > max || input < min) {
-        cout << dye::red("ERR: input is outside of range, please typpe again");
+        cout << dye::red("ERR: input is outside of range, please type again") << endl;
         input = 0;
       }
       return true;
