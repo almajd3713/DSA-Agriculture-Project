@@ -12,35 +12,6 @@
 #include "misc/DBMS.hpp"
 #include "classes/wilaya.hpp"
 
-// template<>
-// class APMS<int> {
-//   DBMS rawData;
-//   BSTree<Wilaya>* data;
-
-//   public:
-//     APMS(string fpath);
-
-//     void startup();
-// };
-
-// template<typename Comparable>
-// class APMS {
-//   // To force the use of Avl or BST
-//   static_assert(
-//     std::is_same<Comparable, AvlTree<Wilaya>>::value || std::is_same<Comparable, BSTree<Wilaya>>::value,
-//     "Error: Cannot use any storage types other than BSTree or AvlTree"
-//   );
-
-//   DBMS rawData;
-//   Comparable wilayas;
-//   Comparable cities;
-//   Comparable areas;
-//   Comparable lands;
-
-//   public:
-//     APMS();
-//     APMS(const string& fpath);
-// };
 
 class APMS
 {
@@ -232,7 +203,6 @@ public:
                << "5: Information about a Farmer" << endl
                << "6: Information about the entire Database" << endl
                << "0: Return to the main menu" << endl;
-          do {
             promptAndValidate(input, "Enter your query: ", 0, 6);
             switch(input) {
               case 1:
@@ -240,7 +210,6 @@ public:
                      << "1: Data for a specific month" << endl
                      << "2: Data for a specific year" << endl
                      << "3: All available data" << endl;
-                while(input) {
                   promptAndValidate(input, "Enter your query: ");
                   switch(input) {
                     case 1:
@@ -280,7 +249,6 @@ public:
                         return;
                       }
                   }
-                }
                 return;
               case 2:
                 cout << dye::blue("How would you like to access the City information?") << endl
@@ -509,7 +477,6 @@ public:
                     return;
                 } 
             }
-          } while(input);
           break;
         case 2:
           cout << dye::blue("What sales do you want to acesss?") << endl
@@ -521,6 +488,7 @@ public:
                << "0: Return to the main menu" << endl;
           do {
             promptAndValidate(input, "Enter your query: ", 0, 5);
+            Wilaya* wil; City* cit; Area* ar; Land* lnd;
             switch(input) {
               case 1:
                 cout << dye::red_on_white("WARNING: ") << "This will print the entire database, resulting in " << dye::green("MILLIONS") << " of lines. Depending on your hardware, " << dye::black_on_white("the 3ND 0F TH3 UN1V3RS3") << " may come before its done printing. Are you sure you want to proceed? (1 for yes, 0 for no)" << endl;
@@ -568,11 +536,22 @@ public:
                       promptAndValidate(input, "Enter the ID of the wilaya you want: ");
                       promptAndValidate(year, "Enter the year you want: ");
                       List_yearly_farmer_sales_in_wilaya(input, year);
+                      wil = wilayas.getById(input);
+                      if(wil) {
+                        promptAndValidate(input2, "Would you like to generate a Plot table for this data? (yes=1, no=0)");
+                        if(input2) generatePlot(wil, year);
+                      }
                       displayMenu = true;
                       return;
                     case 3:
                       promptAndValidate(input, "Enter the ID of the wilaya you want: ");
                       List_yearly_farmer_sales_in_wilaya(input, -1);
+                      wil = wilayas.getById(input);
+                      if (wil)
+                      {
+                        promptAndValidate(input2, "Would you like to generate a Plot table for this data? (yes=1, no=0)");
+                        if (input2) generatePlot(wil);
+                      }
                       displayMenu = true;
                       return;
                   }
@@ -597,11 +576,22 @@ public:
                       promptAndValidate(input, "Enter the ID of the City");
                       promptAndValidate(year, "Enter the year you want: ");
                       List_yearly_farmer_sales_in_city(input, year);
+                      cit = cities.getById(input);
+                      if(cit) {
+                        promptAndValidate(input2, "Would you like to generate a Plot table for this data? (yes=1, no=0)");
+                        if(input2) generatePlot(cit, year);
+                      }
                       displayMenu = true;
                       return;
                     case 3:
                       promptAndValidate(input, "Enter the ID of the City: ");
                       List_yearly_farmer_sales_in_city(input, -1);
+                      cit = cities.getById(input);
+                      if (cit)
+                      {
+                        promptAndValidate(input2, "Would you like to generate a Plot table for this data? (yes=1, no=0)");
+                        if (input2) generatePlot(cit);
+                      }
                       displayMenu = true;
                       return;
                   }
@@ -627,11 +617,22 @@ public:
                       promptAndValidate(year, "Enter the year you want: ");
                       List_yearly_farmer_sales_in_area(input, year);
                       displayMenu = true;
+                      ar = areas.getById(input);
+                      if(ar) {
+                        promptAndValidate(input2, "Would you like to generate a Plot table for this data? (yes=1, no=0)");
+                        if(input2) generatePlot(ar, year);
+                      }
                       return;
                     case 3:
                       promptAndValidate(input, "Enter the ID of the Area: ");
                       List_yearly_farmer_sales_in_area(input, -1);
                       displayMenu = true;
+                      ar = areas.getById(input);
+                      if (ar)
+                      {
+                        promptAndValidate(input2, "Would you like to generate a Plot table for this data? (yes=1, no=0)");
+                        if (input2) generatePlot(ar);
+                      }
                       return;
                   }
                 } while(input);
@@ -655,11 +656,25 @@ public:
                       promptAndValidate(input, "Enter the ID of the Land");
                       promptAndValidate(year, "Enter the year you want: ");
                       List_yearly_farmer_sales(input, year);
+                      lnd = lands.getById(input);
+                      if (lnd)
+                      {
+                        promptAndValidate(input2, "Would you like to generate a Plot table for this data? (yes=1, no=0)");
+                        if(input2)
+                          generatePlot(lnd, year);
+                      }
                       displayMenu = true;
                       return;
                     case 3:
                       promptAndValidate(input, "Enter the ID of the Land: ");
                       List_yearly_farmer_sales(input, -1);
+                      lnd = lands.getById(input);
+                      if (lnd)
+                      {
+                        promptAndValidate(input2, "Would you like to generate a Plot table for this data? (yes=1, no=0)");
+                        if (input2)
+                          generatePlot(lnd);
+                      }
                       displayMenu = true;
                       return;
                   }
@@ -1988,9 +2003,10 @@ private:
     settings->height = 1024;
     settings->width = 1024;
     stringstream str;
-    str << "Sales per year from " << land->getFarmer()->getName() << "'s Land over the year of " << year;
-    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
-    settings->xLabel = toVector(L"Years");
+    string narrowString = "Sales per month from " + land->getFarmer()->getName() + "'s Land over the year of " + std::to_string(year);
+    std::wstring wideString(narrowString.begin(), narrowString.end());
+    settings->title = toVector(wideString.c_str());
+    settings->xLabel = toVector(L"Months");
     settings->yLabel = toVector(L"Sales");
     settings->scatterPlotSeries->push_back(series);
     StringReference* err = CreateStringReferenceLengthValue(0, L' ');
@@ -2004,7 +2020,7 @@ private:
       // string file_name = land->getId() + "_" + year + "_sales.png";
       WriteToFile(pngdata, file_name.str());
       DeleteImage(imageRef->image);
-      cout << dye::green("Plot Generated! opening...");
+      cout << dye::green("Plot Generated! opening...") << endl;
       system(file_name.str().c_str());
     }
   }
@@ -2027,9 +2043,9 @@ private:
     ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
     settings->height = 1024;
     settings->width = 1024;
-    stringstream str;
-    str << "Sales per year from " << land->getFarmer()->getName() << "'s Land";
-    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
+    string narrowString = "Sales per year from " + land->getFarmer()->getName() + "'s Land since it was founded";
+    std::wstring wideString(narrowString.begin(), narrowString.end());
+    settings->title = toVector(wideString.c_str());
     settings->xLabel = toVector(L"Years");
     settings->yLabel = toVector(L"Sales");
     settings->scatterPlotSeries->push_back(series);
@@ -2045,7 +2061,7 @@ private:
       // string file_name = land->getId() + "_" + year + "_sales.png";
       WriteToFile(pngdata, file_name.str());
       DeleteImage(imageRef->image);
-      cout << dye::green("Plot Generated! opening...");
+      cout << dye::green("Plot Generated! opening...") << endl;
       system(file_name.str().c_str());
     }
   }
@@ -2053,12 +2069,6 @@ private:
   {
     vector<double> x, y;
     RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
-    // AnnualReport *ar = land->getAnnualReport(year);
-    // if (!ar)
-    // {
-    //   cout << dye::red("ERR: Data for this year doesn't exist. Perhaps the farmer/land started after it?") << endl;
-    //   return;
-    // }
     for (int i = 0; i < 12; i++)
     {
       x.push_back(i + 1);
@@ -2074,9 +2084,10 @@ private:
     settings->height = 1024;
     settings->width = 1024;
     stringstream str;
-    str << "Sales per year from area of " << area->getName() << " over the year of " << year;
-    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
-    settings->xLabel = toVector(L"Years");
+    string narrowString = "Sales per month from the " + area->getName() + "'s Area over the year of " + std::to_string(year);
+    std::wstring wideString(narrowString.begin(), narrowString.end());
+    settings->title = toVector(wideString.c_str());
+    settings->xLabel = toVector(L"Months");
     settings->yLabel = toVector(L"Sales");
     settings->scatterPlotSeries->push_back(series);
     StringReference *err = CreateStringReferenceLengthValue(0, L' ');
@@ -2100,12 +2111,6 @@ private:
   {
     vector<double> x, y;
     RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
-    // AnnualReport *ar = land->getAnnualReport(year);
-    // if (!ar)
-    // {
-    //   cout << dye::red("ERR: Data for this year doesn't exist. Perhaps the farmer/land started after it?") << endl;
-    //   return;
-    // }
     for (int i = start_year; i < end_year; i++)
     {
       x.push_back(i);
@@ -2121,8 +2126,9 @@ private:
     settings->height = 1024;
     settings->width = 1024;
     stringstream str;
-    str << "Sales per year from area of " << area->getName();
-    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
+    string narrowString = "Sales per year from " + area->getName() + "'s Land since it was founded";
+    std::wstring wideString(narrowString.begin(), narrowString.end());
+    settings->title = toVector(wideString.c_str());
     settings->xLabel = toVector(L"Years");
     settings->yLabel = toVector(L"Sales");
     settings->scatterPlotSeries->push_back(series);
@@ -2146,12 +2152,6 @@ private:
   {
     vector<double> x, y;
     RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
-    // AnnualReport *ar = land->getAnnualReport(year);
-    // if (!ar)
-    // {
-    //   cout << dye::red("ERR: Data for this year doesn't exist. Perhaps the farmer/land started after it?") << endl;
-    //   return;
-    // }
     for (int i = 0; i < 12; i++)
     {
       x.push_back(i + 1);
@@ -2167,9 +2167,10 @@ private:
     settings->height = 1024;
     settings->width = 1024;
     stringstream str;
-    str << "Sales per year from area of " << city->getName() << " over the year of " << year;
-    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
-    settings->xLabel = toVector(L"Years");
+    string narrowString = "Sales per month from the " + city->getName() + "'s City over the year of " + std::to_string(year);
+    std::wstring wideString(narrowString.begin(), narrowString.end());
+    settings->title = toVector(wideString.c_str());
+    settings->xLabel = toVector(L"Months");
     settings->yLabel = toVector(L"Sales");
     settings->scatterPlotSeries->push_back(series);
     StringReference *err = CreateStringReferenceLengthValue(0, L' ');
@@ -2193,12 +2194,6 @@ private:
   {
     vector<double> x, y;
     RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
-    // AnnualReport *ar = land->getAnnualReport(year);
-    // if (!ar)
-    // {
-    //   cout << dye::red("ERR: Data for this year doesn't exist. Perhaps the farmer/land started after it?") << endl;
-    //   return;
-    // }
     for (int i = start_year; i < end_year; i++)
     {
       x.push_back(i);
@@ -2214,8 +2209,9 @@ private:
     settings->height = 1024;
     settings->width = 1024;
     stringstream str;
-    str << "Sales per year from area of " << city->getName();
-    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
+    string narrowString = "Sales per year from " + city->getName() + "'s City since it was founded";
+    std::wstring wideString(narrowString.begin(), narrowString.end());
+    settings->title = toVector(wideString.c_str());
     settings->xLabel = toVector(L"Years");
     settings->yLabel = toVector(L"Sales");
     settings->scatterPlotSeries->push_back(series);
@@ -2239,15 +2235,9 @@ private:
   {
     vector<double> x, y;
     RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
-    // AnnualReport *ar = land->getAnnualReport(year);
-    // if (!ar)
-    // {
-    //   cout << dye::red("ERR: Data for this year doesn't exist. Perhaps the farmer/land started after it?") << endl;
-    //   return;
-    // }
-    for (int i = 0; i < 12; i++)
+    for (int i = 1; i <= 12; i++)
     {
-      x.push_back(i + 1);
+      x.push_back(i);
       y.push_back(wilaya->get_wilaya_total_sales_per_month(year, i));
     }
 
@@ -2259,10 +2249,10 @@ private:
     ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
     settings->height = 1024;
     settings->width = 1024;
-    stringstream str;
-    str << "Sales per year from area of " << wilaya->getName() << " over the year of " << year;
-    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
-    settings->xLabel = toVector(L"Years");
+    string narrowString = "Sales per month from " + wilaya->getName() + " over the year of " + std::to_string(year);
+    std::wstring wideString(narrowString.begin(), narrowString.end());
+    settings->title = toVector(wideString.c_str());
+    settings->xLabel = toVector(L"Months");
     settings->yLabel = toVector(L"Sales");
     settings->scatterPlotSeries->push_back(series);
     StringReference *err = CreateStringReferenceLengthValue(0, L' ');
@@ -2286,12 +2276,6 @@ private:
   {
     vector<double> x, y;
     RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
-    // AnnualReport *ar = land->getAnnualReport(year);
-    // if (!ar)
-    // {
-    //   cout << dye::red("ERR: Data for this year doesn't exist. Perhaps the farmer/land started after it?") << endl;
-    //   return;
-    // }
     for (int i = start_year; i < end_year; i++)
     {
       x.push_back(i);
@@ -2307,8 +2291,9 @@ private:
     settings->height = 1024;
     settings->width = 1024;
     stringstream str;
-    str << "Sales per year from area of " << wilaya->getName();
-    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
+    string narrowString = "Sales per year from " + wilaya->getName() + " since it was founded";
+    std::wstring wideString(narrowString.begin(), narrowString.end());
+    settings->title = toVector(wideString.c_str());
     settings->xLabel = toVector(L"Years");
     settings->yLabel = toVector(L"Sales");
     settings->scatterPlotSeries->push_back(series);

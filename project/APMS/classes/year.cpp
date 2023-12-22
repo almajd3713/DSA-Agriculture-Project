@@ -67,7 +67,7 @@ ostream& operator<<(ostream& os, const AnnualReport& report) {
 MonthlyReport* AnnualReport::getMonthlyReport(int month) {
   if(months.size() < 12) {
     if(months[0]->getMonth() > month) return nullptr;
-    else return months[12 - month - 1];
+    else return months[12 - (12 - months.size()) - 1];
   }
   else return months[month - 1];
 }

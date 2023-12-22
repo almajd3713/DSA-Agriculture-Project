@@ -162,7 +162,7 @@ double Land::get_land_total_sales_per_month(int year,int month){
   MonthlyReport * mReport = report->getMonthlyReport(month);
   if(mReport == nullptr) 
    return 0;
-  Sum = mReport->getProduction()->summarizedSales();
+  Sum = mReport->getProduction() ? mReport->getProduction()->summarizedSales() : 0;
   return Sum;
 }
 
@@ -253,6 +253,22 @@ void Land::print_Land_monthly_penalty(int year,int month,string category_name)
     cout<<"Monthly Penalty of the category  "<<category_name<<"is :"<<mReport->getProduction()->get_Category_Penalty(category_name)<<" DA"<<endl;
 
 } 
+// function to get monthly penalty
+double Land::get_monthly_land_penalty(int year, int month, const string& category_name) {
+  AnnualReport* report = getAnnualReport(year);
+  if(!report) return 0;
+  MonthlyReport* mRep = report->getMonthlyReport(month);
+  if(!mRep) return 0;
+  return mRep->getProduction()->get_Category_Penalty(category_name); 
+}
+double Land::get_yearly_land_penalty(int year, const string& category_name) {
+  double sum = 0;
+  for(int i = 1; i <= 12; i++) {
+    sum += get_monthly_land_penalty(year, i, category_name);
+  }
+  return sum;
+}
+
 // functions to print the yearly  penalty of the land
 void Land::print_Land_yearly_penalty(int year,string category_name)
 {

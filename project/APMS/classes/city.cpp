@@ -275,3 +275,18 @@ void City::print_city_summarized_by_month(int year,int month)
   cout<<"the city total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
 }
+
+double City::get_monthly_city_penalty(int year, int month, const string &category_name)
+{
+    double sum = 0;
+    for (Area *land : getArea())
+        sum += land->get_monthly_area_penalty(year, month, category_name);
+    return sum;
+}
+double City::get_yearly_city_penalty(int year, const string &category_name)
+{
+    double sum = 0;
+    for (Area *land : getArea())
+        sum += land->get_yearly_area_penalty(year, category_name);
+    return sum;
+}

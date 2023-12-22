@@ -52,6 +52,9 @@ public:
     //functions to get the water and electricity consumption of the area
     double get_area_yearly_water_consumption(int year);
     double get_area_yearly_electricity_consumption(int year);
+    // Penalty get
+    double get_monthly_area_penalty(int, int, const string&);
+    double get_yearly_area_penalty(int, const string&);
 
     //functions to get the water and electricity consumption of the area in a month
     double get_area_monthly_water_consumption(int year,int month);

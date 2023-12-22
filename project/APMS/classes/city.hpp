@@ -52,7 +52,9 @@ public:
     double get_city_monthly_water_consumption(int year,int month);
     double get_city_monthly_electricity_consumption(int year,int month);
 
-    
+    // Penalties
+    double get_monthly_city_penalty(int, int, const string&);
+    double get_yearly_city_penalty(int, const string&);
     //functions to print the the summarized report of the city
     void print_city_summarized_by_year(int year);
     void print_city_summarized_by_month(int year,int month);

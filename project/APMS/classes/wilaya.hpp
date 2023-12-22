@@ -39,6 +39,9 @@ public:
 	void print_wilaya_by_year(const int& year,int choice);
 	double get_wilaya_total_sales_per_year(int year);
 	double get_wilaya_total_sales_per_month(int year,int month);
+	// Penalties
+	double get_monthly_wilaya_penalty(int, int, const string&);
+	double get_yearly_wilaya_penalty(int, const string&);
 
 
 	void print_wilaya_monthly_farmer_sales(int year,int month);

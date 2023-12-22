@@ -179,15 +179,18 @@ void to_json(json& j, const Area& area) {
     j["lands"].push_back(*land);
   }
 }
-//   void Area:: print_area_yearly_farmer_sales(int year)
-//   {     cout<<"Area: " << name << endl;
-//         cout<<"Year :"<<year<<endl;
-//         for(auto land : lands)
-//         {
-//             land->print_yearly_farmer_sales(year);
-//             cout<<"============================================"<<endl;
-//         }}
-
+double Area::get_monthly_area_penalty(int year, int month, const string& category_name) {
+    double sum = 0;
+    for(Land* land: getLands())
+        sum += land->get_monthly_land_penalty(year, month, category_name);
+    return sum;
+}
+double Area::get_yearly_area_penalty(int year, const string& category_name) {
+    double sum = 0;
+    for(Land* land: getLands())
+        sum += land->get_yearly_land_penalty(year, category_name);
+    return sum;
+}
 // functions to print the monthly  penalty of the area
 
  void Area::print_Area_monthly_penalty(int year,int month,string category_name)

@@ -31,7 +31,8 @@ void MonthlyReport::setMonth(int new_month) {
 }
 
 Production* MonthlyReport::getProduction() const {
-  return data;
+  if(data) return data;
+  else return nullptr;
 }
 void MonthlyReport::setProduction(Production* new_data) {
   data = new_data;

@@ -306,3 +306,18 @@ void to_json(json& j, const Wilaya& wil) {
     j["cities"].push_back(*cit);
   }
 }
+
+double Wilaya::get_monthly_wilaya_penalty(int year, int month, const string &category_name)
+{
+    double sum = 0;
+    for (City *land : getCity())
+        sum += land->get_monthly_city_penalty(year, month, category_name);
+    return sum;
+}
+double Wilaya::get_yearly_wilaya_penalty(int year, const string &category_name)
+{
+    double sum = 0;
+    for (City *land : getCity())
+        sum += land->get_yearly_city_penalty(year, category_name);
+    return sum;
+}
