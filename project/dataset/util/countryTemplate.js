@@ -137,9 +137,9 @@ let countryTemplateNoId = {
         "Bir Kasdali ": ["khelil", " Sidi embarek"],
         "Mansooura ": ["EL M'hir", "Haraza"]
     },
-    "Boumerdes": {
-        "Ouled moussa ": ["elhlaymiya", " elkouadria"],
-        " Ouled hadadj": [" sbaate", " bartela"]
+    Boumerdes: {
+        "Ouled moussa": ["elhlaymiya", "elkouadria"],
+        "Ouled hadadj": ["sbaate", "bartela"]
     },
     "El Tarf": {
         "El kala ": ["Souarekh", " Raml Souk ", "Al aioun"],
