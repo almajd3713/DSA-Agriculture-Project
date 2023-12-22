@@ -129,10 +129,20 @@ void Wilaya::print_wilaya_by_month(const int year, const int &month)
         cout << "\t" << *cit;
         cit->print_city_by_month(year, month);
     }
-    cout<< "the total_sales : " <<get_wilaya_total_sales_per_month(year,month)<<" DA "<<endl;
-    //water and electricity consumption
-    cout<<" total water consumption :"<<get_wilaya_monthly_water_consumption(year,month)<<" m^3 "<<endl;
-    cout<<" total electricity consumption :"<<get_wilaya_monthly_electricity_consumption(year,month)<<" KWh "<<endl;
+
+    double sales=0;
+         sales = get_wilaya_total_sales_per_month(year,month);
+         double water=0;
+         water= get_wilaya_monthly_water_consumption(year,month);
+         double electricity =0;
+         electricity=get_wilaya_monthly_electricity_consumption(year,month);
+      cout<<" area total sales :"<<sales<<(sales > 1000000 ? sales / 1000000 : sales > 1000 ? sales / 1000 : sales); 
+  cout<<(sales > 1000000 ? "MDA" : sales > 1000 ? "KDA" : "DA")<<endl;
+      //water and electricity consumption
+        cout<<" area total water consumption :"<<water<<(water > 1000000 ? water / 1000000 :  water);
+  cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
+        cout<<" area total electricity consumption :"<<electricity<<(electricity > 1000000 ? electricity / 1000 : electricity);
+  cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
     cout << setfill('=') << setw(40) << "" << endl;
 }
 
@@ -147,10 +157,20 @@ void Wilaya::print_wilaya_by_year(const int &year,int choice)
         cout << "\t" << *cit;
         cit->print_city_by_year(year,choice);
     }
-    cout<< "the total_sales : " <<get_wilaya_total_sales_per_year(year)<<" DA "<<endl;
-    //water and electricity consumption
-    cout<<" total water consumption :"<<get_wilaya_yearly_water_consumption(year)<<" m^3 "<<endl;
-    cout<<" total electricity consumption :"<<get_wilaya_yearly_electricity_consumption(year)<<" KWh "<<endl;
+
+    double sales=0;
+         sales =get_wilaya_total_sales_per_year(year);
+         double water=0;
+         water= get_wilaya_yearly_water_consumption(year);
+         double electricity =0;
+         electricity=get_wilaya_yearly_electricity_consumption(year);
+      cout<<" area total sales :"<<sales<<(sales > 1000000 ? sales / 1000000 : sales > 1000 ? sales / 1000 : sales); 
+  cout<<(sales > 1000000 ? "MDA" : sales > 1000 ? "KDA" : "DA")<<endl;
+      //water and electricity consumption
+        cout<<" area total water consumption :"<<water<<(water > 1000000 ? water / 1000000 :  water);
+  cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
+        cout<<" area total electricity consumption :"<<electricity<<(electricity > 1000000 ? electricity / 1000 : electricity);
+  cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
     cout << setfill('=') << setw(40) << "" << endl;
 }
 double Wilaya::get_wilaya_total_sales_per_year(int year)

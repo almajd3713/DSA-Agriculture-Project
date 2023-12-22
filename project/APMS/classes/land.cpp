@@ -131,10 +131,14 @@ void Land::printAnnualReport(int year,int choice) {
     cout << *worker << endl;
   }
   }
-   cout<< "the total_sales : " <<get_land_total_sales_per_year(year) <<" DA "<<endl;
+   cout<< "the total_sales : " <<get_land_total_sales_per_year(year) <<(get_land_total_sales_per_year(year) > 1000000 ? get_land_total_sales_per_year(year) / 1000000 : get_land_total_sales_per_year(year) > 1000 ? get_land_total_sales_per_year(year) / 1000 : get_land_total_sales_per_year(year)); 
+  cout<<(get_land_total_sales_per_year(year) > 1000000 ? "MDA" : get_land_total_sales_per_year(year) > 1000 ? "KDA" : "DA")<<endl;
+
    //water and electricity consumption
-    cout<<"the water consumption is : "<<get_yearly_water_consumption(year)<<" m3"<<endl;
-    cout<<"the electricity consumption is : "<<get_yearly_electricity_consumption(year)<<" Kwh"<<endl;
+    cout<<"the water consumption is : "<<get_yearly_water_consumption(year)<<(get_yearly_water_consumption(year) > 1000000 ? get_yearly_water_consumption(year) / 1000000 :  get_yearly_water_consumption(year));
+  cout<<(get_yearly_water_consumption(year) > 1000000 ? "dam^3" : "m^3")<<endl;
+    cout<<"the electricity consumption is : "<<get_yearly_electricity_consumption(year)<<(get_yearly_electricity_consumption(year) > 1000000 ? get_yearly_electricity_consumption(year) / 1000 : get_yearly_electricity_consumption(year));
+  cout<<(get_yearly_electricity_consumption(year) > 1000000 ? "Mwh" :  "kwh")<<endl;
   }
   else {
     cout << "No report for this year" << endl;
@@ -190,7 +194,8 @@ double Land::get_land_total_sales_per_month(int year,int month){
         for(auto month:report->getMonths()){
           sum+=month->getProduction()->summrisedSales();
         }
-        cout << "Yearly Sales: " << sum <<" DA" <<endl;
+        cout << "Yearly Sales: " << sum <<(sum > 1000000 ? sum / 1000000 : sum > 1000 ? sum / 1000 : sum); 
+  cout<<(sum > 1000000 ? "MDA" : sum > 1000 ? "KDA" : "DA")<<endl;
       }
       else {
         cout << "No report for this year" << endl;
@@ -215,7 +220,10 @@ void Land::print_Land_monthly_penalty(int year,int month,string category_name)
       return;
     }
     cout<<"Farmer: "<<farmer->getName()<<endl;
-    cout<<"Monthly Penalty of the category  "<<category_name<<"is :"<<mReport->getProduction()->get_Category_Penalty(category_name)<<" DA"<<endl;
+    double sales=0;
+    sales=mReport->getProduction()->get_Category_Penalty(category_name);
+    cout<<"Monthly Penalty of the category  "<<category_name<<"is :"<<mReport->getProduction()->get_Category_Penalty(category_name)<<(sales > 1000000 ? sales / 1000000 : sales > 1000 ? sales / 1000 : sales); 
+  cout<<(sales > 1000000 ? "MDA" : sales > 1000 ? "KDA" : "DA")<<endl;
 
 } 
 // functions to print the yearly  penalty of the land
@@ -233,7 +241,8 @@ void Land::print_Land_yearly_penalty(int year,string category_name)
       for(auto month:report->getMonths()){
         sum+=month->getProduction()->get_Category_Penalty(category_name);
       }
-      cout<<"Yearly Penalty of the category : "<<category_name<<" is : "<<sum<<" DA"<<endl;
+      cout<<"Yearly Penalty of the category : "<<category_name<<" is : "<<sum<<(sum > 1000000 ? sum / 1000000 : sum > 1000 ? sum / 1000 : sum); 
+  cout<<(sum > 1000000 ? "MDA" : sum > 1000 ? "KDA" : "DA")<<endl;
 
 }
 // functions to print the monthly  water and elctricity consumption of the land

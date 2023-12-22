@@ -101,10 +101,20 @@ void City::print_city_by_month(const int year,const int& month)
     {
         area->Print_Area_By_month(year,month);
     }
-    cout<<" total sales :"<<get_city_total_sales_per_month(year,month)<<" DA "<<endl;
-    //water and electricity consumption
-    cout<<" total water consumption :"<<get_city_monthly_water_consumption(year,month)<<" m^3 "<<endl;
-    cout<<" total electricity consumption :"<<get_city_monthly_electricity_consumption(year,month)<<" KWh "<<endl;
+     double sales=0;
+         sales = get_city_total_sales_per_month(year,month);
+         double water=0;
+         water= get_city_monthly_water_consumption(year,month);
+         double electricity =0;
+         electricity=get_city_monthly_electricity_consumption(year,month);
+      cout<<" area total sales :"<<sales<<(sales > 1000000 ? sales / 1000000 : sales > 1000 ? sales / 1000 : sales); 
+  cout<<(sales > 1000000 ? "MDA" : sales > 1000 ? "KDA" : "DA")<<endl;
+      //water and electricity consumption
+        cout<<" area total water consumption :"<<water<<(water > 1000000 ? water / 1000000 :  water);
+  cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
+        cout<<" area total electricity consumption :"<<electricity<<(electricity > 1000000 ? electricity / 1000 : electricity);
+  cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+
 }
 void City::print_city_by_year(const int& year,int choice)
 {
@@ -114,10 +124,22 @@ void City::print_city_by_year(const int& year,int choice)
     {
         area->Print_Area_By_Year(year,choice);
     }
-    cout<<" total sales :"<<get_city_total_sales_per_year(year)<<" DA "<<endl;
-    //water and electricity consumption
-    cout<<" total water consumption :"<<get_city_yearly_water_consumption(year)<<" m^3 "<<endl;
-    cout<<" total electricity consumption :"<<get_city_yearly_electricity_consumption(year)<<" KWh "<<endl;
+
+
+         double sales=0;
+         sales = get_city_total_sales_per_year(year);
+         double water=0;
+         water= get_city_yearly_water_consumption(year);
+         double electricity =0;
+         electricity=get_city_total_sales_per_year(year);
+      cout<<" area total sales :"<<sales<<(sales > 1000000 ? sales / 1000000 : sales > 1000 ? sales / 1000 : sales); 
+  cout<<(sales > 1000000 ? "MDA" : sales > 1000 ? "KDA" : "DA")<<endl;
+      //water and electricity consumption
+        cout<<" area total water consumption :"<<water<<(water > 1000000 ? water / 1000000 :  water);
+  cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
+        cout<<" area total electricity consumption :"<<electricity<<(electricity > 1000000 ? electricity / 1000 : electricity);
+  cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+
 }
 
 double City::get_city_total_sales_per_year(int year)
