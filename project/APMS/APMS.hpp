@@ -51,6 +51,8 @@ class APMS
   BSTree<Land *> lands;
   BSTree<Farmer *> farmers;
   vector<string> categories;
+  int start_year = 0;
+  int end_year = 0;
 
   // vector<City>& addCities(auto cities) {
 
@@ -103,6 +105,15 @@ public:
               AnnualReport *report = new AnnualReport();
               lnd->addYear(report);
               report->setYear((*year)["year"]);
+
+              if(!start_year)
+                start_year = (*year)["year"];
+              if((*year)["year"] < start_year)
+                start_year = (*year)["year"];
+              if (!end_year)
+                end_year = (*year)["year"];
+              if ((*year)["year"] > end_year)
+                end_year = (*year)["year"];
               for (auto worker = (*year)["workers"].begin(); worker != (*year)["workers"].end(); worker++)
               {
                 Worker *wkr = new Worker(
@@ -179,40 +190,6 @@ public:
          << setfill('=') << setw(60) << dye::yellow("") << endl;
   }
 
-  void testPlot()
-  {
-    // PlotConfig con("years", 2000.0, 2023.0, 200, "sales", 0.0, 5e+12);
-    // CustomPlot plot = createPlot("years", "sales", 2000, 2023, 0, 3e+5);
-    Land* land = lands.getById(216326);
-    vector<double>y, x;
-    RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
-    for (AnnualReport *rep : land->getReports())
-    { 
-      cout << land->get_land_total_sales_per_year(rep->getYear()) << endl;
-      y.push_back(land->get_land_total_sales_per_year(rep->getYear()));
-      x.push_back(rep->getYear());
-        }
-        ScatterPlotSeries* series = GetDefaultScatterPlotSeriesSettings();
-        series->xs = &x;
-        series->ys = &y;
-        series->lineThickness = 2;
-        ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
-        settings->height = 1024;
-        settings->width = 1024;
-        settings->title = toVector(L"Sales per year for farm");
-        settings->xLabel = toVector(L"Years");
-        settings->yLabel = toVector(L"Sales");
-        settings->scatterPlotSeries->push_back(series);
-        StringReference* idk = CreateStringReferenceLengthValue(0, L' ');
-        bool success = DrawScatterPlotFromSettings(imageRef, settings, idk);
-        cout << success;
-        if(success) {
-          vector<double>* pngdata = ConvertToPNG(imageRef->image);
-          WriteToFile(pngdata, "test.png");
-          DeleteImage(imageRef->image);
-        }
-        FreeAllocations();
-  }
   void start() {
     int input = 0; bool displayMenu = true;
     while(true) {
@@ -1989,6 +1966,405 @@ private:
   }
 
 
+  void generatePlot(Land* land, int year) {
+    vector<double> x, y;
+    RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
+    AnnualReport* ar = land->getAnnualReport(year);
+    if(!ar) {
+      cout << dye::red("ERR: Data for this year doesn't exist. Perhaps the farmer/land started after it?") << endl;
+      return;
+    }
+    for(int i = 0; i <ar->getMonths().size(); i++) {
+      x.push_back(ar->getMonthlyReport(i)->getMonth());
+      y.push_back(land->get_land_total_sales_per_month(year, i));
+    }
+
+    ScatterPlotSeries* series = GetDefaultScatterPlotSeriesSettings();
+    series->xs = &x;
+    series->ys = &y;
+    series->lineThickness = 2;
+
+    ScatterPlotSettings* settings = GetDefaultScatterPlotSettings();
+    settings->height = 1024;
+    settings->width = 1024;
+    stringstream str;
+    str << "Sales per year from " << land->getFarmer()->getName() << "'s Land over the year of " << year;
+    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
+    settings->xLabel = toVector(L"Years");
+    settings->yLabel = toVector(L"Sales");
+    settings->scatterPlotSeries->push_back(series);
+    StringReference* err = CreateStringReferenceLengthValue(0, L' ');
+    bool success = DrawScatterPlotFromSettings(imageRef, settings, err);
+
+    if(success) {
+      cout << dye::green("Plot created successfully, generating...");
+      vector<double>* pngdata = ConvertToPNG(imageRef->image);
+      stringstream file_name;
+      file_name << land->getId() << "_" << year << "_sales.png";
+      // string file_name = land->getId() + "_" + year + "_sales.png";
+      WriteToFile(pngdata, file_name.str());
+      DeleteImage(imageRef->image);
+      cout << dye::green("Plot Generated! opening...");
+      system(file_name.str().c_str());
+    }
+  }
+
+  void generatePlot(Land *land)
+  {
+    vector<double> x, y;
+    RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
+    for (int i = 0; i < land->getReports().size(); i++)
+    {
+      x.push_back(land->getReports()[i]->getYear());
+      y.push_back(land->get_land_total_sales_per_year(land->getReports()[i]->getYear()));
+    }
+
+    ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
+    series->xs = &x;
+    series->ys = &y;
+    series->lineThickness = 2;
+
+    ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
+    settings->height = 1024;
+    settings->width = 1024;
+    stringstream str;
+    str << "Sales per year from " << land->getFarmer()->getName() << "'s Land";
+    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
+    settings->xLabel = toVector(L"Years");
+    settings->yLabel = toVector(L"Sales");
+    settings->scatterPlotSeries->push_back(series);
+    StringReference *err = CreateStringReferenceLengthValue(0, L' ');
+    bool success = DrawScatterPlotFromSettings(imageRef, settings, err);
+
+    if (success)
+    {
+      cout << dye::green("Plot created successfully, generating...");
+      vector<double> *pngdata = ConvertToPNG(imageRef->image);
+      stringstream file_name;
+      file_name << land->getId() << "_" << "_sales.png";
+      // string file_name = land->getId() + "_" + year + "_sales.png";
+      WriteToFile(pngdata, file_name.str());
+      DeleteImage(imageRef->image);
+      cout << dye::green("Plot Generated! opening...");
+      system(file_name.str().c_str());
+    }
+  }
+  void generatePlot(Area *area, int year)
+  {
+    vector<double> x, y;
+    RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
+    // AnnualReport *ar = land->getAnnualReport(year);
+    // if (!ar)
+    // {
+    //   cout << dye::red("ERR: Data for this year doesn't exist. Perhaps the farmer/land started after it?") << endl;
+    //   return;
+    // }
+    for (int i = 0; i < 12; i++)
+    {
+      x.push_back(i + 1);
+      y.push_back(area->get_area_total_sales_per_month(year, i));
+    }
+
+    ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
+    series->xs = &x;
+    series->ys = &y;
+    series->lineThickness = 2;
+
+    ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
+    settings->height = 1024;
+    settings->width = 1024;
+    stringstream str;
+    str << "Sales per year from area of " << area->getName() << " over the year of " << year;
+    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
+    settings->xLabel = toVector(L"Years");
+    settings->yLabel = toVector(L"Sales");
+    settings->scatterPlotSeries->push_back(series);
+    StringReference *err = CreateStringReferenceLengthValue(0, L' ');
+    bool success = DrawScatterPlotFromSettings(imageRef, settings, err);
+
+    if (success)
+    {
+      cout << dye::green("Plot created successfully, generating...");
+      vector<double> *pngdata = ConvertToPNG(imageRef->image);
+      stringstream file_name;
+      file_name << area->getId() << "_" << year << "_sales.png";
+      // string file_name = land->getId() + "_" + year + "_sales.png";
+      WriteToFile(pngdata, file_name.str());
+      DeleteImage(imageRef->image);
+      cout << dye::green("Plot Generated! opening...");
+      system(file_name.str().c_str());
+    }
+  }
+
+  void generatePlot(Area *area)
+  {
+    vector<double> x, y;
+    RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
+    // AnnualReport *ar = land->getAnnualReport(year);
+    // if (!ar)
+    // {
+    //   cout << dye::red("ERR: Data for this year doesn't exist. Perhaps the farmer/land started after it?") << endl;
+    //   return;
+    // }
+    for (int i = start_year; i < end_year; i++)
+    {
+      x.push_back(i);
+      y.push_back(area->get_area_total_sales_per_year(i));
+    }
+
+    ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
+    series->xs = &x;
+    series->ys = &y;
+    series->lineThickness = 2;
+
+    ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
+    settings->height = 1024;
+    settings->width = 1024;
+    stringstream str;
+    str << "Sales per year from area of " << area->getName();
+    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
+    settings->xLabel = toVector(L"Years");
+    settings->yLabel = toVector(L"Sales");
+    settings->scatterPlotSeries->push_back(series);
+    StringReference *err = CreateStringReferenceLengthValue(0, L' ');
+    bool success = DrawScatterPlotFromSettings(imageRef, settings, err);
+
+    if (success)
+    {
+      cout << dye::green("Plot created successfully, generating...");
+      vector<double> *pngdata = ConvertToPNG(imageRef->image);
+      stringstream file_name;
+      file_name << area->getId() << "_" << "_sales.png";
+      // string file_name = land->getId() + "_" + year + "_sales.png";
+      WriteToFile(pngdata, file_name.str());
+      DeleteImage(imageRef->image);
+      cout << dye::green("Plot Generated! opening...");
+      system(file_name.str().c_str());
+    }
+  }
+  void generatePlot(City *city, int year)
+  {
+    vector<double> x, y;
+    RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
+    // AnnualReport *ar = land->getAnnualReport(year);
+    // if (!ar)
+    // {
+    //   cout << dye::red("ERR: Data for this year doesn't exist. Perhaps the farmer/land started after it?") << endl;
+    //   return;
+    // }
+    for (int i = 0; i < 12; i++)
+    {
+      x.push_back(i + 1);
+      y.push_back(city->get_city_total_sales_per_month(year, i));
+    }
+
+    ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
+    series->xs = &x;
+    series->ys = &y;
+    series->lineThickness = 2;
+
+    ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
+    settings->height = 1024;
+    settings->width = 1024;
+    stringstream str;
+    str << "Sales per year from area of " << city->getName() << " over the year of " << year;
+    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
+    settings->xLabel = toVector(L"Years");
+    settings->yLabel = toVector(L"Sales");
+    settings->scatterPlotSeries->push_back(series);
+    StringReference *err = CreateStringReferenceLengthValue(0, L' ');
+    bool success = DrawScatterPlotFromSettings(imageRef, settings, err);
+
+    if (success)
+    {
+      cout << dye::green("Plot created successfully, generating...");
+      vector<double> *pngdata = ConvertToPNG(imageRef->image);
+      stringstream file_name;
+      file_name << city->getId() << "_" << year << "_sales.png";
+      // string file_name = land->getId() + "_" + year + "_sales.png";
+      WriteToFile(pngdata, file_name.str());
+      DeleteImage(imageRef->image);
+      cout << dye::green("Plot Generated! opening...");
+      system(file_name.str().c_str());
+    }
+  }
+
+  void generatePlot(City *city)
+  {
+    vector<double> x, y;
+    RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
+    // AnnualReport *ar = land->getAnnualReport(year);
+    // if (!ar)
+    // {
+    //   cout << dye::red("ERR: Data for this year doesn't exist. Perhaps the farmer/land started after it?") << endl;
+    //   return;
+    // }
+    for (int i = start_year; i < end_year; i++)
+    {
+      x.push_back(i);
+      y.push_back(city->get_city_total_sales_per_year(i));
+    }
+
+    ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
+    series->xs = &x;
+    series->ys = &y;
+    series->lineThickness = 2;
+
+    ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
+    settings->height = 1024;
+    settings->width = 1024;
+    stringstream str;
+    str << "Sales per year from area of " << city->getName();
+    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
+    settings->xLabel = toVector(L"Years");
+    settings->yLabel = toVector(L"Sales");
+    settings->scatterPlotSeries->push_back(series);
+    StringReference *err = CreateStringReferenceLengthValue(0, L' ');
+    bool success = DrawScatterPlotFromSettings(imageRef, settings, err);
+
+    if (success)
+    {
+      cout << dye::green("Plot created successfully, generating...");
+      vector<double> *pngdata = ConvertToPNG(imageRef->image);
+      stringstream file_name;
+      file_name << city->getId() << "_" << "_sales.png";
+      // string file_name = land->getId() + "_" + year + "_sales.png";
+      WriteToFile(pngdata, file_name.str());
+      DeleteImage(imageRef->image);
+      cout << dye::green("Plot Generated! opening...");
+      system(file_name.str().c_str());
+    }
+  }
+  void generatePlot(Wilaya *wilaya, int year)
+  {
+    vector<double> x, y;
+    RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
+    // AnnualReport *ar = land->getAnnualReport(year);
+    // if (!ar)
+    // {
+    //   cout << dye::red("ERR: Data for this year doesn't exist. Perhaps the farmer/land started after it?") << endl;
+    //   return;
+    // }
+    for (int i = 0; i < 12; i++)
+    {
+      x.push_back(i + 1);
+      y.push_back(wilaya->get_wilaya_total_sales_per_month(year, i));
+    }
+
+    ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
+    series->xs = &x;
+    series->ys = &y;
+    series->lineThickness = 2;
+
+    ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
+    settings->height = 1024;
+    settings->width = 1024;
+    stringstream str;
+    str << "Sales per year from area of " << wilaya->getName() << " over the year of " << year;
+    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
+    settings->xLabel = toVector(L"Years");
+    settings->yLabel = toVector(L"Sales");
+    settings->scatterPlotSeries->push_back(series);
+    StringReference *err = CreateStringReferenceLengthValue(0, L' ');
+    bool success = DrawScatterPlotFromSettings(imageRef, settings, err);
+
+    if (success)
+    {
+      cout << dye::green("Plot created successfully, generating...");
+      vector<double> *pngdata = ConvertToPNG(imageRef->image);
+      stringstream file_name;
+      file_name << wilaya->getId() << "_" << year << "_sales.png";
+      // string file_name = land->getId() + "_" + year + "_sales.png";
+      WriteToFile(pngdata, file_name.str());
+      DeleteImage(imageRef->image);
+      cout << dye::green("Plot Generated! opening...");
+      system(file_name.str().c_str());
+    }
+  }
+
+  void generatePlot(Wilaya *wilaya)
+  {
+    vector<double> x, y;
+    RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
+    // AnnualReport *ar = land->getAnnualReport(year);
+    // if (!ar)
+    // {
+    //   cout << dye::red("ERR: Data for this year doesn't exist. Perhaps the farmer/land started after it?") << endl;
+    //   return;
+    // }
+    for (int i = start_year; i < end_year; i++)
+    {
+      x.push_back(i);
+      y.push_back(wilaya->get_wilaya_total_sales_per_year(i));
+    }
+
+    ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
+    series->xs = &x;
+    series->ys = &y;
+    series->lineThickness = 2;
+
+    ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
+    settings->height = 1024;
+    settings->width = 1024;
+    stringstream str;
+    str << "Sales per year from area of " << wilaya->getName();
+    settings->title = toVector(std::wstring(str.str().begin(), str.str().end()).c_str());
+    settings->xLabel = toVector(L"Years");
+    settings->yLabel = toVector(L"Sales");
+    settings->scatterPlotSeries->push_back(series);
+    StringReference *err = CreateStringReferenceLengthValue(0, L' ');
+    bool success = DrawScatterPlotFromSettings(imageRef, settings, err);
+
+    if (success)
+    {
+      cout << dye::green("Plot created successfully, generating...");
+      vector<double> *pngdata = ConvertToPNG(imageRef->image);
+      stringstream file_name;
+      file_name << wilaya->getId() << "_"
+                << "_sales.png";
+      // string file_name = land->getId() + "_" + year + "_sales.png";
+      WriteToFile(pngdata, file_name.str());
+      DeleteImage(imageRef->image);
+      cout << dye::green("Plot Generated! opening...");
+      system(file_name.str().c_str());
+    }
+  }
 };
+
+// void testPlot()
+// {
+//   // PlotConfig con("years", 2000.0, 2023.0, 200, "sales", 0.0, 5e+12);
+//   // CustomPlot plot = createPlot("years", "sales", 2000, 2023, 0, 3e+5);
+//   Land *land = lands.getById(216326);
+//   vector<double> y, x;
+//   RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
+//   for (AnnualReport *rep : land->getReports())
+//   {
+//     cout << land->get_land_total_sales_per_year(rep->getYear()) << endl;
+//     y.push_back(land->get_land_total_sales_per_year(rep->getYear()));
+//     x.push_back(rep->getYear());
+//   }
+//   ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
+//   series->xs = &x;
+//   series->ys = &y;
+//   series->lineThickness = 2;
+//   ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
+//   settings->height = 1024;
+//   settings->width = 1024;
+//   settings->title = toVector(L"Sales per year for farm");
+//   settings->xLabel = toVector(L"Years");
+//   settings->yLabel = toVector(L"Sales");
+//   settings->scatterPlotSeries->push_back(series);
+//   StringReference *idk = CreateStringReferenceLengthValue(0, L' ');
+//   bool success = DrawScatterPlotFromSettings(imageRef, settings, idk);
+//   cout << success;
+//   if (success)
+//   {
+//     vector<double> *pngdata = ConvertToPNG(imageRef->image);
+//     WriteToFile(pngdata, "test.png");
+//     DeleteImage(imageRef->image);
+//   }
+//   FreeAllocations();
+// }
 
 #endif
