@@ -1,26 +1,22 @@
 #pragma once
-#ifndef APMSDSA
-#define APMSDSA
+#ifndef APMSAVLDSA
+#define APMSAVLDSA
 // #include <vector>
 // #include <type_traits>
 // #include <stdlib.h>
-#include "../lib/plot/pbPlots.hpp"
-#include "../lib/plot/supportLib.hpp"
-#include "misc/AvlTree.hpp"
 // #include <color.hpp>
-#include "misc/BinarySearchTree.h"
 #include "misc/DBMS.hpp"
 #include "classes/wilaya.hpp"
 
 
-class APMS
+class APMSAVL
 {
   DBMS rawFile;
-  BSTree<Wilaya *> wilayas;
-  BSTree<City *> cities;
-  BSTree<Area *> areas;
-  BSTree<Land *> lands;
-  BSTree<Farmer *> farmers;
+  AvlTree<Wilaya *> wilayas;
+  AvlTree<City *> cities;
+  AvlTree<Area *> areas;
+  AvlTree<Land *> lands;
+  AvlTree<Farmer *> farmers;
   vector<string> categories;
   int start_year = 0;
   int end_year = 0;
@@ -30,8 +26,8 @@ class APMS
   // }
 
 public:
-  APMS() : wilayas{BSTree<Wilaya *>()}, cities{BSTree<City *>()}, areas{BSTree<Area *>()}, lands{BSTree<Land *>()}, rawFile{DBMS()}, farmers{BSTree<Farmer *>()}, categories{vector<string>()} {}
-  APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya *>()}, cities{BSTree<City *>()}, areas{BSTree<Area *>()}, lands{BSTree<Land *>()}, farmers{BSTree<Farmer *>()}, categories{vector<string>()} {}
+  APMSAVL() : wilayas{AvlTree<Wilaya *>()}, cities{AvlTree<City *>()}, areas{AvlTree<Area *>()}, lands{AvlTree<Land *>()}, rawFile{DBMS()}, farmers{AvlTree<Farmer *>()}, categories{vector<string>()} {}
+  APMSAVL(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{AvlTree<Wilaya *>()}, cities{AvlTree<City *>()}, areas{AvlTree<Area *>()}, lands{AvlTree<Land *>()}, farmers{AvlTree<Farmer *>()}, categories{vector<string>()} {}
 
   void load()
   {
@@ -153,7 +149,7 @@ public:
   void printMenu()
   {
     cout << setfill('=') << setw(60) << "" << endl
-         << setfill(' ') << dye::yellow("** APMS System -- 1.3.77 -- All Rights Reserved") << endl
+         << setfill(' ') << dye::yellow("** APMSAVL System -- 1.3.77 -- All Rights Reserved") << endl
          << setfill('=') << setw(60) << dye::yellow("") << endl
          << setfill(' ') << dye::yellow("1: Access information") << endl
          << setfill(' ') << dye::yellow("2: Save changes into database") << endl

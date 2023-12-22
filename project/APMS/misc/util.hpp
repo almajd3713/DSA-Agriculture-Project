@@ -6,6 +6,10 @@
 #include <windows.h>
 #include <string>
 #include <sstream>
+#include <chrono>
+#include <functional>
+using std::function;
+using namespace std::chrono;
 using std::string, std::stringstream;
 // #endif
 
@@ -23,6 +27,15 @@ inline string stringRepeat(const string& str, int repetitions)
   for(int i = 0; i < repetitions; i++) 
     oss << str;
   return oss.str();
+}
+
+template <typename T>
+auto benchmark(size_t iterations, function<void()> func) {
+  auto start = high_resolution_clock::now();
+  for(size_t i = 0; i < iterations; i++) 
+    func();
+  auto end = high_resolution_clock::now();
+  return duration_cast<T>(end - start) / iterations;
 }
 
 #endif
