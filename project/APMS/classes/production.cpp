@@ -52,18 +52,22 @@ void Production::addProduct(const string& name, double bp, double pr, PesticideS
 ostream &operator<<(ostream& os, const Production& data) {
   os << dye::aqua(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   os << "Water Consumption: " << data.getWaterConsumption() <<" m³"<< endl
-     << "Electricity Consumption: " << data.getElectricityConsumption() <<" kWh"<< endl
-     <<setfill('=') << setw(40) << "" << endl
-     << "Products: " << endl;
-    int i = 1;
+     << "Electricity Consumption: " << data.getElectricityConsumption() <<" kWh"<< endl;
+  os << dye::light_yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+
+  int i = 1;
   for(auto& it: data.categories) {
+  os << dye::light_yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+
     os << "Product " << i << ": " << it.first << endl
     << "Production: " << it.second->getProduction() <<" KG"<< endl
     << "Price/unit: " << it.second->getBasePrice() <<" DA/KG"<< endl
     << "Total sales: " << it.second->getGrossSales() <<(it.second->getGrossSales() > 1000000 ? it.second->getGrossSales()/ 1000000 : it.second->getGrossSales() > 1000 ? it.second->getGrossSales() / 1000 : it.second->getGrossSales()) 
     <<(it.second->getGrossSales() > 1000000 ? "MDA" : it.second->getGrossSales() > 1000 ? "KDA" : "DA")<<endl
-    << "Net sales: " << it.second->getPureSales() <<(it.second->getPureSales()  > 1000000 ? it.second->getPureSales()  / 1000000 : it.second->getPureSales()  > 1000 ? it.second->getPureSales()  / 1000 : it.second->getPureSales() )
+    << "Net sales: " << it.second->getPureSales() <<(it.second->getPureSales()  > 1000000 ? (it.second->getPureSales()  / 1000000) : it.second->getPureSales()  > 1000 ? (it.second->getPureSales()  / 1000): it.second->getPureSales() )
     <<(it.second->getPureSales()  > 1000000 ? "MDA" : it.second->getPureSales()  > 1000 ? "KDA" : "DA")<<endl;
+    i ++;
+    os << dye::light_yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   }
   os << dye::aqua(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   return os;
@@ -97,5 +101,5 @@ double Production::summarizedSales() {
 double Production::get_Category_Penalty(const string& cat) {
   if(categories.find(cat) != categories.end()) {
     return categories[cat]->getPenalty();
-  }
+  } else return 0;
 }

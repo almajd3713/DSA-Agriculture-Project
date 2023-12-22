@@ -204,10 +204,10 @@ class BSTree
     if(t == nullptr) {
         return nullptr;
     }
-    else if(t->element->getId() == id) {
+    else if((t->element)->getId() == id) {
         return t->element;
     }
-    else if(t->element->getId() > id) {
+    else if((t->element)->getId() > id) {
         return getById(id, t->left);
     }
     else {
