@@ -1,10 +1,14 @@
 #pragma once
-#ifndef APMSBSTDSA
-#define APMSBSTDSA
+#ifndef APMSDSA
+#define APMSDSA
 // #include <vector>
 // #include <type_traits>
 // #include <stdlib.h>
+#include "../lib/plot/pbPlots.hpp"
+#include "../lib/plot/supportLib.hpp"
+#include "misc/AvlTree.hpp"
 // #include <color.hpp>
+#include "misc/BinarySearchTree.h"
 #include "misc/DBMS.hpp"
 #include "classes/wilaya.hpp"
 #include <time.h>
@@ -181,14 +185,14 @@ public:
   }
 
   void readDataPrompt(bool& displayMenu) {
-    int input = 0, input2,  year, month, isDetailed;
+    int input = 0, input2,  year, month, monthEnd, yearEnd, isDetailed;
+    Wilaya* wil; City* cit; Area* ar; Land* land;
     cout << dye::blue("What would you like to access?") << endl
          << "1: General information" << endl
          << "2: Sales" << endl
          << "3: Penalties" << endl
          << "4: Winners in the monthly competition" << endl
          << "0: Return to main menu" << endl;
-    do {
       Farmer* desired;
       promptAndValidate(input, "Enter your query: ", 0, 4);
       switch(input) {
@@ -214,8 +218,9 @@ public:
                      << "1: Data for a specific month" << endl
                      << "2: Data for a specific year" << endl
                      << "3: All available data" << endl
+                     << "4: Data for a period" << endl
                      << "0: Return to the main menu" << endl;
-                  promptAndValidate(input, "Enter your query: ", 0, 3);
+                  promptAndValidate(input, "Enter your query: ", 0, 4);
                   switch(input) {
                     default:
                       displayMenu = true;
@@ -245,7 +250,7 @@ public:
                       return;
                     case 3:
                       promptAndValidate(input, "Enter the ID of the wilaya you want: ");
-                      Wilaya* wil = wilayas.getById(input);
+                      wil = wilayas.getById(input);
                       if(wil) {
                         cout << *wil << endl;
                         displayMenu = true;
@@ -256,6 +261,23 @@ public:
                         displayMenu = true;
                         return;
                       }
+                    case 4:
+                      promptAndValidate(input2, "Enter the ID of the wilaya you want: ");
+                      promptAndValidate(year, "Enter the year you want to start with: ");
+                      promptAndValidate(month, "Enter the month you want to start with: ");
+                      promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                      promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                      promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                      if (isDetailed == 2)
+                      {
+                        print_period_wilaya_summarized(input2, year, month, yearEnd, monthEnd);
+                      }
+                      else
+                      {
+                        print_period_wilaya_info(input2, year, month, yearEnd, monthEnd);
+                      }
+                      displayMenu = true;
+                      return;
                   }
                 return;
               case 2:
@@ -263,57 +285,75 @@ public:
                      << "1: Data for a specific month" << endl
                      << "2: Data for a specific year" << endl
                      << "3: All available data" << endl
+                     << "4: Data for a period" << endl
                      << "0: Return to the main menu" << endl;
-                promptAndValidate(input, "Enter your query: ", 0, 3);
+                promptAndValidate(input, "Enter your query: ", 0, 4);
                 switch (input)
                 {
-                default:
-                  displayMenu = true;
-                  return;
-                case 1:
-                  promptAndValidate(input2, "Enter the ID of the city you want: ");
-                  promptAndValidate(year, "Enter the year you want: ");
-                  promptAndValidate(month, "Enter the month you want: ");
-                  promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
-                  if (isDetailed == 2)
-                  {
-                    print_monthly_city_info(input2, year, month);
-                  }
-                  else
-                  {
-                    print_monthly_city_summarized(input2, year, month);
-                  }
-                  displayMenu = true;
-                  return;
-                case 2:
-                  promptAndValidate(input, "Enter the ID of the city you want: ");
-                  promptAndValidate(year, "Enter the year you want: ");
-                  promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
-                  if (isDetailed == 2)
-                  {
-                    print_yearly_city_info(input, year, isDetailed - 1);
-                  }
-                  else
-                  {
-                    print_yearly_city_summarized(input, year);
-                  }
-                  displayMenu = true;
-                  return;
-                case 3:
-                  promptAndValidate(input, "Enter the ID of the city you want: ");
-                  City *cit = cities.getById(input);
-                  if (cit)
-                  {
-                    cout << *cit << endl;
+                  default:
                     displayMenu = true;
                     return;
-                  }
-                  else
-                  {
-                    cout << "Sorry, couldn't find the City you're looking for.";
+                  case 1:
+                    promptAndValidate(input2, "Enter the ID of the city you want: ");
+                    promptAndValidate(year, "Enter the year you want: ");
+                    promptAndValidate(month, "Enter the month you want: ");
+                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                    if (isDetailed == 2)
+                    {
+                      print_monthly_city_info(input2, year, month);
+                    }
+                    else
+                    {
+                      print_monthly_city_summarized(input2, year, month);
+                    }
                     displayMenu = true;
                     return;
-                  }
+                  case 2:
+                    promptAndValidate(input, "Enter the ID of the city you want: ");
+                    promptAndValidate(year, "Enter the year you want: ");
+                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                    if (isDetailed == 2)
+                    {
+                      print_yearly_city_info(input, year, isDetailed - 1);
+                    }
+                    else
+                    {
+                      print_yearly_city_summarized(input, year);
+                    }
+                    displayMenu = true;
+                    return;
+                  case 3:
+                    promptAndValidate(input, "Enter the ID of the city you want: ");
+                    cit = cities.getById(input);
+                    if (cit)
+                    {
+                      cout << *cit << endl;
+                      displayMenu = true;
+                      return;
+                    }
+                    else
+                    {
+                      cout << "Sorry, couldn't find the City you're looking for.";
+                      displayMenu = true;
+                      return;
+                    }
+                  case 4:
+                    promptAndValidate(input2, "Enter the ID of the city you want: ");
+                    promptAndValidate(year, "Enter the year you want to start with: ");
+                    promptAndValidate(month, "Enter the month you want to start with: ");
+                    promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                    promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                    if (isDetailed == 2)
+                    {
+                      print_period_city_summarized(input2, year, month, yearEnd, monthEnd);
+                    }
+                    else
+                    {
+                      print_period_city_info(input2, year, month, yearEnd, monthEnd);
+                    }
+                    displayMenu = true;
+                    return;
                   }
                 return;
               case 3:
@@ -321,57 +361,75 @@ public:
                      << "1: Data for a specific month" << endl
                      << "2: Data for a specific year" << endl
                      << "3: All available data" << endl
+                     << "4: Data for a period" << endl
                      << "0: Return to the main menu" << endl;
-                promptAndValidate(input, "Enter your query: ", 0, 3);
+                promptAndValidate(input, "Enter your query: ", 0, 4);
                 switch (input)
                 {
-                default:
-                  displayMenu = true;
-                  return;
-                case 1:
-                  promptAndValidate(input2, "Enter the ID of the area you want: ");
-                  promptAndValidate(year, "Enter the year you want: ");
-                  promptAndValidate(month, "Enter the month you want: ");
-                  promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
-                  if (isDetailed == 2)
-                  {
-                    print_monthly_area_info(input2, year, month);
-                  }
-                  else
-                  {
-                    print_monthly_area_summarized(input2, year, month);
-                  }
-                  displayMenu = true;
-                  return;
-                case 2:
-                  promptAndValidate(input, "Enter the ID of the area you want: ");
-                  promptAndValidate(year, "Enter the year you want: ");
-                  promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
-                  if (isDetailed == 2)
-                  {
-                    print_yearly_area_info(input, year, isDetailed);
-                  }
-                  else
-                  {
-                    print_yearly_area_summarized(input, year);
-                  }
-                  displayMenu = true;
-                  return;
-                case 3:
-                  promptAndValidate(input, "Enter the ID of the area you want: ");
-                  Area *ar = areas.getById(input);
-                  if (ar)
-                  {
-                    cout << *ar << endl;
+                  default:
                     displayMenu = true;
                     return;
-                  }
-                  else
-                  {
-                    cout << "Sorry, couldn't find the Area you're looking for.";
+                  case 1:
+                    promptAndValidate(input2, "Enter the ID of the area you want: ");
+                    promptAndValidate(year, "Enter the year you want: ");
+                    promptAndValidate(month, "Enter the month you want: ");
+                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                    if (isDetailed == 2)
+                    {
+                      print_monthly_area_info(input2, year, month);
+                    }
+                    else
+                    {
+                      print_monthly_area_summarized(input2, year, month);
+                    }
                     displayMenu = true;
                     return;
-                  }
+                  case 2:
+                    promptAndValidate(input, "Enter the ID of the area you want: ");
+                    promptAndValidate(year, "Enter the year you want: ");
+                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                    if (isDetailed == 2)
+                    {
+                      print_yearly_area_info(input, year, isDetailed);
+                    }
+                    else
+                    {
+                      print_yearly_area_summarized(input, year);
+                    }
+                    displayMenu = true;
+                    return;
+                  case 3:
+                    promptAndValidate(input, "Enter the ID of the area you want: ");
+                    ar = areas.getById(input);
+                    if (ar)
+                    {
+                      cout << *ar << endl;
+                      displayMenu = true;
+                      return;
+                    }
+                    else
+                    {
+                      cout << "Sorry, couldn't find the Area you're looking for.";
+                      displayMenu = true;
+                      return;
+                    }
+                  case 4:
+                    promptAndValidate(input2, "Enter the ID of the area you want: ");
+                    promptAndValidate(year, "Enter the year you want to start with: ");
+                    promptAndValidate(month, "Enter the month you want to start with: ");
+                    promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                    promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                    if (isDetailed == 2)
+                    {
+                      print_period_area_summarized(input2, year, month, yearEnd, monthEnd);
+                    }
+                    else
+                    {
+                      print_period_area_info(input2, year, month, yearEnd, monthEnd);
+                    }
+                    displayMenu = true;
+                    return;
                   }
                 return;
               case 4:
@@ -379,57 +437,75 @@ public:
                      << "1: Data for a specific month" << endl
                      << "2: Data for a specific year" << endl
                      << "3: All available data" << endl
+                     << "4: Data for a period" << endl
                      << "0: Return to the main menu" << endl;
-                promptAndValidate(input, "Enter your query: ", 0, 3);
+                promptAndValidate(input, "Enter your query: ", 0, 4);
                 switch (input)
                 {
-                default:
-                  displayMenu = true;
-                  return;
-                case 1:
-                  promptAndValidate(input2, "Enter the ID of the land you want: ");
-                  promptAndValidate(year, "Enter the year you want: ");
-                  promptAndValidate(month, "Enter the month you want: ");
-                  promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
-                  if (isDetailed == 2)
-                  {
-                    print_monthly_land_info(input2, year, month);
-                  }
-                  else
-                  {
-                    print_monthly_land_summarized(input2, year, month);
-                  }
-                  displayMenu = true;
-                  return;
-                case 2:
-                  promptAndValidate(input, "Enter the ID of the land you want: ");
-                  promptAndValidate(year, "Enter the year you want: ");
-                  promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
-                  if (isDetailed == 2)
-                  {
-                    print_yearly_land_info(input, year, isDetailed - 1);
-                  }
-                  else
-                  {
-                    List_yearly_farmer_sales(input, year);
-                  }
-                  displayMenu = true;
-                  return;
-                case 3:
-                  promptAndValidate(input, "Enter the ID of the land you want: ");
-                  Land *land = lands.getById(input);
-                  if (land)
-                  {
-                    cout << *land << endl;
+                  default:
                     displayMenu = true;
                     return;
-                  }
-                  else
-                  {
-                    cout << "Sorry, couldn't find the Land you're looking for.";
+                  case 1:
+                    promptAndValidate(input2, "Enter the ID of the land you want: ");
+                    promptAndValidate(year, "Enter the year you want: ");
+                    promptAndValidate(month, "Enter the month you want: ");
+                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                    if (isDetailed == 2)
+                    {
+                      print_monthly_land_info(input2, year, month);
+                    }
+                    else
+                    {
+                      print_monthly_land_summarized(input2, year, month);
+                    }
                     displayMenu = true;
                     return;
-                  }
+                  case 2:
+                    promptAndValidate(input, "Enter the ID of the land you want: ");
+                    promptAndValidate(year, "Enter the year you want: ");
+                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                    if (isDetailed == 2)
+                    {
+                      print_yearly_land_info(input, year, isDetailed - 1);
+                    }
+                    else
+                    {
+                      List_yearly_farmer_sales(input, year);
+                    }
+                    displayMenu = true;
+                    return;
+                  case 3:
+                    promptAndValidate(input, "Enter the ID of the land you want: ");
+                    land = lands.getById(input);
+                    if (land)
+                    {
+                      cout << *land << endl;
+                      displayMenu = true;
+                      return;
+                    }
+                    else
+                    {
+                      cout << "Sorry, couldn't find the Land you're looking for.";
+                      displayMenu = true;
+                      return;
+                    }
+                  case 4:
+                    promptAndValidate(input2, "Enter the ID of the land you want: ");
+                    promptAndValidate(year, "Enter the year you want to start with: ");
+                    promptAndValidate(month, "Enter the month you want to start with: ");
+                    promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                    promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                    if (isDetailed == 2)
+                    {
+                      print_period_land_summarized(input2, year, month, yearEnd, monthEnd);
+                    }
+                    else
+                    {
+                      print_period_land_info(input2, year, month, yearEnd, monthEnd);
+                    }
+                    displayMenu = true;
+                    return;
                   }
                 return;
               case 5:
@@ -448,49 +524,67 @@ public:
                          << "1: Data for a specific month" << endl
                          << "2: Data for a specific year" << endl
                          << "3: All available data" << endl
+                         << "4: Data for a period" << endl
                          << "0: Return to the main menu" << endl;
                     while (input)
                     {
-                      promptAndValidate(input, "Enter your query: ");
+                      promptAndValidate(input, "Enter your query: ", 0, 4);
                       switch (input)
                       {
-                      default:
-                        displayMenu = true;
-                        return;
-                      case 1:
-                        promptAndValidate(year, "Enter the year you want: ");
-                        promptAndValidate(month, "Enter the month you want: ");
-                        promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
-                        if (isDetailed == 2)
-                        {
-                          print_monthly_country_info(year, month);
-                        }
-                        else
-                        {
-                          print_monthly_country_summarized(year, month);
-                        }
-                        displayMenu = true;
-                        return;
-                      case 2:
-                        promptAndValidate(year, "Enter the year you want: ");
-                        promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
-                        if (isDetailed - 1)
-                        {
-                          print_yearly_country_info(year, isDetailed - 1);
-                        }
-                        else
-                        {
-                          print_yearly_country_summarized(year);
-                        }
-                        displayMenu = true;
-                        return;
-                      case 3:
-                        print_yearly_country_info(-1, 1);
-                        displayMenu = true;
+                        default:
+                          displayMenu = true;
+                          return;
+                        case 1:
+                          promptAndValidate(year, "Enter the year you want: ");
+                          promptAndValidate(month, "Enter the month you want: ");
+                          promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                          if (isDetailed == 2)
+                          {
+                            print_monthly_country_info(year, month);
+                          }
+                          else
+                          {
+                            print_monthly_country_summarized(year, month);
+                          }
+                          displayMenu = true;
+                          return;
+                        case 2:
+                          promptAndValidate(year, "Enter the year you want: ");
+                          promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                          if (isDetailed - 1)
+                          {
+                            print_yearly_country_info(year, isDetailed - 1);
+                          }
+                          else
+                          {
+                            print_yearly_country_summarized(year);
+                          }
+                          displayMenu = true;
+                          return;
+                        case 3:
+                          print_yearly_country_info(-1, 1);
+                          displayMenu = true;
+                        case 4:
+                          promptAndValidate(year, "Enter the year you want to start with: ");
+                          promptAndValidate(month, "Enter the month you want to start with: ");
+                          promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                          promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                          promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                          if (isDetailed == 2)
+                          {
+                            print_period_country_summarized( year, month, yearEnd, monthEnd);
+                          }
+                          else
+                          {
+                            print_period_country_info(year, month, yearEnd, monthEnd);
+                          }
+                          displayMenu = true;
+                          return;
                       }
                     }
                     return;
                 } 
+                
             }
           break;
         case 2:
@@ -501,7 +595,6 @@ public:
                << "4: Sales in an Area" << endl
                << "5: Sales in a Land" << endl
                << "0: Return to the main menu" << endl;
-          do {
             promptAndValidate(input, "Enter your query: ", 0, 5);
             Wilaya* wil; City* cit; Area* ar; Land* lnd;
             switch(input) {
@@ -515,8 +608,9 @@ public:
                   cout << dye::blue("What sales would you like to list?") << endl
                        << "1: Sales in a specific month" << endl
                        << "2: Sales for a specific year" << endl
+                       << "3: Sales for a period"
                        << "0: Return to the main menu" << endl;
-                       promptAndValidate(input, "Enter your query: ", 0, 4);
+                       promptAndValidate(input, "Enter your query: ", 0, 3);
                        switch(input) {
                         default:
                           displayMenu = true;
@@ -532,6 +626,14 @@ public:
                          List_yearly_farmer_sales_in_country(year);
                          displayMenu = true;
                          return;
+                       case 3:
+                         promptAndValidate(year, "Enter the year you want to start with: ");
+                         promptAndValidate(month, "Enter the month you want to start with: ");
+                         promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                         promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                         print_period_country_sales(year, month, yearEnd, monthEnd);
+                         displayMenu = true;
+                         return;
                        }
                 } else {
                   displayMenu = true;
@@ -542,10 +644,10 @@ public:
                      << "1: Sales in a specific month" << endl
                      << "2: Sales for a specific year" << endl
                      << "3: All Sales" << endl
+                     << "4: Sales for a period" << endl
                      << "0: Return to the main menu" << endl;
 
-                do {
-                  promptAndValidate(input, "Enter your query: ", 1, 3);
+                  promptAndValidate(input, "Enter your query: ", 0, 4);
                   switch(input) {
                     default:
                       displayMenu = true;
@@ -579,17 +681,25 @@ public:
                       }
                       displayMenu = true;
                       return;
+                    case 4:
+                      print_period_city_sales(input2, year, month, yearEnd, monthEnd);
+                      promptAndValidate(year, "Enter the year you want to start with: ");
+                      promptAndValidate(month, "Enter the month you want to start with: ");
+                      promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                      promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                      print_period_wilaya_sales(input2, year, month, yearEnd, monthEnd);
+                      displayMenu = true;
+                      return;
                   }
-                } while(input);
               case 3:
                 cout << dye::blue("What sales would you like to list?") << endl
                      << "1: Sales in a specific month" << endl
                      << "2: Sales for a specific year" << endl
                      << "3: All Sales" << endl
+                     << "4: Sales for a period" << endl
                      << "0: Return to the main menu" << endl;
 
-                do {
-                  promptAndValidate(input, "Enter your query: ", 1, 3);
+                  promptAndValidate(input, "Enter your query: ", 0, 4);
                   switch(input) {
                                   default:
                 displayMenu = true;
@@ -623,19 +733,31 @@ public:
                       }
                       displayMenu = true;
                       return;
+                    case 4:
+                      promptAndValidate(input2, "Enter the ID of the City: ");
+                      promptAndValidate(year, "Enter the year you want to start with: ");
+                      promptAndValidate(month, "Enter the month you want to start with: ");
+                      promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                      promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                      print_period_city_sales(input2, year, month, yearEnd, monthEnd);
+                      displayMenu = true;
+                      return;
                   }
-                } while(input);
               case 4:
                 cout << dye::blue("What sales would you like to list?") << endl
                      << "1: Sales in a specific month" << endl
                      << "2: Sales for a specific year" << endl
-                     << "3: All Sales" << endl;
+                     << "3: All Sales" << endl
+                     << "4: Sales  for a period" << endl
+                     << "0: Return to the main menu" << endl;
 
-                do {
-                  promptAndValidate(input, "Enter your query: ", 1, 3);
+                  promptAndValidate(input, "Enter your query: ", 0, 4);
                   switch(input) {
+                    default:
+                      displayMenu = true;
+                      return;
                     case 1:
-                      promptAndValidate(input, "Enter the ID of the Area you want: : ");
+                      promptAndValidate(input, "Enter the ID of the Area you want: ");
                       promptAndValidate(year, "Enter the year you want: ");
                       promptAndValidate(month, "Enter the month you want: ");
                       List_monthly_farmer_sales_in_area(input, year, month);
@@ -653,7 +775,7 @@ public:
                       }
                       return;
                     case 3:
-                      promptAndValidate(input, "Enter the ID of the Area you want: : ");
+                      promptAndValidate(input, "Enter the ID of the Area you want: ");
                       List_yearly_farmer_sales_in_area(input, -1);
                       displayMenu = true;
                       ar = areas.getById(input);
@@ -663,17 +785,29 @@ public:
                         if (input2) generatePlot(ar);
                       }
                       return;
+                    case 4:
+                      promptAndValidate(input2, "Enter the ID of the Area: ");
+                      promptAndValidate(year, "Enter the year you want to start with: ");
+                      promptAndValidate(month, "Enter the month you want to start with: ");
+                      promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                      promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                      print_period_area_sales(input2, year, month, yearEnd, monthEnd);
+                      displayMenu = true;
+                      return;
                   }
-                } while(input);
               case 5:
                 cout << dye::blue("What sales would you like to list?") << endl
                      << "1: Sales in a specific month" << endl
                      << "2: Sales for a specific year" << endl
-                     << "3: All Sales" << endl;
+                     << "3: All Sales" << endl
+                     << "4: Sales for a period" << endl
+                     << "0: Return to the main menu" << endl;
 
-                do {
-                  promptAndValidate(input, "Enter your query: ", 1, 3);
+                  promptAndValidate(input, "Enter your query: ", 0, 4);
                   switch(input) {
+                    default:
+                      displayMenu = true;
+                      return;
                     case 1:
                       promptAndValidate(input, "Enter the ID of the Land: ");
                       promptAndValidate(year, "Enter the year you want: ");
@@ -706,10 +840,17 @@ public:
                       }
                       displayMenu = true;
                       return;
+                    case 4:
+                      promptAndValidate(input2, "Enter the ID of the Land: ");
+                      promptAndValidate(year, "Enter the year you want to start with: ");
+                      promptAndValidate(month, "Enter the month you want to start with: ");
+                      promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                      promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                      print_period_land_sales(input2, year, month, yearEnd, monthEnd);
+                      displayMenu = true;
+                      return;
                   }
-                } while(input);
             }
-          } while(input);
         case 3:
           cout << dye::blue("What Penalties would you like to access") << endl
                << "1: Penalties in the Whole Country" << endl
@@ -718,9 +859,11 @@ public:
                << "4: Penalties in an Area" << endl
                << "5: Penalties in a Land" << endl
                << "0: Return to the main menu" << endl;
-          do {
             promptAndValidate(input, "Enter your query: ", 0, 5);
             switch(input) {
+              default:
+                displayMenu = true;
+                return;
               case 1:
                 do
                 {
@@ -731,12 +874,16 @@ public:
                     cout << dye::blue("How would you like to access the Penalties?") << endl
                          << "1: Show Penalties in a specific month" << endl
                          << "2: Show Penalties in a specific year" << endl
+                         << "3: Show Penalties for a period" << endl
                          << "0: Return to the main menu" << endl;
                     do
                     {
                       promptAndValidate(input, "Enter your query: ", 0, 3);
                       switch (input)
                       {
+                      default:
+                        displayMenu = true;
+                        return;
                       case 1:
                         promptAndValidate(year, "Enter the year you want: ");
                         promptAndValidate(month, "Enter the month you want: ");
@@ -765,7 +912,25 @@ public:
                             List_country_monthly_farmers_penalties(year, month, cat);
                         else
                           List_country_monthly_farmers_penalties(year, month, categories[input - 1]);
+                        displayMenu = true;
                         return;
+                      case 3:
+                        promptAndValidate(year, "Enter the year you want to start with: ");
+                        promptAndValidate(month, "Enter the month you want to start with: ");
+                        promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                        promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                        cout << dye::blue("In what category should the Penalties be for?") << endl;
+                        for (int i = 0; i < categories.size(); ++i)
+                          cout << i + 1 << ": " << categories[i] << endl;
+                        cout << categories.size() << ": show all categories" << endl;
+                        cout << "0: Return to the main menu" << endl;
+                        promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
+                        if (input == categories.size())
+                          for (const string &cat : categories)
+                            List_period_country_monthly_farmers_penalties(year, month, yearEnd, monthEnd, cat);
+                        else
+                          List_period_country_monthly_farmers_penalties(year, month, yearEnd, monthEnd, categories[input - 1]);
+                        displayMenu = true;
                         return;
                       }
                     } while (input);
@@ -781,12 +946,14 @@ public:
                 cout << dye::blue("How would you like to access the Penalties?") << endl
                      << "1: Show Penalties in a specific month" << endl
                      << "2: Show Penalties in a specific year" << endl
+                     << "3: Show Penaltiers for a period" << endl
                      << "0: Return to the main menu" << endl;
-                do
-                {
                   promptAndValidate(input, "Enter your query: ", 0, 3);
                   switch (input)
                   {
+                  default:
+                    displayMenu = true;
+                    return;
                   case 1:
                     promptAndValidate(year, "Enter the year you want: ");
                     promptAndValidate(month, "Enter the month you want: ");
@@ -818,16 +985,32 @@ public:
                       List_wilaya_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
                     displayMenu = true;
                     return;
+                  case 3:
+                    promptAndValidate(year, "Enter the year you want to start with: ");
+                    promptAndValidate(month, "Enter the month you want to start with: ");
+                    promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                    promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                    cout << dye::blue("In what category should the Penalties be for?") << endl;
+                    for (int i = 0; i < categories.size(); ++i)
+                      cout << i + 1 << ": " << categories[i] << endl;
+                    cout << categories.size() << ": show all categories" << endl;
+                    cout << "0: Return to the main menu" << endl;
+                    promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
+                    if (input == categories.size())
+                      for (const string &cat : categories)
+                        List_period_wilaya_monthly_farmers_penalties(input2, year, month, yearEnd, monthEnd, cat);
+                    else
+                      List_period_wilaya_monthly_farmers_penalties(input2, year, month, yearEnd, monthEnd, categories[input - 1]);
+                    displayMenu = true;
+                    return;
                   }
-                } while (input);
               case 3:
                 promptAndValidate(input2, "Enter the ID of the city: ");
                 cout << dye::blue("How would you like to access the Penalties?") << endl
                      << "1: Show Penalties in a specific month" << endl
                      << "2: Show Penalties in a specific year" << endl
+                     << "3: Show Penalties for a period" << endl
                      << "0: Return to the main menu" << endl;
-                do
-                {
                   promptAndValidate(input, "Enter your query: ", 0, 3);
                   switch (input)
                   {
@@ -862,19 +1045,39 @@ public:
                       List_city_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
                     displayMenu = true;
                     return;
+                  case 3:
+                    promptAndValidate(year, "Enter the year you want to start with: ");
+                    promptAndValidate(month, "Enter the month you want to start with: ");
+                    promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                    promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                    cout << dye::blue("In what category should the Penalties be for?") << endl;
+                    for (int i = 0; i < categories.size(); ++i)
+                      cout << i + 1 << ": " << categories[i] << endl;
+                    cout << categories.size() << ": show all categories" << endl;
+                    cout << "0: Return to the main menu" << endl;
+                    promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
+                    if (input == categories.size())
+                      for (const string &cat : categories)
+                        List_period_city_monthly_farmers_penalties(input2, year, month, yearEnd, monthEnd, cat);
+                    else
+                      List_period_city_monthly_farmers_penalties(input2, year, month, yearEnd, monthEnd, categories[input - 1]);
+                    displayMenu = true;
+                    return;
                   }
-                } while (input);
               case 4:
                 promptAndValidate(input2, "Enter the ID of the area: ");
                 cout << dye::blue("How would you like to access the Penalties?") << endl
                      << "1: Show Penalties in a specific month" << endl
                      << "2: Show Penalties in a specific year" << endl
+                     << "3: Show Penalties for a period" << endl
                      << "0: Return to the main menu" << endl;
-                do
-                {
+
                   promptAndValidate(input, "Enter your query: ", 0, 3);
                   switch (input)
                   {
+                  default:
+                    displayMenu = true;
+                    return;
                   case 1:
                     promptAndValidate(year, "Enter the year you want: ");
                     promptAndValidate(month, "Enter the month you want: ");
@@ -906,19 +1109,39 @@ public:
                       List_area_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
                     displayMenu = true;
                     return;
+                  case 3:
+                    promptAndValidate(year, "Enter the year you want to start with: ");
+                    promptAndValidate(month, "Enter the month you want to start with: ");
+                    promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                    promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                    cout << dye::blue("In what category should the Penalties be for?") << endl;
+                    for (int i = 0; i < categories.size(); ++i)
+                      cout << i + 1 << ": " << categories[i] << endl;
+                    cout << categories.size() << ": show all categories" << endl;
+                    cout << "0: Return to the main menu" << endl;
+                    promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
+                    if (input == categories.size())
+                      for (const string &cat : categories)
+                        List_period_area_monthly_farmers_penalties(input2, year, month, yearEnd, monthEnd, cat);
+                    else
+                      List_period_area_monthly_farmers_penalties(input2, year, month, yearEnd, monthEnd, categories[input - 1]);
+                    displayMenu = true;
+                    return;
                   }
-                } while (input);
               case 5:
                 promptAndValidate(input2, "Enter the ID of the land: ");
                 cout << dye::blue("How would you like to access the Penalties?") << endl
                      << "1: Show Penalties in a specific month" << endl
                      << "2: Show Penalties in a specific year" << endl
+                     << "3: Show Penalties for a period" << endl
                      << "0: Return to the main menu" << endl;
-                do
-                {
+
                   promptAndValidate(input, "Enter your query: ", 0, 3);
                   switch (input)
                   {
+                  default:
+                    displayMenu = true;
+                    return;
                   case 1:
                     promptAndValidate(year, "Enter the year you want: ");
                     promptAndValidate(month, "Enter the month you want: ");
@@ -950,10 +1173,26 @@ public:
                     return;
                     displayMenu = true;
                     return;
+                  case 3:
+                    promptAndValidate(year, "Enter the year you want to start with: ");
+                    promptAndValidate(month, "Enter the month you want to start with: ");
+                    promptAndValidate(yearEnd, "Enter the year you want to end with: ");
+                    promptAndValidate(monthEnd, "Enter the month you want to end with: ");
+                    cout << dye::blue("In what category should the Penalties be for?") << endl;
+                    for (int i = 0; i < categories.size(); ++i)
+                      cout << i + 1 << ": " << categories[i] << endl;
+                    cout << categories.size() << ": show all categories" << endl;
+                    cout << "0: Return to the main menu" << endl;
+                    promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
+                    if (input == categories.size())
+                      for (const string &cat : categories)
+                        List_period_farmer_penalty(input2, year, month, yearEnd, monthEnd, cat);
+                    else
+                      List_period_farmer_penalty(input2, year, month, yearEnd, monthEnd, categories[input - 1]);
+                    displayMenu = true;
+                    return;
                   }
-                } while (input);
               }
-          } while(input);
         case 4:
           cout << dye::blue("Which category you want to list the winners of?") << endl;
           for(int i = 1; i <= categories.size(); i++) 
@@ -968,7 +1207,6 @@ public:
           else 
             getWinner(year, month, categories[input - 1]);
         }
-    } while(input);
   }
 
   void addCategory(string cat) {
@@ -983,7 +1221,6 @@ public:
 
     Land *winner = nullptr;
     double ratio = 0;
-    cout << "start winners loop..." << endl;
     lands.iterate([year, month, category, &winner, &ratio](Land *land) -> bool
       {
       AnnualReport* y = land->getAnnualReport(year);
@@ -1157,7 +1394,7 @@ private:
    //iterating over the years from specific month and calling  print_monthly_land_info
     for(int i=year1;i<=year2;i++)
     {
-      if(i==year1)
+      if(i==year1)  
       {
         for(int j=month1;j<=12;j++)
         {

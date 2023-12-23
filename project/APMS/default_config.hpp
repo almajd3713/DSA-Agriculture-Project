@@ -2,7 +2,9 @@
 #ifndef DEFAULTCONFIGDSA
 #define DEFAULTCONFIGDSA
 #include "APMSBST.hpp"
-// #include "APMSAVL.hpp"
+
+#include "APMSAVL.hpp"
+
 
 void defaultConfig(APMSBST& apms) {
   apms.load();
