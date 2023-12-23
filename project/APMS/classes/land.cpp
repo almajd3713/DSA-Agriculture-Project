@@ -122,19 +122,18 @@ double Land :: get_land_total_sales_per_year(int year){
 void Land::printAnnualReport(int year,int choice) {
   cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   cout << "Land ID: " << id << endl;
- AnnualReport* report = getAnnualReport(year);
+  AnnualReport* report = getAnnualReport(year);
   if(report != nullptr) {
     cout << *report << endl;
     
-
   if(choice==1){
       cout << "Workers: " << endl;
     
-  int number = 0;
-  for (auto worker : report->getWorkers()) {
-    cout << "Worker " << number << ": " << endl;
-    cout << *worker << endl;
-  }
+    int number = 0;
+    for (auto worker : report->getWorkers()) {
+      cout << "Worker " << ++number << ": " << endl;
+      cout << *worker << endl;
+    }
   }
    cout<< "the total_sales : " <<get_land_total_sales_per_year(year) <<(get_land_total_sales_per_year(year) > 1000000 ? get_land_total_sales_per_year(year) / 1000000 : get_land_total_sales_per_year(year) > 1000 ? get_land_total_sales_per_year(year) / 1000 : get_land_total_sales_per_year(year)); 
   cout<<(get_land_total_sales_per_year(year) > 1000000 ? "MDA" : get_land_total_sales_per_year(year) > 1000 ? "KDA" : "DA")<<endl;
@@ -337,6 +336,7 @@ void Land::print_monthly_summarized_report(int year,int month){
   double sales=0;
   double water=0;
   double electricity=0;
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   cout<<"Farmer: "<<farmer->getName()<<endl;
   cout<<"Monthly Summarized Report : "<<endl;
   electricity=get_monthly_electricity_consumption(year,month);
@@ -348,7 +348,7 @@ void Land::print_monthly_summarized_report(int year,int month){
   cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
   cout<<"the total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
- 
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
  void Land::print_yearly_summarized_report(int year){
@@ -358,6 +358,7 @@ void Land::print_monthly_summarized_report(int year,int month){
     cout<<"No report for this year"<<endl;
     return;
   }
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   cout<<"Farmer: "<<farmer->getName()<<endl;
   cout<<"Yearly Summarized Report : "<<endl;
   double sales=0;
@@ -372,4 +373,5 @@ void Land::print_monthly_summarized_report(int year,int month){
   cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
   cout<<"the total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
  }
