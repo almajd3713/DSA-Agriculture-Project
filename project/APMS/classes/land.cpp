@@ -334,6 +334,8 @@ void Land::print_monthly_summarized_report(int year,int month){
     cout<<"No report for this month"<<endl;
     return;
   }
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+
   double sales=0;
   double water=0;
   double electricity=0;
@@ -348,16 +350,19 @@ void Land::print_monthly_summarized_report(int year,int month){
   cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
   cout<<"the total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
- 
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
  void Land::print_yearly_summarized_report(int year){
   AnnualReport * report =getAnnualReport(year);
+  
   if(report == nullptr)
   {
     cout<<"No report for this year"<<endl;
     return;
   }
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+
   cout<<"Farmer: "<<farmer->getName()<<endl;
   cout<<"Yearly Summarized Report : "<<endl;
   double sales=0;
@@ -371,5 +376,17 @@ void Land::print_monthly_summarized_report(int year,int month){
   cout<<"the total water consumption is : "<<(water > 1000000 ? water / 1000000 :  water);
   cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
   cout<<"the total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
-  cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+  cout<<(electricity > 1000000 ? "Mwh" :  "KwH")<<endl;
+  cout << dye::blue(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+ }
+
+ void to_json(json &j, const Land &land)
+ {
+   j = json{
+       {"id", land.getId()},
+       {"farmer", (json)*land.getFarmer()}};
+   for (AnnualReport *rep : land.getReports())
+   {
+     j["report"].push_back(*rep);
+   }
  }

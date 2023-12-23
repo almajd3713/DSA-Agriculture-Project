@@ -211,29 +211,29 @@ double Area::get_yearly_area_penalty(int year, const string& category_name) {
 
  void Area::print_Area_monthly_penalty(int year,int month,string category_name)
  {
-   //iterating over the years and then over the months
-    cout<<"Area: " << name << endl;
-    cout<<"Year :"<<year<<" Month :"<<month<<endl;
-    for(auto land : lands)
-    {
-        land->print_Land_monthly_penalty(year,month,category_name);
-        cout<<"============================================"<<endl;
+     cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+     // iterating over the years and then over the months
+     cout << "Area: " << name << endl;
+     cout << "Year :" << year << " Month :" << month << endl;
+     for (auto land : lands)
+     {
+         land->print_Land_monthly_penalty(year, month, category_name);
+    
     }
-
-
-
+    cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
  }
   void Area::print_Area_yearly_penalty(int year,string category_name)
   {
-    //iterating over the years and then over the months
-    cout<<"Area: " << name << endl;
-    cout<<"Year :"<<year<<endl;
-    for(auto land : lands)
-    {
-        land->print_Land_yearly_penalty(year,category_name);
-        cout<<"============================================"<<endl;
+      cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+      // iterating over the years and then over the months
+      cout << "Area: " << name << endl;
+      cout << "Year :" << year << endl;
+      for (auto land : lands)
+      {
+          land->print_Land_yearly_penalty(year, category_name);
+    
     }
-
+    cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   }
 //functions to get the water and electricity consumption of the area
 double Area::get_area_yearly_water_consumption(int year)
@@ -277,13 +277,10 @@ double Area::get_area_monthly_electricity_consumption(int year,int month)
 //functions to print the the summarized report of the area
 void Area::print_area_summerized_by_month(int year,int month)
 {
+    cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<<"Area: " << name << endl;
     cout<<"Year :"<<year<<" Month :"<<month<<endl;
-    for(auto land : lands)
-    {
-        land->print_monthly_summarized_report(year,month);
-        cout<<"============================================"<<endl;
-    }
+
 double sales = get_area_total_sales_per_month(year,month);
 double water = get_area_monthly_water_consumption(year,month);
 double electricity = get_area_monthly_electricity_consumption(year,month);
@@ -293,16 +290,18 @@ double electricity = get_area_monthly_electricity_consumption(year,month);
   cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
   cout<<"the area total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+  for (auto land : lands)
+  {
+      land->print_monthly_summarized_report(year, month);
+  }
 }
 void Area::print_area_summerized_by_year(int year)
 {
+    cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<<"Area: " << name << endl;
     cout<<"Year :"<<year<<endl;
-    for(auto land : lands)
-    {
-        land->print_yearly_summarized_report(year);
-        cout<<"============================================"<<endl;
-    }
+
 double sales = get_area_total_sales_per_year(year);
 double water = get_area_yearly_water_consumption(year);
 double electricity = get_area_yearly_electricity_consumption(year);
@@ -312,4 +311,9 @@ double electricity = get_area_yearly_electricity_consumption(year);
   cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
   cout<<"the area total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+  for (auto land : lands)
+  {
+      land->print_yearly_summarized_report(year);
+  }
 }

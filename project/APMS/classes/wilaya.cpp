@@ -112,15 +112,12 @@ ostream &operator<<(ostream &os, const Wilaya &wil)
 // detailed print
 void Wilaya::print_wilaya_by_month(const int year, const int &month)
 {
+    cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
+
     cout << "Wilaya ID: " << getId() << endl;
     cout << "Wilaya: " << getName() << endl;
     cout << "Cities: " << endl;
-    cout << setfill('=') << setw(40) << "" << endl;
-    for (City *cit : getCity())
-    {
-        cout << "\t" << *cit;
-        cit->print_city_by_month(year, month);
-    }
+
 
     double sales=0;
          sales = get_wilaya_total_sales_per_month(year,month);
@@ -135,21 +132,20 @@ void Wilaya::print_wilaya_by_month(const int year, const int &month)
   cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
         cout<<" area total electricity consumption :"<<electricity<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
-    cout << setfill('=') << setw(40) << "" << endl;
+  for (City *cit : getCity())
+  {
+      cit->print_city_by_month(year, month);
+  }
   cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
 void Wilaya::print_wilaya_by_year(const int &year,int choice)
 {
+    cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout << "Wilaya ID: " << getId() << endl;
     cout << "Wilaya: " << getName() << endl;
     cout << "Cities: " << endl;
-    cout << setfill('=') << setw(40) << "" << endl;
-    for (City *cit : getCity())
-    {
-        cout << "\t" << *cit;
-        cit->print_city_by_year(year,choice);
-    }
+
 
     double sales=0;
          sales =get_wilaya_total_sales_per_year(year);
@@ -164,7 +160,10 @@ void Wilaya::print_wilaya_by_year(const int &year,int choice)
   cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
         cout<<" area total electricity consumption :"<<electricity<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
-    cout << setfill('=') << setw(40) << "" << endl;
+  for (City *cit : getCity())
+  {
+      cit->print_city_by_year(year, choice);
+    }
   cout << dye::yellow(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 double Wilaya::get_wilaya_total_sales_per_year(int year)
@@ -276,11 +275,7 @@ void Wilaya::print_wilaya_summarized_by_year(int year)
     cout << "Wilaya: " << getName() << endl;
     cout << "Cities: " << endl;
     cout << setfill('=') << setw(40) << "" << endl;
-    for (City *cit : getCity())
-    {
-        cout << "\t" << *cit;
-        cit->print_city_summarized_by_year(year);
-    }
+
     cout << setfill('=') << setw(40) << "" << endl;
     double sales = get_wilaya_total_sales_per_year(year);
     double water = get_wilaya_yearly_water_consumption(year);
@@ -291,6 +286,10 @@ void Wilaya::print_wilaya_summarized_by_year(int year)
   cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
   cout<<"the wilaya total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+  for (City *cit : getCity())
+  {
+      cit->print_city_summarized_by_year(year);
+  }
 }
 
    void Wilaya::print_wilaya_summarized_by_month(int year,int month)
@@ -299,11 +298,7 @@ void Wilaya::print_wilaya_summarized_by_year(int year)
        cout << "Wilaya: " << getName() << endl;
        cout << "Cities: " << endl;
        cout << setfill('=') << setw(40) << "" << endl;
-       for (City *cit : getCity())
-       {
-           cout << "\t" << *cit;
-           cit->print_city_summarized_by_month(year,month);
-       }
+
        cout << setfill('=') << setw(40) << "" << endl;
        double sales = get_wilaya_total_sales_per_month(year,month);
        double water = get_wilaya_monthly_water_consumption(year,month);
@@ -314,6 +309,10 @@ void Wilaya::print_wilaya_summarized_by_year(int year)
        cout << (water > 1000000 ? " M^3" : water > 1000 ? " K^3" : " ^3") << endl;
        cout<<" the wilaya total electricity consumption :"<<(electricity > 1000000 ? electricity / 1000000 : electricity > 1000 ? electricity / 1000 : electricity);
        cout << (electricity > 1000000 ? " MKWh" : electricity > 1000 ? " KKWh" : " KWh") << endl;
+       for (City *cit : getCity())
+       {
+           cit->print_city_summarized_by_month(year, month);
+       }
    } 
 
 

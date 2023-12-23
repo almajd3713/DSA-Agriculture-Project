@@ -199,24 +199,27 @@ void to_json(json& j, const City& cit) {
 //query 3
 void City::print_city_monthly_penalty(int year,int month,string category_name)
 {
+    cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<<"City: " << name << endl;
     cout<<"Year :"<<year<<" Month :"<<month<<endl;
     for(auto area : areas)
     {
         area->print_Area_monthly_penalty(year,month,category_name);
-        cout<<"============================================"<<endl;
+    
     }
+    cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 //query 3
 void City::print_city_yearly_penalty(int year,string category_name)
 {
+    cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<<"City: " << name << endl;
     cout<<"Year :"<<year<<endl;
     for(auto area : areas)
     {
         area->print_Area_yearly_penalty(year,category_name);
-        cout<<"============================================"<<endl;
     }
+    cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 //functions to get the water and electricity consumption of the city
 double City::get_city_yearly_water_consumption(int year)
@@ -259,13 +262,10 @@ double City::get_city_monthly_electricity_consumption(int year,int month)
 //functions to print the the summarized report of the city
 void City::print_city_summarized_by_year(int year)
 {
+    cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<<"City: " << name << endl;
     cout<<"Year :"<<year<<endl;
-    for(auto area : areas)
-    {
-        area->print_area_summerized_by_year(year);
-        cout<<"============================================"<<endl;
-    }
+
     double sales=get_city_total_sales_per_year(year);
     double water=get_city_yearly_water_consumption(year);
     double electricity=get_city_yearly_electricity_consumption(year);
@@ -275,16 +275,18 @@ void City::print_city_summarized_by_year(int year)
   cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
   cout<<"the city total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+  for (auto area : areas)
+  {
+      area->print_area_summerized_by_year(year);
+  }
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 void City::print_city_summarized_by_month(int year,int month)
 {
+    cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<<"City: " << name << endl;
     cout<<"Year :"<<year<<" Month :"<<month<<endl;
-    for(auto area : areas)
-    {
-        area->print_area_summerized_by_month(year,month);
-        cout<<"============================================"<<endl;
-    }
+
     double sales=get_city_total_sales_per_month(year,month);
     double water=get_city_monthly_water_consumption(year,month);
     double electricity=get_city_monthly_electricity_consumption(year,month);
@@ -294,6 +296,11 @@ void City::print_city_summarized_by_month(int year,int month)
   cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
   cout<<"the city total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+for(auto area : areas)
+  {
+      area->print_area_summerized_by_month(year, month);
+  }
+  cout << dye::green(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 
 double City::get_monthly_city_penalty(int year, int month, const string &category_name)

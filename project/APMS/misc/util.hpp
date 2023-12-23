@@ -18,7 +18,7 @@ inline int getConsoleWidth()
 
 inline string stringRepeat(const string& str, int repetitions)
 {
-  if(repetitions < 1) repetitions = 60;
+  if(repetitions < 1 || repetitions > 200) repetitions = 60;
   stringstream oss;
   for(int i = 0; i < repetitions; i++) 
     oss << str;
