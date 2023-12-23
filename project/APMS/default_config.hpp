@@ -3,7 +3,7 @@
 #define DEFAULTCONFIGDSA
 #include "APMSBST.hpp"
 
-#include "APMSAVL.hpp"
+// #include "APMSAVL.hpp"
 
 
 void defaultConfig(APMSBST& apms) {
@@ -27,13 +27,13 @@ void defaultConfig(APMSBST& apms) {
 //   apms.addCategory("Olive");
 // }
 
-enum prompts {
-  MENU, 
-  INFO, MODIFY,
-  WILAYAS, CITIES, AREAS, LANDS, FARMERS,
-  WINNERS, PENALTIES,
-  TOTAL_SALES
-};
+// enum prompts {
+//   MENU, 
+//   INFO, MODIFY,
+//   WILAYAS, CITIES, AREAS, LANDS, FARMERS,
+//   WINNERS, PENALTIES,
+//   TOTAL_SALES
+// };
 
 
 

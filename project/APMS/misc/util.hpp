@@ -30,12 +30,16 @@ inline string stringRepeat(const string& str, int repetitions)
 }
 
 template <typename T>
-auto benchmark(size_t iterations, function<void()> func) {
-  auto start = high_resolution_clock::now();
-  for(size_t i = 0; i < iterations; i++) 
-    func();
-  auto end = high_resolution_clock::now();
-  return duration_cast<T>(end - start) / iterations;
+auto benchmark(size_t iterations, std::function<void()> func_to_test)
+{
+  auto start = std::chrono::high_resolution_clock::now();
+
+  for (size_t i = 0; i < iterations; ++i)
+    func_to_test();
+
+  auto end = std::chrono::high_resolution_clock::now();
+
+  return std::chrono::duration_cast<T>(end - start) / iterations;
 }
 
 #endif

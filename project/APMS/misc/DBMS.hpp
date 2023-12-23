@@ -32,7 +32,6 @@ class DBMS {
     }
 
     void read() {
-      cout << "Starting data read..." << endl;
       if(!fileExists()) throw fileDoesNotExistException();
       fileReader.open(filePath);
       if(!(fileReader.is_open())) {
@@ -40,7 +39,6 @@ class DBMS {
       }
       fileData = json::parse(fileReader);
       fileReader.close();
-      cout << "Data has been read" << endl;
     }
     void write(json &j, string new_path)
     {
@@ -70,7 +68,6 @@ class DBMS {
       if(fileExists()) {
         fileReader.close();
         fileWriter.close();
-        cout << "Program Finished" << endl;
       }
     }
 

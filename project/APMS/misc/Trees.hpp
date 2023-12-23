@@ -196,7 +196,6 @@ class BSTree
         BinaryNode( Comparable && theElement, BinaryNode *lt, BinaryNode *rt )
           : element{ std::move( theElement ) }, left{ lt }, right{ rt } { }
         ~BinaryNode() {
-            cout << "adcfedrf" << endl;
         }
     };
 
