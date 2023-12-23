@@ -1,9 +1,9 @@
 #pragma once
 #ifndef DEFAULTCONFIGDSA
 #define DEFAULTCONFIGDSA
-#include "APMS.hpp"
+#include "APMSBST.hpp"
 
-void defaultConfig(APMS& apms) {
+void defaultConfig(APMSBST& apms) {
   apms.load();
 
   apms.addCategory("Fruit");
