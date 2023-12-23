@@ -12,14 +12,12 @@ TODO:
 
 - [x] Script for generating data
 - [X] Predefined data (Real Wilayas, cities, ...)
-- [ ] Actual project
+- [X] Actual project
   - [x] JSON Reader/Writer
   - [X] Data Structures
-  - [ ] Functions
-  - [ ] Terminal Prompter
-- [ ] Directives on the data structure used
-- [ ] Report
+  - [X] Functions
+  - [X] Terminal Prompter
+- [X] Directives on the data structure used
+- [X] Report
 
-Bugs:
-
-- Validating monthly/yearly functions to check if data exists or nah
+YAAAAy !
