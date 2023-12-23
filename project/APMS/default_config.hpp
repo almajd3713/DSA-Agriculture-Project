@@ -1,10 +1,9 @@
 #pragma once
 #ifndef DEFAULTCONFIGDSA
 #define DEFAULTCONFIGDSA
-#include "APMSBST.hpp"
-// #include "APMSAVL.hpp"
+#include "APMS.hpp"
 
-void defaultConfig(APMSBST& apms) {
+void defaultConfig(APMS& apms) {
   apms.load();
 
   apms.addCategory("Fruit");
@@ -13,17 +12,6 @@ void defaultConfig(APMSBST& apms) {
   apms.addCategory("Date");
   apms.addCategory("Olive");
 }
-
-// void defaultConfig(APMSAVL &apms)
-// {
-//   apms.load();
-
-//   apms.addCategory("Fruit");
-//   apms.addCategory("Cereal");
-//   apms.addCategory("Vegetable");
-//   apms.addCategory("Date");
-//   apms.addCategory("Olive");
-// }
 
 enum prompts {
   MENU, 

@@ -1150,6 +1150,37 @@ private:
       cout << "the land with ID " << landId << " doesn't exist" << endl;
     }
   }
+ // print land detailed info in a period
+  void print_period_land_info(int landId, int year1, int month1,int year2,int month2)
+  {
+    Land *land = lands.getById(landId);
+   //iterating over the years from specific month and calling  print_monthly_land_info
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          print_monthly_land_info(landId,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          print_monthly_land_info(landId,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          print_monthly_land_info(landId,i,j);
+        }
+      }
+    }
+  }
+
   // print land detailed info by  year
   void print_yearly_land_info(int landId, int year,int choice)
   {
@@ -1186,6 +1217,38 @@ private:
       cout << "  the land  " << landid << " has no sales in this month " << endl;
     }
   }
+  //print land summary info in a period
+  void print_period_land_sales(int landid, int year1, int month1,int year2,int month2)
+  {
+    Land *land =lands.getById(landid);
+    //iterating over the years from specific month and calling  print_monthly_land_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          print_monthly_land_sales(landid,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          print_monthly_land_sales(landid,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          print_monthly_land_sales(landid,i,j);
+        }
+      }
+    }
+  }
+  
+
   // print land summary info by  year
   void print_yearly_land_sales(int landid, int year)
   {
@@ -1228,6 +1291,37 @@ private:
     }
   }
 
+  //print area detailed info in a period
+  void print_period_area_info(int areaId, int year1, int month1,int year2,int month2)
+  {
+    Area *area = areas.getById(areaId);
+    //iterating over the years from specific month and calling  print_monthly_area_info
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          print_monthly_area_info(areaId,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          print_monthly_area_info(areaId,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          print_monthly_area_info(areaId,i,j);
+        }
+      }
+    }
+  }
+
   // print area detailed info by  year
   void print_yearly_area_info(int areaId, int year,int choice)
   {
@@ -1260,6 +1354,37 @@ private:
       cout << "  the area  " << area->getName() << "with ID : " << areaid << " has no sales in this month " << endl;
   }
   }
+//print area summary info in a period
+  void print_period_area_sales(int areaid, int year1, int month1,int year2,int month2)
+  {
+    Area *area = areas.getById(areaid);
+    //iterating over the years from specific month and calling  print_monthly_area_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          print_monthly_area_sales(areaid,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          print_monthly_area_sales(areaid,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          print_monthly_area_sales(areaid,i,j);
+        }
+      }
+    }
+  }
+
   // print area summary info by  year
   void print_yearly_area_sales(int areaid, int year)
   {
@@ -1299,6 +1424,36 @@ private:
       cout << "the city with ID " << cityId << " doesn't exist" << endl;
     }
   }
+  //print city detailed info in a period
+  void print_period_city_info(int cityId, int year1, int month1,int year2,int month2)
+  {
+    City *city = cities.getById(cityId);
+    //iterating over the years from specific month and calling  print_monthly_city_info
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          print_monthly_city_info(cityId,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          print_monthly_city_info(cityId,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          print_monthly_city_info(cityId,i,j);
+        }
+      }
+    }
+  }
 
   // print city detailed info by  year
   void print_yearly_city_info(int cityId, int year,int choice)
@@ -1335,6 +1490,36 @@ private:
     else
       cout << "  the city  " << city->getName() << "with ID : " << cityid << " has no sales in this month " << endl;
   }
+  }
+  //print city summary info in a period
+  void print_period_city_sales(int cityid, int year1, int month1,int year2,int month2)
+  {
+    City *city = cities.getById(cityid);
+    //iterating over the years from specific month and calling  print_monthly_city_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          print_monthly_city_sales(cityid,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          print_monthly_city_sales(cityid,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          print_monthly_city_sales(cityid,i,j);
+        }
+      }
+    }
   }
 
   // print city summary info by  year
@@ -1373,6 +1558,36 @@ private:
       cout << "the wilaya with ID " << wilayaId << " doesn't exist" << endl;
     }
   }
+  //print wilaya detailed info in a period
+  void print_period_wilaya_info(int wilayaId, int year1, int month1,int year2,int month2)
+  {
+    Wilaya *wilaya = wilayas.getById(wilayaId);
+    //iterating over the years from specific month and calling  print_monthly_wilaya_info
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          print_monthly_wilaya_info(wilayaId,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          print_monthly_wilaya_info(wilayaId,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          print_monthly_wilaya_info(wilayaId,i,j);
+        }
+      }
+    }
+  }
 
   // print wilaya detailed info by  year
   void print_yearly_wilaya_info(int wilayaId, int year,int choice)
@@ -1404,6 +1619,36 @@ private:
     else
       cout << "  the wilaya  " << wilaya->getName() << "with ID : " << wilayaid << " has no sales in this month " << endl;
   }
+  }
+  //print wilaya summary info in a period
+  void print_period_wilaya_sales(int wilayaid, int year1, int month1,int year2,int month2)
+  {
+    Wilaya *wilaya = wilayas.getById(wilayaid);
+    //iterating over the years from specific month and calling  print_monthly_wilaya_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          print_monthly_wilaya_sales(wilayaid,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          print_monthly_wilaya_sales(wilayaid,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          print_monthly_wilaya_sales(wilayaid,i,j);
+        }
+      }
+    }
   }
 
   // print wilaya summary info by  year
@@ -1441,6 +1686,61 @@ private:
       cout<<"the total water consumption of the country in the month "<<month<<" of the year "<<year<<" is :"<<sum2<<" m³"<<endl;
       cout<<"the total electricity consumption of the country in the month "<<month<<" of the year "<<year<<" is :"<<sum3<<" KWh"<<endl;
   }
+  //print country detailed info in a period
+  void print_period_country_info(int year1, int month1,int year2,int month2)
+  {
+    // iterating over all the wilayas
+    int sum2=0;
+      int sum1=0;
+      int sum3=0;
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          wilayas.iterate([i, j,&sum1,&sum2,&sum3](Wilaya *wilaya) -> bool
+       {
+      wilaya->print_wilaya_by_month(i, j);
+      sum1+=wilaya->get_wilaya_total_sales_per_month(i, j);
+      sum2+=wilaya->get_wilaya_monthly_water_consumption(i, j);
+      sum3+=wilaya->get_wilaya_monthly_electricity_consumption(i, j);
+      return true; });
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          wilayas.iterate([i, j,&sum1,&sum2,&sum3](Wilaya *wilaya) -> bool
+       {
+      wilaya->print_wilaya_by_month(i, j);
+      sum1+=wilaya->get_wilaya_total_sales_per_month(i, j);
+      sum2+=wilaya->get_wilaya_monthly_water_consumption(i, j);
+      sum3+=wilaya->get_wilaya_monthly_electricity_consumption(i, j);
+      return true; });
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          wilayas.iterate([i, j,&sum1,&sum2,&sum3](Wilaya *wilaya) -> bool
+       {
+      wilaya->print_wilaya_by_month(i, j);
+      sum1+=wilaya->get_wilaya_total_sales_per_month(i, j);
+      sum2+=wilaya->get_wilaya_monthly_water_consumption(i, j);
+      sum3+=wilaya->get_wilaya_monthly_electricity_consumption(i, j);
+      return true; });
+        }
+      }
+    }
+    //printing the sums
+      cout<<"the total sales of the country in the period from "<<month1<<"/"<<year1<<" to "<<month2<<"/"<<year2<<" is :"<<sum1<<" DA"<<endl;
+      cout<<"the total water consumption of the country in the period from "<<month1<<"/"<<year1<<" to "<<month2<<"/"<<year2<<" is :"<<sum2<<" m³"<<endl;
+      cout<<"the total electricity consumption of the country in the period from "<<month1<<"/"<<year1<<" to "<<month2<<"/"<<year2<<" is :"<<sum3<<" KWh"<<endl;
+  }
+   
   // print country detailed info by  year
   void print_yearly_country_info(int year,int choice)
   {
@@ -1477,6 +1777,51 @@ private:
     else
       cout << "  the country has no sales in this month " << endl;
   }
+  //print country summary info in a period
+  void print_period_country_sales(int year1, int month1,int year2,int month2)
+  {
+    int result = 0;
+    // iterating over all the wilayas
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          wilayas.iterate([i, j, &result](Wilaya *wilaya) -> bool
+                    {
+      result+=wilaya->get_wilaya_total_sales_per_month(i,j);
+      return true; });
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          wilayas.iterate([i, j, &result](Wilaya *wilaya) -> bool
+                    {
+      result+=wilaya->get_wilaya_total_sales_per_month(i,j);
+      return true; });
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          wilayas.iterate([i, j, &result](Wilaya *wilaya) -> bool
+                    {
+      result+=wilaya->get_wilaya_total_sales_per_month(i,j);
+      return true; });
+        }
+      }
+    }
+    if (result != 0)
+      cout << "the total sales of the country in the period from "<<month1<<"/"<<year1<<" to "<<month2<<"/"<<year2<<" is :" << result << " DA" << endl;
+    else
+      cout << "  the country has no sales in this period " << endl;
+  }
+
+
   // print country summary info by  year
   void print_yearly_country_sales(int year)
   {
@@ -1506,6 +1851,38 @@ private:
       cout << "the land with ID " << LandID << " doesn't exist" << endl;
     }
   }
+// Listing all the sales of a farmer in a period
+  void List_period_farmer_sales(int LandID, int year1, int month1,int year2,int month2)
+  {
+    Land *land = lands.getById(LandID);
+    //iterating over the years from specific month and calling  print_monthly_farmer_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          List_monthly_farmer_sales(LandID,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          List_monthly_farmer_sales(LandID,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          List_monthly_farmer_sales(LandID,i,j);
+        }
+      }
+    }
+  }
+
+
   // Listing all the sales of a farmer in a land in a year
   void List_yearly_farmer_sales(int LandID, int year)
   {
@@ -1534,6 +1911,38 @@ private:
       cout << "the area with ID " << areaID << " doesn't exist" << endl;
     }
   }
+  // Listing all the sales of a farmer in a area in a period
+  void List_period_farmer_sales_in_area(int areaID, int year1, int month1,int year2,int month2)
+  {
+    Area *area = areas.getById(areaID);
+    //iterating over the years from specific month and calling  print_monthly_farmer_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          List_monthly_farmer_sales_in_area(areaID,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          List_monthly_farmer_sales_in_area(areaID,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          List_monthly_farmer_sales_in_area(areaID,i,j);
+        }
+      }
+    }
+  }
+
+
   // Listing all the sales of a farmer in a area in a year
   void List_yearly_farmer_sales_in_area(int areaID, int year)
   {
@@ -1562,6 +1971,39 @@ private:
       cout << "the city with ID " << cityID << " doesn't exist" << endl;
     }
   }
+  // Listing all the sales of a farmer in a city in a period
+  void List_period_farmer_sales_in_city(int cityID, int year1, int month1,int year2,int month2)
+  {
+    City *city = cities.getById(cityID);
+    //iterating over the years from specific month and calling  print_monthly_farmer_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          List_monthly_farmer_sales_in_city(cityID,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          List_monthly_farmer_sales_in_city(cityID,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          List_monthly_farmer_sales_in_city(cityID,i,j);
+        }
+      }
+    }
+  }
+
+
+
   // Listing all the sales of a farmer in a city in a year
   void List_yearly_farmer_sales_in_city(int cityID, int year)
   {
@@ -1590,6 +2032,39 @@ private:
       cout << "the wilaya with ID " << wilayaID << " doesn't exist" << endl;
     }
   }
+  // Listing all the sales of a farmer in a wilaya in a period
+  void List_period_farmer_sales_in_wilaya(int wilayaID, int year1, int month1,int year2,int month2)
+  {
+    Wilaya *wilaya = wilayas.getById(wilayaID);
+    //iterating over the years from specific month and calling  print_monthly_farmer_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          List_monthly_farmer_sales_in_wilaya(wilayaID,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          List_monthly_farmer_sales_in_wilaya(wilayaID,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          List_monthly_farmer_sales_in_wilaya(wilayaID,i,j);
+        }
+      }
+    }
+  }
+
+
+
   // Listing all the sales of a farmer in a wilaya in a year
   void List_yearly_farmer_sales_in_wilaya(int wilayaID, int year)
   {
@@ -1613,6 +2088,45 @@ private:
       wilaya->print_wilaya_monthly_farmer_sales(year,month);
       return true; });
   }
+// Listing all the sales of all farmers in the country in a period
+  void List_period_farmer_sales_in_country(int year1, int month1,int year2,int month2)
+  {
+    // iterating over all the wilayas
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          wilayas.iterate([i, j](Wilaya *wilaya) -> bool
+                    {
+      wilaya->print_wilaya_monthly_farmer_sales(i,j);
+      return true; });
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          wilayas.iterate([i, j](Wilaya *wilaya) -> bool
+                    {
+      wilaya->print_wilaya_monthly_farmer_sales(i,j);
+      return true; });
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          wilayas.iterate([i, j](Wilaya *wilaya) -> bool
+                    {
+      wilaya->print_wilaya_monthly_farmer_sales(i,j);
+      return true; });
+        }
+      }
+    }
+  }
+
   // Listing all the sales of a farmer in a country in a year
   void List_yearly_farmer_sales_in_country(int year)
   {
@@ -1765,6 +2279,37 @@ private:
       cout << "the land with ID " << landID << " doesn't exist" << endl;
     }
   }
+  //listing the penalties of a farmer  in a period in a specific category
+  void List_period_farmer_penalty(int landID, int year1, int month1,int year2,int month2, string category)
+  {
+    Land *land = lands.getById(landID);
+    //iterating over the years from specific month and calling  print_monthly_farmer_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          List_monthly_farmer_penalty(landID,i,j,category);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          List_monthly_farmer_penalty(landID,i,j,category);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          List_monthly_farmer_penalty(landID,i,j,category);
+        }
+      }
+    }
+  }
+
   //listing the penalties of a farmer  in a year in a specific category
   void List_yearly_farmer_penalty(int landID, int year, string category)
   {
@@ -1793,6 +2338,38 @@ private:
       cout << "the area with ID " << areaID << " doesn't exist" << endl;
     }
   }
+ //listing the penalties of a farmer  in a period in a specific category
+  void List_period_area_monthly_farmers_penalties(int areaID, int year1, int month1,int year2,int month2, string category)
+  {
+    Area *area = areas.getById(areaID);
+    //iterating over the years from specific month and calling  print_monthly_farmer_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          List_area_monthly_farmers_penalties(areaID,i,j,category);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          List_area_monthly_farmers_penalties(areaID,i,j,category);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          List_area_monthly_farmers_penalties(areaID,i,j,category);
+        }
+      }
+    }
+  }
+
+
   //listing the penalties of a farmer  in a year in a specific category
   void List_area_yearly_farmers_penalties(int areaID, int year, string category)
   {
@@ -1821,6 +2398,39 @@ private:
       cout << "the city with ID " << cityID << " doesn't exist" << endl;
     }
   }
+  //listing the penalties of a farmers in city  in a period in a specific category
+  void List_period_city_monthly_farmers_penalties(int cityID, int year1, int month1,int year2,int month2, string category)
+  {
+    City *city = cities.getById(cityID);
+    //iterating over the years from specific month and calling  print_monthly_farmer_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          List_city_monthly_farmers_penalties(cityID,i,j,category);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          List_city_monthly_farmers_penalties(cityID,i,j,category);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          List_city_monthly_farmers_penalties(cityID,i,j,category);
+        }
+      }
+    }
+  }
+
+
+
   //listing the penalties of a farmer  in a year in a specific category
   void List_city_yearly_farmers_penalties(int cityID, int year, string category)
   {
@@ -1849,6 +2459,40 @@ private:
       cout << "the wilaya with ID " << wilayaID << " doesn't exist" << endl;
     }
   }
+  //listing the penalties of a farmers in wilaya  in a period in a specific category
+  void List_period_wilaya_monthly_farmers_penalties(int wilayaID, int year1, int month1,int year2,int month2, string category)
+  {
+    Wilaya *wilaya = wilayas.getById(wilayaID);
+    //iterating over the years from specific month and calling  print_monthly_farmer_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          List_wilaya_monthly_farmers_penalties(wilayaID,i,j,category);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          List_wilaya_monthly_farmers_penalties(wilayaID,i,j,category);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          List_wilaya_monthly_farmers_penalties(wilayaID,i,j,category);
+        }
+      }
+    }
+  }  
+
+
+
+
   //listing the penalties of a farmer  in a year in a specific category
   void List_wilaya_yearly_farmers_penalties(int wilayaID, int year, string category)
   {
@@ -1872,6 +2516,46 @@ private:
       wilaya->print_wilaya_monthly_penalty(year, month, category);
       return true; });
   }
+ //listing the penalties of a farmers in wilaya  in a period in a specific category
+  void List_period_country_monthly_farmers_penalties(int year1, int month1,int year2,int month2, string category)
+  {
+    // iterating over all the wilayas
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          wilayas.iterate([i, j, category](Wilaya *wilaya) -> bool
+                    {
+      wilaya->print_wilaya_monthly_penalty(i, j, category);
+      return true; });
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          wilayas.iterate([i, j, category](Wilaya *wilaya) -> bool
+                    {
+      wilaya->print_wilaya_monthly_penalty(i, j, category);
+      return true; });
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          wilayas.iterate([i, j, category](Wilaya *wilaya) -> bool
+                    {
+      wilaya->print_wilaya_monthly_penalty(i, j, category);
+      return true; });
+        }
+      }
+    }
+  }
+
+
   //listing the penalties of a farmer  in a year in a specific category
   void List_country_yearly_farmers_penalties(int year, string category)
   {
@@ -1897,6 +2581,37 @@ private:
       cout << "the land with ID " << landID << " doesn't exist" << endl;
     }
   }
+ //functions to print the summarized reports in a period
+  void print_period_land_summarized(int landID, int year1, int month1,int year2,int month2)
+  {
+    Land *land = lands.getById(landID);
+    //iterating over the years from specific month and calling  print_monthly_farmer_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          print_monthly_land_summarized(landID,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          print_monthly_land_summarized(landID,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          print_monthly_land_summarized(landID,i,j);
+        }
+      }
+    }
+  }
+
   void print_yearly_land_summarized(int landID, int year)
   {
     Land *land = lands.getById(landID);
@@ -1922,6 +2637,36 @@ private:
     else
     {
       cout << "the area with ID " << areaID << " doesn't exist" << endl;
+    }
+  }
+  //functions to print the summarized reports in a period
+  void print_period_area_summarized(int areaID, int year1, int month1,int year2,int month2)
+  {
+    Area *area = areas.getById(areaID);
+    //iterating over the years from specific month and calling  print_monthly_farmer_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          print_monthly_area_summarized(areaID,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          print_monthly_area_summarized(areaID,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          print_monthly_area_summarized(areaID,i,j);
+        }
+      }
     }
   }
 
@@ -1953,6 +2698,37 @@ private:
     }
   }
 
+  //functions to print the summarized reports in a period
+  void print_period_city_summarized(int cityID, int year1, int month1,int year2,int month2)
+  {
+    City *city = cities.getById(cityID);
+    //iterating over the years from specific month and calling  print_monthly_farmer_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          print_monthly_city_summarized(cityID,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          print_monthly_city_summarized(cityID,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          print_monthly_city_summarized(cityID,i,j);
+        }
+      }
+    }
+  }
+
   void print_yearly_city_summarized(int cityID, int year)
   {
     City *city = cities.getById(cityID);
@@ -1981,6 +2757,38 @@ private:
     }
   }
 
+  //functions to print the summarized reports in a period
+
+  void print_period_wilaya_summarized(int wilayaID, int year1, int month1,int year2,int month2)
+  {
+    Wilaya *wilaya = wilayas.getById(wilayaID);
+    //iterating over the years from specific month and calling  print_monthly_farmer_sales
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          print_monthly_wilaya_summarized(wilayaID,i,j);
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          print_monthly_wilaya_summarized(wilayaID,i,j);
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          print_monthly_wilaya_summarized(wilayaID,i,j);
+        }
+      }
+    }
+  }
+
   void print_yearly_wilaya_summarized(int wilayaID, int year)
   {
     Wilaya *wilaya = wilayas.getById(wilayaID);
@@ -2002,6 +2810,45 @@ private:
                     {
       wilaya->print_wilaya_summarized_by_month(year,month);
       return true; });
+  }
+
+  //functions to print the summarized reports in a period
+  void print_period_country_summarized(int year1, int month1,int year2,int month2)
+  {
+    // iterating over all the wilayas
+    for(int i=year1;i<=year2;i++)
+    {
+      if(i==year1)
+      {
+        for(int j=month1;j<=12;j++)
+        {
+          wilayas.iterate([i, j](Wilaya *wilaya) -> bool
+                    {
+      wilaya->print_wilaya_summarized_by_month(i,j);
+      return true; });
+        }
+      }
+      else if(i==year2)
+      {
+        for(int j=1;j<=month2;j++)
+        {
+          wilayas.iterate([i, j](Wilaya *wilaya) -> bool
+                    {
+      wilaya->print_wilaya_summarized_by_month(i,j);
+      return true; });
+        }
+      }
+      else
+      {
+        for(int j=1;j<=12;j++)
+        {
+          wilayas.iterate([i, j](Wilaya *wilaya) -> bool
+                    {
+      wilaya->print_wilaya_summarized_by_month(i,j);
+      return true; });
+        }
+      }
+    }
   }
 
   void print_yearly_country_summarized(int year)

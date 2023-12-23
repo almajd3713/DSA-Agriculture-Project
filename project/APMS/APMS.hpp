@@ -1,22 +1,26 @@
 #pragma once
-#ifndef APMSAVLDSA
-#define APMSAVLDSA
+#ifndef APMSDSA
+#define APMSDSA
 // #include <vector>
 // #include <type_traits>
 // #include <stdlib.h>
+#include "../lib/plot/pbPlots.hpp"
+#include "../lib/plot/supportLib.hpp"
+#include "misc/AvlTree.hpp"
 // #include <color.hpp>
+#include "misc/BinarySearchTree.h"
 #include "misc/DBMS.hpp"
 #include "classes/wilaya.hpp"
 
 
-class APMSAVL
+class APMS
 {
   DBMS rawFile;
-  AvlTree<Wilaya *> wilayas;
-  AvlTree<City *> cities;
-  AvlTree<Area *> areas;
-  AvlTree<Land *> lands;
-  AvlTree<Farmer *> farmers;
+  BSTree<Wilaya *> wilayas;
+  BSTree<City *> cities;
+  BSTree<Area *> areas;
+  BSTree<Land *> lands;
+  BSTree<Farmer *> farmers;
   vector<string> categories;
   int start_year = 0;
   int end_year = 0;
@@ -26,8 +30,8 @@ class APMSAVL
   // }
 
 public:
-  APMSAVL() : wilayas{AvlTree<Wilaya *>()}, cities{AvlTree<City *>()}, areas{AvlTree<Area *>()}, lands{AvlTree<Land *>()}, rawFile{DBMS()}, farmers{AvlTree<Farmer *>()}, categories{vector<string>()} {}
-  APMSAVL(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{AvlTree<Wilaya *>()}, cities{AvlTree<City *>()}, areas{AvlTree<Area *>()}, lands{AvlTree<Land *>()}, farmers{AvlTree<Farmer *>()}, categories{vector<string>()} {}
+  APMS() : wilayas{BSTree<Wilaya *>()}, cities{BSTree<City *>()}, areas{BSTree<Area *>()}, lands{BSTree<Land *>()}, rawFile{DBMS()}, farmers{BSTree<Farmer *>()}, categories{vector<string>()} {}
+  APMS(const string &fpath) : rawFile{DBMS{fpath}}, wilayas{BSTree<Wilaya *>()}, cities{BSTree<City *>()}, areas{BSTree<Area *>()}, lands{BSTree<Land *>()}, farmers{BSTree<Farmer *>()}, categories{vector<string>()} {}
 
   void load()
   {
@@ -149,7 +153,7 @@ public:
   void printMenu()
   {
     cout << setfill('=') << setw(60) << "" << endl
-         << setfill(' ') << dye::yellow("** APMSAVL System -- 1.3.77 -- All Rights Reserved") << endl
+         << setfill(' ') << dye::yellow("** APMS System -- 1.3.77 -- All Rights Reserved") << endl
          << setfill('=') << setw(60) << dye::yellow("") << endl
          << setfill(' ') << dye::yellow("1: Access information") << endl
          << setfill(' ') << dye::yellow("2: Save changes into database") << endl
@@ -602,14 +606,14 @@ public:
                   promptAndValidate(input, "Enter your query: ", 1, 3);
                   switch(input) {
                     case 1:
-                      promptAndValidate(input, "Enter the ID of the Area you want: : ");
+                      promptAndValidate(input, "Enter the ID of the Area: ");
                       promptAndValidate(year, "Enter the year you want: ");
                       promptAndValidate(month, "Enter the month you want: ");
                       List_monthly_farmer_sales_in_area(input, year, month - 1);
                       displayMenu = true;
                       return;
                     case 2:
-                      promptAndValidate(input, "Enter the ID of the Area you want: ");
+                      promptAndValidate(input, "Enter the ID of the Area");
                       promptAndValidate(year, "Enter the year you want: ");
                       List_yearly_farmer_sales_in_area(input, year);
                       displayMenu = true;
@@ -620,7 +624,7 @@ public:
                       }
                       return;
                     case 3:
-                      promptAndValidate(input, "Enter the ID of the Area you want: ");
+                      promptAndValidate(input, "Enter the ID of the Area: ");
                       List_yearly_farmer_sales_in_area(input, -1);
                       displayMenu = true;
                       ar = areas.getById(input);
@@ -1147,12 +1151,15 @@ private:
     }
     else{
     int result = land->get_land_total_sales_per_month(year, month); // contains the check if the land exists
-    if (result != 0)
-      cout << "the total sales of the land " << landid << " in the month " << month << " of the year " << year << " is :" << result << " DA" << endl;
+    if (result != 0){
+      cout << "the total sales of the land " << landid << " in the month " << month << " of the year " << year << " is :" << result <<(result > 1000000 ? result / 1000000 : result > 1000 ? result / 1000 : result); 
+  cout<<(result > 1000000 ? "MDA" : result > 1000 ? "KDA" : "DA")<<endl;
+  }
     else
       cout << "  the land  " << landid << " has no sales in this month " << endl;
     }
   }
+
   // print land summary info by  year
   void print_yearly_land_sales(int landid, int year)
   {
@@ -1165,8 +1172,10 @@ private:
     else
     {
       int result = land->get_land_total_sales_per_year(year); // contains the check if the land exists
-      if (result != 0)
-        cout << "the total sales of the land " << landid << " in the year " << year << " is :" << result << " DA" << endl;
+      if (result != 0){
+        cout << "the total sales of the land " << landid << " in the year " << year << " is :" << result <<(result > 1000000 ? result / 1000000 : result > 1000 ? result / 1000 : result); 
+  cout<<(result > 1000000 ? "MDA" : result > 1000 ? "KDA" : "DA")<<endl;
+  }
       else
         cout << "  the land  " << landid << " has no sales in this year " << endl;
     }
@@ -1221,8 +1230,10 @@ private:
     }
     else{
     int result = area->get_area_total_sales_per_month(year, month); // contains the check if the area exists
-    if (result != 0)
-      cout << "the total sales of the area " << area->getName() << "with ID : " << areaid << " in the month " << month << " of the year " << year << " is :" << result << " DA" << endl;
+    if (result != 0){
+      cout << "the total sales of the area " << area->getName() << "with ID : " << areaid << " in the month " << month << " of the year " << year << " is :" << result <<(result > 1000000 ? result / 1000000 : result > 1000 ? result / 1000 : result); 
+  cout<<(result > 1000000 ? "MDA" : result > 1000 ? "KDA" : "DA")<<endl;
+  }
     else
       cout << "  the area  " << area->getName() << "with ID : " << areaid << " has no sales in this month " << endl;
   }
@@ -1237,8 +1248,10 @@ private:
     }
     else{
     int result = area->get_area_total_sales_per_year(year); // contains the check if the area exists
-    if (result != 0)
-      cout << "the total sales of the area " << area->getName() << "with ID : " << areaid << " of the year " << year << " is :" << result << " DA" << endl;
+    if (result != 0){
+      cout << "the total sales of the area " << area->getName() << "with ID : " << areaid << " of the year " << year << " is :" << result <<(result > 1000000 ? result / 1000000 : result > 1000 ? result / 1000 : result); 
+  cout<<(result > 1000000 ? "MDA" : result > 1000 ? "KDA" : "DA")<<endl;
+  }
     else
       cout << "  the area  " << area->getName() << "with ID : " << areaid << " has no sales in this month " << endl;
   }
@@ -1297,8 +1310,10 @@ private:
     else{
       
     int result = city->get_city_total_sales_per_month(year, month); // contains the check if the city exists
-    if (result != 0)
-      cout << "the total sales of the city " << city->getName() << "with ID : " << cityid << " in the month " << month << " of the year " << year << " is :" << result << " DA" << endl;
+    if (result != 0){
+      cout << "the total sales of the city " << city->getName() << "with ID : " << cityid << " in the month " << month << " of the year " << year << " is :" << result <<(result > 1000000 ? result / 1000000 : result > 1000 ? result / 1000 : result); 
+  cout<<(result > 1000000 ? "MDA" : result > 1000 ? "KDA" : "DA")<<endl;
+  }
     else
       cout << "  the city  " << city->getName() << "with ID : " << cityid << " has no sales in this month " << endl;
   }
@@ -1314,8 +1329,10 @@ private:
     }
     else{
     int result = city->get_city_total_sales_per_year(year); // contains the check if the city exists
-    if (result != 0)
-      cout << "the total sales of the city " << city->getName() << "with ID : " << cityid << " in the year " << year << " is :" << result << " DA" << endl;
+    if (result != 0){
+      cout << "the total sales of the city " << city->getName() << "with ID : " << cityid << " in the year " << year << " is :" << result <<(result > 1000000 ? result / 1000000 : result > 1000 ? result / 1000 : result); 
+  cout<<(result > 1000000 ? "MDA" : result > 1000 ? "KDA" : "DA")<<endl;
+  }
     else
       cout << "  the city  " << city->getName() << "with ID : " << cityid << " has no sales in this year " << endl;
   }
@@ -1366,8 +1383,10 @@ private:
     }
     else{
     int result = wilaya->get_wilaya_total_sales_per_month(year, month); // contains the check if the wilaya exists
-    if (result != 0)
-      cout << "the total sales of the wilaya " << wilaya->getName() << "with ID : " << wilayaid << " in the month " << month << " of the year " << year << " is :" << result << " DA" << endl;
+    if (result != 0){
+      cout << "the total sales of the wilaya " << wilaya->getName() << "with ID : " << wilayaid << " in the month " << month << " of the year " << year << " is :" << result <<(result > 1000000 ? result / 1000000 : result > 1000 ? result / 1000 : result); 
+  cout<<(result > 1000000 ? "MDA" : result > 1000 ? "KDA" : "DA")<<endl;
+  }
     else
       cout << "  the wilaya  " << wilaya->getName() << "with ID : " << wilayaid << " has no sales in this month " << endl;
   }
@@ -1383,8 +1402,10 @@ private:
     }
     else{
     int result = wilaya->get_wilaya_total_sales_per_year(year); // contains the check if the wilaya exists
-    if (result != 0)
-      cout << "the total sales of the wilaya " << wilaya->getName() << "with ID : " << wilayaid << " in the year " << year << " is :" << result << " DA" << endl;
+    if (result != 0){
+      cout << "the total sales of the wilaya " << wilaya->getName() << "with ID : " << wilayaid << " in the year " << year << " is :" << result <<(result > 1000000 ? result / 1000000 : result > 1000 ? result / 1000 : result); 
+  cout<<(result > 1000000 ? "MDA" : result > 1000 ? "KDA" : "DA")<<endl;
+  }
     else
       cout << "  the wilaya  " << wilaya->getName() << "with ID : " << wilayaid << " has no sales in this year " << endl;
   }
@@ -1404,9 +1425,12 @@ private:
       sum3+=wilaya->get_wilaya_monthly_electricity_consumption(year, month);
       return true; });
       //printing the sums
-      cout<<"the total sales of the country in the month "<<month<<" of the year "<<year<<" is :"<<sum1<<" DA"<<endl;
-      cout<<"the total water consumption of the country in the month "<<month<<" of the year "<<year<<" is :"<<sum2<<" m³"<<endl;
-      cout<<"the total electricity consumption of the country in the month "<<month<<" of the year "<<year<<" is :"<<sum3<<" KWh"<<endl;
+      cout<<"the total sales of the country in the month "<<month<<" of the year "<<year<<" is :"<<sum1 <<(sum1 > 1000000 ? sum1 / 1000000 : sum1 > 1000 ? sum1 / 1000 : sum1); 
+  cout<<(sum1 > 1000000 ? "MDA" : sum1 > 1000 ? "KDA" : "DA")<<endl;
+      cout<<"the total water consumption of the country in the month "<<month<<" of the year "<<year<<" is :"<<sum2<<(sum2 > 1000000 ? sum2 / 1000000 :  sum2);
+  cout<<(sum2 > 1000000 ? "dam^3" : "m^3")<<endl;
+      cout<<"the total electricity consumption of the country in the month "<<month<<" of the year "<<year<<" is :"<<sum3<<(sum3 > 1000000 ? sum3 / 1000 : sum3);
+  cout<<(sum3 > 1000000 ? "Mwh" :  "kwh")<<endl;
   }
   // print country detailed info by  year
   void print_yearly_country_info(int year,int choice)
@@ -1426,9 +1450,12 @@ private:
       return true;
       });
       //printing the sums
-      cout<<"the total sales of the country in the year "<<year<<" is :"<<sum1<<" DA"<<endl;
-      cout<<"the total water consumption of the country in the year "<<year<<" is :"<<sum2<<" m³"<<endl;
-      cout<<"the total electricity consumption of the country in the year "<<year<<" is :"<<sum3<<" KWh"<<endl;
+      cout<<"the total sales of the country in the year "<<year<<" is :"<<sum1 <<(sum1 > 1000000 ? sum1 / 1000000 : sum1 > 1000 ? sum1 / 1000 : sum1); 
+  cout<<(sum1 > 1000000 ? "MDA" : sum1 > 1000 ? "KDA" : "DA")<<endl;
+      cout<<"the total water consumption of the country in the year "<<year<<" is :"<<sum2<<(sum2 > 1000000 ? sum2 / 1000000 :  sum2);
+  cout<<(sum2 > 1000000 ? "dam^3" : "m^3")<<endl;
+      cout<<"the total electricity consumption of the country in the year "<<year<<" is :"<<sum3<<(sum3 > 1000000 ? sum3 / 1000 : sum3);
+  cout<<(sum3 > 1000000 ? "Mwh" :  "kwh")<<endl;
   }
   // print country summary info by  month
   void print_monthly_country_sales(int year, int month)
@@ -1439,8 +1466,9 @@ private:
                     {
       result+=wilaya->get_wilaya_total_sales_per_month(year,month);
       return true; });
-    if (result != 0)
-      cout << "the total sales of the country in the month " << month << " of the year " << year << " is :" << result << " DA" << endl;
+    if (result != 0){
+      cout << "the total sales of the country in the month " << month << " of the year " << year << " is :" << result <<(result > 1000000 ? result / 1000000 : result > 1000 ? result / 1000 : result); 
+  cout<<(result > 1000000 ? "MDA" : result > 1000 ? "KDA" : "DA")<<endl;}
     else
       cout << "  the country has no sales in this month " << endl;
   }
@@ -1453,8 +1481,9 @@ private:
                     {
       result+=wilaya->get_wilaya_total_sales_per_year(year);
       return true; });
-    if (result != 0)
-      cout << "the total sales of the country in the year " << year << " is :" << result << " DA" << endl;
+    if (result != 0){
+      cout << "the total sales of the country in the year " << year << " is :" <<result <<(result > 1000000 ? result / 1000000 : result > 1000 ? result / 1000 : result); 
+  cout<<(result > 1000000 ? "MDA" : result > 1000 ? "KDA" : "DA")<<endl;}
     else
       cout << "  the country has no sales in this year " << endl;
   }

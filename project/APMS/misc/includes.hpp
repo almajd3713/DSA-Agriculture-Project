@@ -17,10 +17,6 @@
 
 #include "util.hpp"
 #include "../../lib/json.hpp"
-#include "../lib/plot/pbPlots.hpp"
-#include "../lib/plot/supportLib.hpp"
-
-#include "Trees.hpp"
 
 using std::cout, std::cin, std::endl, std::stoi;
 using std::ostream, std::ifstream, std::ofstream;

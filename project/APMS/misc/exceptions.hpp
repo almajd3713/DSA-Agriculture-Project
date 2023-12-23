@@ -1,4 +1,3 @@
-#pragma once
 #ifndef EXCEPTIONSDSA
 #define EXCEPTIONSDSA
 
