@@ -2085,9 +2085,10 @@ private:
         }
       }
     }
-    if (result != 0)
+    if (result != 0) {
       cout << "the total sales of the country in the period from "<<month1<<"/"<<year1<<" to "<<month2<<"/"<<year2<<" is :" <<   result <<(result > 1000000 ? result / 1000000 : result > 1000 ? result / 1000 : result); 
   cout<<(result > 1000000 ? "MDA" : result > 1000 ? "KDA" : "DA")<<endl;
+    }
     else
       cout << "  the country has no sales in this period " << endl;
   }
@@ -2102,9 +2103,10 @@ private:
                     {
       result+=wilaya->get_wilaya_total_sales_per_year(year);
       return true; });
-    if (result != 0)
+    if (result != 0) {
       cout << "the total sales of the country in the year " << year << " is :" <<  result <<(result > 1000000 ? result / 1000000 : result > 1000 ? result / 1000 : result); 
-  cout<<(result > 1000000 ? "MDA" : result > 1000 ? "KDA" : "DA")<<endl;
+    cout<<(result > 1000000 ? "MDA" : result > 1000 ? "KDA" : "DA")<<endl;
+    }
     else
       cout << "  the country has no sales in this year " << endl;
   }
