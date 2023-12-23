@@ -17,8 +17,8 @@
 
 #include "util.hpp"
 #include "../../lib/json.hpp"
-#include "../lib/plot/pbPlots.hpp"
-#include "../lib/plot/supportLib.hpp"
+#include "../../lib/plot/pbPlots.hpp"
+#include "../../lib/plot/supportLib.hpp"
 
 #include "Trees.hpp"
 

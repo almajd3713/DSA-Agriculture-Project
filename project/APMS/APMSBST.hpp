@@ -1,6 +1,6 @@
 #pragma once
-#ifndef APMSDSA
-#define APMSDSA
+#ifndef APMSBSTDSA
+#define APMSBSTDSA
 // #include <vector>
 // #include <type_traits>
 // #include <stdlib.h>
@@ -170,6 +170,9 @@ public:
       }
       promptAndValidate(input, "Enter query: ");
       switch (input) {
+      case 0:
+        cout << dye::aqua("Thank you for using the APMS system. See you next time!") << endl;
+        return;
       case 1:
         readDataPrompt(displayMenu);
         break;
@@ -3330,10 +3333,10 @@ private:
   {
     vector<double> x, y;
     RGBABitmapImageReference *imageRef = CreateRGBABitmapImageReference();
-    for (int i = 0; i < 12; i++)
+    for (int i = 1; i <= 12; i++)
     {
-      x.push_back(i + 1);
-      y.push_back(city->get_city_total_sales_per_month(year, i + 1));
+      x.push_back(i);
+      y.push_back(city->get_city_total_sales_per_month(year, i));
     }
 
     ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
@@ -3416,7 +3419,7 @@ private:
     for (int i = 1; i <= 12; i++)
     {
       x.push_back(i);
-      y.push_back(wilaya->get_wilaya_total_sales_per_month(year, i + 1));
+      y.push_back(wilaya->get_wilaya_total_sales_per_month(year, i));
     }
 
     ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
