@@ -192,6 +192,9 @@ public:
       Farmer* desired;
       promptAndValidate(input, "Enter your query: ", 0, 4);
       switch(input) {
+        default:
+          displayMenu = true;
+          return;
         case 1:
           cout << dye::blue("What information do you want to access?") << endl
                << "1: Information about a Wilaya" << endl
@@ -203,22 +206,29 @@ public:
                << "0: Return to the main menu" << endl;
             promptAndValidate(input, "Enter your query: ", 0, 6);
             switch(input) {
+              default:
+                displayMenu = true;
+                return;
               case 1:
                 cout << dye::blue("How would you like to access the Wilaya information?") << endl
                      << "1: Data for a specific month" << endl
                      << "2: Data for a specific year" << endl
-                     << "3: All available data" << endl;
-                  promptAndValidate(input, "Enter your query: ");
+                     << "3: All available data" << endl
+                     << "0: Return to the main menu" << endl;
+                  promptAndValidate(input, "Enter your query: ", 0, 3);
                   switch(input) {
+                    default:
+                      displayMenu = true;
+                      return;
                     case 1:
                       promptAndValidate(input2, "Enter the ID of the wilaya you want: ");
                       promptAndValidate(year, "Enter the year you want: ");
                       promptAndValidate(month, "Enter the month you want: ");
                       promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
                       if(isDetailed == 2) {
-                        print_monthly_wilaya_info(input2, year, month - 1);
+                        print_monthly_wilaya_info(input2, year, month);
                       } else {
-                         print_monthly_wilaya_summarized(input2, year, month - 1);
+                         print_monthly_wilaya_summarized(input2, year, month);
                       }
                       displayMenu = true;
                       return;
@@ -252,172 +262,175 @@ public:
                 cout << dye::blue("How would you like to access the City information?") << endl
                      << "1: Data for a specific month" << endl
                      << "2: Data for a specific year" << endl
-                     << "3: All available data" << endl;
-                while (input)
+                     << "3: All available data" << endl
+                     << "0: Return to the main menu" << endl;
+                promptAndValidate(input, "Enter your query: ", 0, 3);
+                switch (input)
                 {
-                  promptAndValidate(input, "Enter your query: ");
-                  switch (input)
+                default:
+                  displayMenu = true;
+                  return;
+                case 1:
+                  promptAndValidate(input2, "Enter the ID of the city you want: ");
+                  promptAndValidate(year, "Enter the year you want: ");
+                  promptAndValidate(month, "Enter the month you want: ");
+                  promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                  if (isDetailed == 2)
                   {
-                  case 1:
-                    promptAndValidate(input2, "Enter the ID of the city you want: ");
-                    promptAndValidate(year, "Enter the year you want: ");
-                    promptAndValidate(month, "Enter the month you want: ");
-                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
-                    if (isDetailed == 2)
-                    {
-                      print_monthly_city_info(input2, year, month - 1);
-                    }
-                    else
-                    {
-                      print_monthly_city_summarized(input2, year, month - 1);
-                    }
-                    displayMenu = true;
-                    return;
-                  case 2:
-                    promptAndValidate(input, "Enter the ID of the city you want: ");
-                    promptAndValidate(year, "Enter the year you want: ");
-                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
-                    if (isDetailed == 2)
-                    {
-                      print_yearly_city_info(input, year, isDetailed - 1);
-                    }
-                    else
-                    {
-                      print_yearly_city_summarized(input, year);
-                    }
-                    displayMenu = true;
-                    return;
-                  case 3:
-                    promptAndValidate(input, "Enter the ID of the city you want: ");
-                    City *cit = cities.getById(input);
-                    if (cit)
-                    {
-                      cout << *cit << endl;
-                      displayMenu = true;
-                      return;
-                    }
-                    else
-                    {
-                      cout << "Sorry, couldn't find the City you're looking for.";
-                      displayMenu = true;
-                      return;
-                    }
+                    print_monthly_city_info(input2, year, month);
                   }
-                }
+                  else
+                  {
+                    print_monthly_city_summarized(input2, year, month);
+                  }
+                  displayMenu = true;
+                  return;
+                case 2:
+                  promptAndValidate(input, "Enter the ID of the city you want: ");
+                  promptAndValidate(year, "Enter the year you want: ");
+                  promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                  if (isDetailed == 2)
+                  {
+                    print_yearly_city_info(input, year, isDetailed - 1);
+                  }
+                  else
+                  {
+                    print_yearly_city_summarized(input, year);
+                  }
+                  displayMenu = true;
+                  return;
+                case 3:
+                  promptAndValidate(input, "Enter the ID of the city you want: ");
+                  City *cit = cities.getById(input);
+                  if (cit)
+                  {
+                    cout << *cit << endl;
+                    displayMenu = true;
+                    return;
+                  }
+                  else
+                  {
+                    cout << "Sorry, couldn't find the City you're looking for.";
+                    displayMenu = true;
+                    return;
+                  }
+                  }
                 return;
               case 3:
                 cout << dye::blue("How would you like to access the Area information?") << endl
                      << "1: Data for a specific month" << endl
                      << "2: Data for a specific year" << endl
-                     << "3: All available data" << endl;
-                while (input)
+                     << "3: All available data" << endl
+                     << "0: Return to the main menu" << endl;
+                promptAndValidate(input, "Enter your query: ", 0, 3);
+                switch (input)
                 {
-                  promptAndValidate(input, "Enter your query: ");
-                  switch (input)
+                default:
+                  displayMenu = true;
+                  return;
+                case 1:
+                  promptAndValidate(input2, "Enter the ID of the area you want: ");
+                  promptAndValidate(year, "Enter the year you want: ");
+                  promptAndValidate(month, "Enter the month you want: ");
+                  promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                  if (isDetailed == 2)
                   {
-                  case 1:
-                    promptAndValidate(input2, "Enter the ID of the area you want: ");
-                    promptAndValidate(year, "Enter the year you want: ");
-                    promptAndValidate(month, "Enter the month you want: ");
-                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
-                    if (isDetailed == 2)
-                    {
-                      print_monthly_area_info(input2, year, month - 1);
-                    }
-                    else
-                    {
-                      print_monthly_area_summarized(input2, year, month - 1);
-                    }
-                    displayMenu = true;
-                    return;
-                  case 2:
-                    promptAndValidate(input, "Enter the ID of the area you want: ");
-                    promptAndValidate(year, "Enter the year you want: ");
-                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
-                    if (isDetailed == 2)
-                    {
-                      print_yearly_area_info(input, year, isDetailed);
-                    }
-                    else
-                    {
-                      print_yearly_area_summarized(input, year);
-                    }
-                    displayMenu = true;
-                    return;
-                  case 3:
-                    promptAndValidate(input, "Enter the ID of the area you want: ");
-                    Area *ar = areas.getById(input);
-                    if (ar)
-                    {
-                      cout << *ar << endl;
-                      displayMenu = true;
-                      return;
-                    }
-                    else
-                    {
-                      cout << "Sorry, couldn't find the Area you're looking for.";
-                      displayMenu = true;
-                      return;
-                    }
+                    print_monthly_area_info(input2, year, month);
                   }
-                }
+                  else
+                  {
+                    print_monthly_area_summarized(input2, year, month);
+                  }
+                  displayMenu = true;
+                  return;
+                case 2:
+                  promptAndValidate(input, "Enter the ID of the area you want: ");
+                  promptAndValidate(year, "Enter the year you want: ");
+                  promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                  if (isDetailed == 2)
+                  {
+                    print_yearly_area_info(input, year, isDetailed);
+                  }
+                  else
+                  {
+                    print_yearly_area_summarized(input, year);
+                  }
+                  displayMenu = true;
+                  return;
+                case 3:
+                  promptAndValidate(input, "Enter the ID of the area you want: ");
+                  Area *ar = areas.getById(input);
+                  if (ar)
+                  {
+                    cout << *ar << endl;
+                    displayMenu = true;
+                    return;
+                  }
+                  else
+                  {
+                    cout << "Sorry, couldn't find the Area you're looking for.";
+                    displayMenu = true;
+                    return;
+                  }
+                  }
                 return;
               case 4:
                 cout << dye::blue("How would you like to access the Land information?") << endl
                      << "1: Data for a specific month" << endl
                      << "2: Data for a specific year" << endl
-                     << "3: All available data" << endl;
-                while (input)
+                     << "3: All available data" << endl
+                     << "0: Return to the main menu" << endl;
+                promptAndValidate(input, "Enter your query: ", 0, 3);
+                switch (input)
                 {
-                  promptAndValidate(input, "Enter your query: ");
-                  switch (input)
+                default:
+                  displayMenu = true;
+                  return;
+                case 1:
+                  promptAndValidate(input2, "Enter the ID of the land you want: ");
+                  promptAndValidate(year, "Enter the year you want: ");
+                  promptAndValidate(month, "Enter the month you want: ");
+                  promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                  if (isDetailed == 2)
                   {
-                  case 1:
-                    promptAndValidate(input2, "Enter the ID of the land you want: ");
-                    promptAndValidate(year, "Enter the year you want: ");
-                    promptAndValidate(month, "Enter the month you want: ");
-                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
-                    if (isDetailed == 2)
-                    {
-                      print_monthly_land_info(input2, year, month - 1);
-                    }
-                    else
-                    {
-                      print_monthly_land_summarized(input2, year, month - 1);
-                    }
-                    displayMenu = true;
-                    return;
-                  case 2:
-                    promptAndValidate(input, "Enter the ID of the land you want: ");
-                    promptAndValidate(year, "Enter the year you want: ");
-                    promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
-                    if (isDetailed == 2)
-                    {
-                      print_yearly_land_info(input, year, isDetailed - 1);
-                    }
-                    else
-                    {
-                      List_yearly_farmer_sales(input, year);
-                    }
-                    displayMenu = true;
-                    return;
-                  case 3:
-                    promptAndValidate(input, "Enter the ID of the land you want: ");
-                    Land *land = lands.getById(input);
-                    if (land)
-                    {
-                      cout << *land << endl;
-                      displayMenu = true;
-                      return;
-                    }
-                    else
-                    {
-                      cout << "Sorry, couldn't find the Land you're looking for.";
-                      displayMenu = true;
-                      return;
-                    }
+                    print_monthly_land_info(input2, year, month);
                   }
-                }
+                  else
+                  {
+                    print_monthly_land_summarized(input2, year, month);
+                  }
+                  displayMenu = true;
+                  return;
+                case 2:
+                  promptAndValidate(input, "Enter the ID of the land you want: ");
+                  promptAndValidate(year, "Enter the year you want: ");
+                  promptAndValidate(isDetailed, "Do you want the summarized or detailed version? (2 for detailed, 1 for summarized): ", 1, 2);
+                  if (isDetailed == 2)
+                  {
+                    print_yearly_land_info(input, year, isDetailed - 1);
+                  }
+                  else
+                  {
+                    List_yearly_farmer_sales(input, year);
+                  }
+                  displayMenu = true;
+                  return;
+                case 3:
+                  promptAndValidate(input, "Enter the ID of the land you want: ");
+                  Land *land = lands.getById(input);
+                  if (land)
+                  {
+                    cout << *land << endl;
+                    displayMenu = true;
+                    return;
+                  }
+                  else
+                  {
+                    cout << "Sorry, couldn't find the Land you're looking for.";
+                    displayMenu = true;
+                    return;
+                  }
+                  }
                 return;
               case 5:
                 promptAndValidate(input, "Enter the farmer's ID: ");
@@ -434,12 +447,16 @@ public:
                     cout << dye::blue("How would you like to access the Country information?") << endl
                          << "1: Data for a specific month" << endl
                          << "2: Data for a specific year" << endl
-                         << "3: All available data" << endl;
+                         << "3: All available data" << endl
+                         << "0: Return to the main menu" << endl;
                     while (input)
                     {
                       promptAndValidate(input, "Enter your query: ");
                       switch (input)
                       {
+                      default:
+                        displayMenu = true;
+                        return;
                       case 1:
                         promptAndValidate(year, "Enter the year you want: ");
                         promptAndValidate(month, "Enter the month you want: ");
@@ -469,7 +486,7 @@ public:
                         return;
                       case 3:
                         print_yearly_country_info(-1, 1);
-                        break;
+                        displayMenu = true;
                       }
                     }
                     return;
@@ -488,6 +505,9 @@ public:
             promptAndValidate(input, "Enter your query: ", 0, 5);
             Wilaya* wil; City* cit; Area* ar; Land* lnd;
             switch(input) {
+              default:
+                displayMenu = true;
+                return;
               case 1:
                 cout << dye::red_on_white("WARNING: ") << "This will print the entire database, resulting in " << dye::green("MILLIONS") << " of lines. Depending on your hardware, " << dye::black_on_white("the 3ND 0F TH3 UN1V3RS3") << " may come before its done printing. Are you sure you want to proceed? (1 for yes, 0 for no)" << endl;
                 promptAndValidate(input, "Proceed?", 0, 1);
@@ -498,6 +518,9 @@ public:
                        << "0: Return to the main menu" << endl;
                        promptAndValidate(input, "Enter your query: ", 0, 4);
                        switch(input) {
+                        default:
+                          displayMenu = true;
+                          return;
                        case 1:
                          promptAndValidate(year, "Enter the year you want: ");
                          promptAndValidate(month, "Enter the month you want: ");
@@ -518,16 +541,20 @@ public:
                 cout << dye::blue("What sales would you like to list?") << endl
                      << "1: Sales in a specific month" << endl
                      << "2: Sales for a specific year" << endl
-                     << "3: All Sales" << endl;
+                     << "3: All Sales" << endl
+                     << "0: Return to the main menu" << endl;
 
                 do {
                   promptAndValidate(input, "Enter your query: ", 1, 3);
                   switch(input) {
+                    default:
+                      displayMenu = true;
+                      return;
                     case 1:
                       promptAndValidate(input, "Enter the ID of the wilaya you want: ");
                       promptAndValidate(year, "Enter the year you want: ");
                       promptAndValidate(month, "Enter the month you want: ");
-                      List_monthly_farmer_sales_in_wilaya(input, year, month - 1);
+                      List_monthly_farmer_sales_in_wilaya(input, year, month);
                       displayMenu = true;
                       return;
                     case 2:
@@ -558,16 +585,20 @@ public:
                 cout << dye::blue("What sales would you like to list?") << endl
                      << "1: Sales in a specific month" << endl
                      << "2: Sales for a specific year" << endl
-                     << "3: All Sales" << endl;
+                     << "3: All Sales" << endl
+                     << "0: Return to the main menu" << endl;
 
                 do {
                   promptAndValidate(input, "Enter your query: ", 1, 3);
                   switch(input) {
+                                  default:
+                displayMenu = true;
+                return;
                     case 1:
                       promptAndValidate(input, "Enter the ID of the City: ");
                       promptAndValidate(year, "Enter the year you want: ");
                       promptAndValidate(month, "Enter the month you want: ");
-                      List_monthly_farmer_sales_in_city(input, year, month - 1);
+                      List_monthly_farmer_sales_in_city(input, year, month);
                       displayMenu = true;
                       return;
                     case 2:
@@ -604,14 +635,14 @@ public:
                   promptAndValidate(input, "Enter your query: ", 1, 3);
                   switch(input) {
                     case 1:
-                      promptAndValidate(input, "Enter the ID of the Area: ");
+                      promptAndValidate(input, "Enter the ID of the Area you want: : ");
                       promptAndValidate(year, "Enter the year you want: ");
                       promptAndValidate(month, "Enter the month you want: ");
-                      List_monthly_farmer_sales_in_area(input, year, month - 1);
+                      List_monthly_farmer_sales_in_area(input, year, month);
                       displayMenu = true;
                       return;
                     case 2:
-                      promptAndValidate(input, "Enter the ID of the Area");
+                      promptAndValidate(input, "Enter the ID of the Area you want: ");
                       promptAndValidate(year, "Enter the year you want: ");
                       List_yearly_farmer_sales_in_area(input, year);
                       displayMenu = true;
@@ -622,7 +653,7 @@ public:
                       }
                       return;
                     case 3:
-                      promptAndValidate(input, "Enter the ID of the Area: ");
+                      promptAndValidate(input, "Enter the ID of the Area you want: : ");
                       List_yearly_farmer_sales_in_area(input, -1);
                       displayMenu = true;
                       ar = areas.getById(input);
@@ -647,7 +678,7 @@ public:
                       promptAndValidate(input, "Enter the ID of the Land: ");
                       promptAndValidate(year, "Enter the year you want: ");
                       promptAndValidate(month, "Enter the month you want: ");
-                      List_monthly_farmer_sales(input, year, month - 1);
+                      List_monthly_farmer_sales(input, year, month);
                       displayMenu = true;
                       return;
                     case 2:
@@ -767,9 +798,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_wilaya_monthly_farmers_penalties(input2, year, month - 1, cat);
+                        List_wilaya_monthly_farmers_penalties(input2, year, month, cat);
                     else
-                      List_wilaya_monthly_farmers_penalties(input2, year, month - 1, categories[input - 1]);
+                      List_wilaya_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
                     displayMenu = true;
                     return;
                   case 2:
@@ -782,9 +813,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_wilaya_monthly_farmers_penalties(input2, year, month - 1, cat);
+                        List_wilaya_monthly_farmers_penalties(input2, year, month, cat);
                     else
-                      List_wilaya_monthly_farmers_penalties(input2, year, month - 1, categories[input - 1]);
+                      List_wilaya_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
                     displayMenu = true;
                     return;
                   }
@@ -811,9 +842,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_city_monthly_farmers_penalties(input2, year, month - 1, cat);
+                        List_city_monthly_farmers_penalties(input2, year, month, cat);
                     else
-                      List_city_monthly_farmers_penalties(input2, year, month - 1, categories[input - 1]);
+                      List_city_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
                     displayMenu = true;
                     return;
                   case 2:
@@ -826,9 +857,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_city_monthly_farmers_penalties(input2, year, month - 1, cat);
+                        List_city_monthly_farmers_penalties(input2, year, month, cat);
                     else
-                      List_city_monthly_farmers_penalties(input2, year, month - 1, categories[input - 1]);
+                      List_city_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
                     displayMenu = true;
                     return;
                   }
@@ -855,9 +886,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_area_monthly_farmers_penalties(input2, year, month - 1, cat);
+                        List_area_monthly_farmers_penalties(input2, year, month, cat);
                     else
-                      List_area_monthly_farmers_penalties(input2, year, month - 1, categories[input - 1]);
+                      List_area_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
                     displayMenu = true;
                     return;
                   case 2:
@@ -870,9 +901,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_area_monthly_farmers_penalties(input2, year, month - 1, cat);
+                        List_area_monthly_farmers_penalties(input2, year, month, cat);
                     else
-                      List_area_monthly_farmers_penalties(input2, year, month - 1, categories[input - 1]);
+                      List_area_monthly_farmers_penalties(input2, year, month, categories[input - 1]);
                     displayMenu = true;
                     return;
                   }
@@ -899,9 +930,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_monthly_farmer_penalty(input2, year, month - 1, cat);
+                        List_monthly_farmer_penalty(input2, year, month, cat);
                     else
-                      List_monthly_farmer_penalty(input2, year, month - 1, categories[input - 1]);
+                      List_monthly_farmer_penalty(input2, year, month, categories[input - 1]);
                     return;
                   case 2:
                     promptAndValidate(year, "Enter the year you want: ");
@@ -913,9 +944,9 @@ public:
                     promptAndValidate(input, "Enter your query: ", 0, categories.size() - 1);
                     if (input == categories.size())
                       for (const string &cat : categories)
-                        List_monthly_farmer_penalty(input2, year, month - 1, cat);
+                        List_monthly_farmer_penalty(input2, year, month, cat);
                     else
-                      List_monthly_farmer_penalty(input2, year, month - 1, categories[input - 1]);
+                      List_monthly_farmer_penalty(input2, year, month, categories[input - 1]);
                     return;
                     displayMenu = true;
                     return;
@@ -979,139 +1010,139 @@ public:
   }
 
 private:
-  void getLandsPrompt()
-  {
-    int input = -1, year = 0, month = 0;
-    while (input)
-    {
-      cout << "How would you like to access the lands? " << endl
-           << "1: List all lands" << endl
-           << "2: List lands in a Wilaya" << endl
-           << "3: List lands in a City" << endl
-           << "4: List lands in a Area" << endl
-           << "5: Access a specific land" << endl
-           << "Enter your query number: ";
-      cin >> input;
-      switch (input)
-      {
-      case 1:
-        cout << setfill('=') << setw(40) << "" << endl;
-        wilayas.iterate([](Wilaya *wil) -> bool
-                        {
-            cout << *wil << endl;
-            return true; });
-        input = 0;
-        break;
+  // void getLandsPrompt()
+  // {
+  //   int input = -1, year = 0, month = 0;
+  //   while (input)
+  //   {
+  //     cout << "How would you like to access the lands? " << endl
+  //          << "1: List all lands" << endl
+  //          << "2: List lands in a Wilaya" << endl
+  //          << "3: List lands in a City" << endl
+  //          << "4: List lands in a Area" << endl
+  //          << "5: Access a specific land" << endl
+  //          << "Enter your query number: ";
+  //     cin >> input;
+  //     switch (input)
+  //     {
+  //     case 1:
+  //       cout << setfill('=') << setw(40) << "" << endl;
+  //       wilayas.iterate([](Wilaya *wil) -> bool
+  //                       {
+  //           cout << *wil << endl;
+  //           return true; });
+  //       input = 0;
+  //       break;
 
-      default:
-        break;
-      }
-    }
-  }
-  void getwilayas()
-  {
-    int input = -1;
-    while (input)
-    {
-      cout << "How would you like to access the wilayas? " << endl
-           << "1: List all wilayas" << endl
-           << "2: Access a specific wilaya" << endl
-           << "Enter your query number: ";
-      cin >> input;
-      switch (input)
-      {
-      case 1:
-        cout << setfill('=') << setw(40) << "" << endl;
-        wilayas.iterate([](Wilaya *wil) -> bool
-                        {
-            cout << *wil << endl;
-            return true; });
-        input = 0;
-        break;
-      case 2:
-        cout << "Enter the wilaya id: ";
-        cin >> input;
-        cout << *wilayas.getById(input) << endl;
-        input = 0;
-        break;
-      default:
-        break;
-      }
-    }
-  }
+  //     default:
+  //       break;
+  //     }
+  //   }
+  // }
+  // void getwilayas()
+  // {
+  //   int input = -1;
+  //   while (input)
+  //   {
+  //     cout << "How would you like to access the wilayas? " << endl
+  //          << "1: List all wilayas" << endl
+  //          << "2: Access a specific wilaya" << endl
+  //          << "Enter your query number: ";
+  //     cin >> input;
+  //     switch (input)
+  //     {
+  //     case 1:
+  //       cout << setfill('=') << setw(40) << "" << endl;
+  //       wilayas.iterate([](Wilaya *wil) -> bool
+  //                       {
+  //           cout << *wil << endl;
+  //           return true; });
+  //       input = 0;
+  //       break;
+  //     case 2:
+  //       cout << "Enter the wilaya id: ";
+  //       cin >> input;
+  //       cout << *wilayas.getById(input) << endl;
+  //       input = 0;
+  //       break;
+  //     default:
+  //       break;
+  //     }
+  //   }
+  // }
 
-  void getcities()
-  {
-    int input = -1;
-    while (input)
-    {
-      cout << "How would you like to access the cities? " << endl
-           << "1: List all cities" << endl
-           << "2: Access a specific city" << endl
-           << "Enter your query number: ";
-      cin >> input;
-      switch (input)
-      {
-      case 1:
-        cout << setfill('=') << setw(40) << "" << endl;
-        cities.iterate([](City *city) -> bool
-                       {
-            cout << *city << endl;
-            return true; });
-        input = 0;
-        break;
-      case 2:
-        cout << "Enter the city id: ";
-        cin >> input;
-        cout << *cities.getById(input) << endl;
-        input = 0;
-        break;
-      default:
-        break;
-      }
-    }
-  }
+  // void getcities()
+  // {
+  //   int input = -1;
+  //   while (input)
+  //   {
+  //     cout << "How would you like to access the cities? " << endl
+  //          << "1: List all cities" << endl
+  //          << "2: Access a specific city" << endl
+  //          << "Enter your query number: ";
+  //     cin >> input;
+  //     switch (input)
+  //     {
+  //     case 1:
+  //       cout << setfill('=') << setw(40) << "" << endl;
+  //       cities.iterate([](City *city) -> bool
+  //                      {
+  //           cout << *city << endl;
+  //           return true; });
+  //       input = 0;
+  //       break;
+  //     case 2:
+  //       cout << "Enter the city id: ";
+  //       cin >> input;
+  //       cout << *cities.getById(input) << endl;
+  //       input = 0;
+  //       break;
+  //     default:
+  //       break;
+  //     }
+  //   }
+  // }
 
-  void getAreas()
-  {
-    int input = -1;
-    while (input)
-    {
-      cout << "How would you like to access the areas? " << endl
-           << "1: List all areas" << endl
-           << "2: Access a specific area" << endl
-           << "Enter your query number: ";
-      cin >> input;
-      switch (input)
-      {
-      case 1:
-        cout << setfill('=') << setw(40) << "" << endl;
-        areas.iterate([](Area *area) -> bool
-                      {
-            cout << *area << endl;
-            return true; });
-        input = 0;
-        break;
-      case 2:
-        cout << "Enter the area id: ";
-        cin >> input;
-        cout << *areas.getById(input) << endl;
-        input = 0;
-        break;
-      default:
-        break;
-      }
-    }
-  }
+  // void getAreas()
+  // {
+  //   int input = -1;
+  //   while (input)
+  //   {
+  //     cout << "How would you like to access the areas? " << endl
+  //          << "1: List all areas" << endl
+  //          << "2: Access a specific area" << endl
+  //          << "Enter your query number: ";
+  //     cin >> input;
+  //     switch (input)
+  //     {
+  //     case 1:
+  //       cout << setfill('=') << setw(40) << "" << endl;
+  //       areas.iterate([](Area *area) -> bool
+  //                     {
+  //           cout << *area << endl;
+  //           return true; });
+  //       input = 0;
+  //       break;
+  //     case 2:
+  //       cout << "Enter the area id: ";
+  //       cin >> input;
+  //       cout << *areas.getById(input) << endl;
+  //       input = 0;
+  //       break;
+  //     default:
+  //       break;
+  //     }
+  //   }
+  // }
   // print land detailed info by  month
   void print_monthly_land_info(int landId, int year, int month)
   {
     Land *land = lands.getById(landId);
     //cheking if the land exists
     if (land != nullptr)
-    {  cout << "Land ID: " << landId<< endl;
+    {  
+      cout << "Land ID: " << landId<< endl;
        cout << "Farmer: " << land->getFarmer()->getName() << endl;
-       cout << setfill('=') << setw(40) << "" << endl;
       land->printMonthlyReport(year, month);
     }
     else
@@ -1599,9 +1630,10 @@ private:
   private:
     template <typename T>
     bool promptAndValidate(T& input, string message, int min = 0, int max = 10000000, bool is_integer = true/* , function<bool(T)> const& func */) {
+      bool isProcessed = false;
       if(is_integer) {
-        input = 0;
-        while(!input) {
+          while(!isProcessed) {
+          input = 0;
           cout << message;
           string str; size_t pos;
           getline(cin, str);
@@ -1626,17 +1658,20 @@ private:
               // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // discard input
               // #endif
               cout << dye::red("ERR: wrong input type. Please type again") << endl;
-              input = 0;
+              continue;
+            }
+            else if (input > max || input < min)
+            {
+              cout << dye::red("ERR: input is outside of range, please type again") << endl;
+              continue;
             }
           } else {
             cout << dye::red("ERR: wrong input type. Please type again") << endl;
-            input = 0;
+            continue;
           }
+          isProcessed = true;
+
         }
-      }
-      if(input > max || input < min) {
-        cout << dye::red("ERR: input is outside of range, please type again") << endl;
-        input = 0;
       }
       return true;
     }
@@ -1989,7 +2024,7 @@ private:
     }
     for(int i = 0; i <ar->getMonths().size(); i++) {
       x.push_back(ar->getMonthlyReport(i)->getMonth());
-      y.push_back(land->get_land_total_sales_per_month(year, i));
+      y.push_back(land->get_land_total_sales_per_month(year, i + 1));
     }
 
     ScatterPlotSeries* series = GetDefaultScatterPlotSeriesSettings();
@@ -2070,7 +2105,7 @@ private:
     for (int i = 0; i < 12; i++)
     {
       x.push_back(i + 1);
-      y.push_back(area->get_area_total_sales_per_month(year, i));
+      y.push_back(area->get_area_total_sales_per_month(year, i + 1));
     }
 
     ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
@@ -2153,7 +2188,7 @@ private:
     for (int i = 0; i < 12; i++)
     {
       x.push_back(i + 1);
-      y.push_back(city->get_city_total_sales_per_month(year, i));
+      y.push_back(city->get_city_total_sales_per_month(year, i + 1));
     }
 
     ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
@@ -2195,7 +2230,7 @@ private:
     for (int i = start_year; i < end_year; i++)
     {
       x.push_back(i);
-      y.push_back(city->get_city_total_sales_per_year(i));
+      y.push_back(city->get_city_total_sales_per_year(i + 1));
     }
 
     ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
@@ -2236,7 +2271,7 @@ private:
     for (int i = 1; i <= 12; i++)
     {
       x.push_back(i);
-      y.push_back(wilaya->get_wilaya_total_sales_per_month(year, i));
+      y.push_back(wilaya->get_wilaya_total_sales_per_month(year, i + 1));
     }
 
     ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
@@ -2277,7 +2312,7 @@ private:
     for (int i = start_year; i < end_year; i++)
     {
       x.push_back(i);
-      y.push_back(wilaya->get_wilaya_total_sales_per_year(i));
+      y.push_back(wilaya->get_wilaya_total_sales_per_year(i + 1));
     }
 
     ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();

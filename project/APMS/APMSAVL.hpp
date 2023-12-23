@@ -602,14 +602,14 @@ public:
                   promptAndValidate(input, "Enter your query: ", 1, 3);
                   switch(input) {
                     case 1:
-                      promptAndValidate(input, "Enter the ID of the Area: ");
+                      promptAndValidate(input, "Enter the ID of the Area you want: : ");
                       promptAndValidate(year, "Enter the year you want: ");
                       promptAndValidate(month, "Enter the month you want: ");
                       List_monthly_farmer_sales_in_area(input, year, month - 1);
                       displayMenu = true;
                       return;
                     case 2:
-                      promptAndValidate(input, "Enter the ID of the Area");
+                      promptAndValidate(input, "Enter the ID of the Area you want: ");
                       promptAndValidate(year, "Enter the year you want: ");
                       List_yearly_farmer_sales_in_area(input, year);
                       displayMenu = true;
@@ -620,7 +620,7 @@ public:
                       }
                       return;
                     case 3:
-                      promptAndValidate(input, "Enter the ID of the Area: ");
+                      promptAndValidate(input, "Enter the ID of the Area you want: ");
                       List_yearly_farmer_sales_in_area(input, -1);
                       displayMenu = true;
                       ar = areas.getById(input);

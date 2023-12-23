@@ -77,17 +77,20 @@ bool Area::operator==(const Area& rhs) {
 void Area::Print_Area_By_Year(int year,int choice)
 {
   cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
-    cout<< "Year :"<<year<<endl;
+    cout << "Area: " << getName() << endl;
+    cout << "Area ID: " << getId() << endl;
+    // cout<< "Year: "<< year << endl;
+    cout << "Area total sales :" << get_area_total_sales_per_year(year) << " DA " << endl;
+    // water and electricity consumption
+    cout << "Area total water consumption :" << get_area_yearly_water_consumption(year) << " m^3 " << endl;
+    cout << "Area total electricity consumption :" << get_area_yearly_electricity_consumption(year) << " KWh " << endl;
+    cout << "Lands: " << endl;
     for(auto land : lands)
     {  
-        cout<<" farmer : " <<*land->getFarmer()<<endl;
+        cout<< *land->getFarmer() << endl;
         land->printAnnualReport(year,choice);//prints id land and the total sales of the year
        
      }
-    cout<<" area total sales :"<<get_area_total_sales_per_year(year)<<" DA "<<endl;
-    //water and electricity consumption
-    cout<<" area total water consumption :"<<get_area_yearly_water_consumption(year)<<" m^3 "<<endl;
-    cout<<" area total electricity consumption :"<<get_area_yearly_electricity_consumption(year)<<" KWh "<<endl;
   cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
       
 }
@@ -112,7 +115,7 @@ double total_sales = 0;
  }
 void Area::Print_Area_By_month(int year,int month){
     cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
-    cout<< "Year :"<<year<<" Month :"<<month<<endl;
+    cout<< "Year: "<<year<<" Month: "<<month<<endl;
     for(auto land : lands)
     {
         cout<<" farmer : " <<*land->getFarmer()<<endl;
@@ -142,7 +145,7 @@ void Area::print_area_monthly_farmer_sales(int year,int month)
 {      
   cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;   
      cout<<"Area: " << name << endl;
-    cout<<"Year :"<<year<<" Month :"<<month<<endl;
+    cout<<"Year: "<<year<<" Month: "<<month<<endl;
     for(auto land : lands)
     {
         land->print_monthly_farmer_sales(year,month);
@@ -154,21 +157,13 @@ void Area:: print_area_yearly_farmer_sales(int year)
 {
   cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<<"Area: " << name << endl;
-    cout<<"Year :"<<year<<endl;
+    cout<<"Year: "<<year<<endl;
     for(auto land : lands)
     {
         land->print_yearly_farmer_sales(year);
     }
   cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
-
-// ostream& operator<<(ostream& os, const Area& area) {
-//     cout << setfill('.') << setw(40) << "" << endl;
-//     os << "Area ID: " << area.getId() << endl;
-//     os << "Area: " << area.getName() << endl;
-//     cout << setfill('.') << setw(40) << "" << endl;
-//     return os;
-// }
 
 void to_json(json& j, const Area& area) {
   j = json{
@@ -195,29 +190,28 @@ double Area::get_yearly_area_penalty(int year, const string& category_name) {
 
  void Area::print_Area_monthly_penalty(int year,int month,string category_name)
  {
+      cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
    //iterating over the years and then over the months
     cout<<"Area: " << name << endl;
-    cout<<"Year :"<<year<<" Month :"<<month<<endl;
+    cout<<"Year: "<<year<<" Month: "<<month<<endl;
     for(auto land : lands)
     {
         land->print_Land_monthly_penalty(year,month,category_name);
-        cout<<"============================================"<<endl;
     }
-
-
-
+    cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
  }
   void Area::print_Area_yearly_penalty(int year,string category_name)
   {
+      cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     //iterating over the years and then over the months
     cout<<"Area: " << name << endl;
-    cout<<"Year :"<<year<<endl;
+    cout<<"Year: "<<year<<endl;
     for(auto land : lands)
     {
         land->print_Land_yearly_penalty(year,category_name);
-        cout<<"============================================"<<endl;
+       
     }
-
+    cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
   }
 //functions to get the water and electricity consumption of the area
 double Area::get_area_yearly_water_consumption(int year)
@@ -261,31 +255,35 @@ double Area::get_area_monthly_electricity_consumption(int year,int month)
 //functions to print the the summarized report of the area
 void Area::print_area_summerized_by_month(int year,int month)
 {
+    cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<<"Area: " << name << endl;
-    cout<<"Year :"<<year<<" Month :"<<month<<endl;
-    for(auto land : lands)
-    {
-        land->print_monthly_summarized_report(year,month);
-        cout<<"============================================"<<endl;
-    }
-double sales = get_area_total_sales_per_month(year,month);
-double water = get_area_monthly_water_consumption(year,month);
-double electricity = get_area_monthly_electricity_consumption(year,month);
+    cout<<"Year: "<<year<<" Month: "<<month<<endl;
+
+    double sales = get_area_total_sales_per_month(year,month);
+    double water = get_area_monthly_water_consumption(year,month);
+    double electricity = get_area_monthly_electricity_consumption(year,month);
  cout<<"the area total sales is : "<<(sales > 1000000 ? sales / 1000000 : sales > 1000 ? sales / 1000 : sales); 
   cout<<(sales > 1000000 ? "MDA" : sales > 1000 ? "KDA" : "DA")<<endl;
   cout<<"the area total water consumption is : "<<(water > 1000000 ? water / 1000000 :  water);
   cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
   cout<<"the area total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+  cout << "Lands: " << endl;
+  for (auto land : lands)
+  {
+      land->print_monthly_summarized_report(year, month);
+  }
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
 void Area::print_area_summerized_by_year(int year)
 {
+    cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
     cout<<"Area: " << name << endl;
-    cout<<"Year :"<<year<<endl;
+    cout<<"Year: "<<year<<endl;
     for(auto land : lands)
     {
         land->print_yearly_summarized_report(year);
-        cout<<"============================================"<<endl;
+
     }
 double sales = get_area_total_sales_per_year(year);
 double water = get_area_yearly_water_consumption(year);
@@ -296,4 +294,5 @@ double electricity = get_area_yearly_electricity_consumption(year);
   cout<<(water > 1000000 ? "dam^3" : "m^3")<<endl;
   cout<<"the area total electricity consumption is : "<<(electricity > 1000000 ? electricity / 1000 : electricity);
   cout<<(electricity > 1000000 ? "Mwh" :  "kwh")<<endl;
+  cout << dye::purple(stringRepeat("=", getConsoleWidth() / 2)) << endl;
 }
